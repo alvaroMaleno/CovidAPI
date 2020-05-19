@@ -7,7 +7,6 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
 {
     public class PostgreSqlCreateTable : ICreate<ConnectionPostgreSql>
     {
-        private Query _oQuery;
         private string[] _oPathsArray;
 
         public PostgreSqlCreateTable()
@@ -40,7 +39,7 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
             Query oQuery;
             this.SetQuery(pPath, out oQuery);
             
-            return pConnector.ExecuteCommand(this._oQuery.query);
+            return pConnector.ExecuteCommand(oQuery.query);
         }
 
         public bool CreateNamedDataTable(
@@ -50,9 +49,9 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
         {
             Query oQuery;
             this.SetQuery(pPath, out oQuery);
-            this._oQuery.query = this._oQuery.query.Replace("country_name", pTableName);
+            oQuery.query = oQuery.query.Replace("country_name", pTableName);
             
-            return pConnector.ExecuteCommand(this._oQuery.query);
+            return pConnector.ExecuteCommand(oQuery.query);
         }
 
         public void SetQuery(string pPath, out Query pQuery)
