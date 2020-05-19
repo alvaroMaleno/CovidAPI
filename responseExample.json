@@ -1,0 +1,648 @@
+{
+    "father": null,
+    "sonList": null,
+    "geoID": "AD",
+    "code": "AND",
+    "name": "Andorra",
+    "population": 77006,
+    "dataList": [
+        {
+            "date": {
+                "id": 0,
+                "date": "03/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 1,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "14/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 1,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "16/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 3,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "17/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 9,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "18/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 0,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "19/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 39,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "20/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 22,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "21/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 0,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "22/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 13,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "23/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 25,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "24/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 20,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "25/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 31,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "26/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 24,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "27/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 36,
+            "deaths": 3,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "28/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 43,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "29/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 41,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "30/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 26,
+            "deaths": 2,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "31/03/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 36,
+            "deaths": 2,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "01/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 6,
+            "deaths": 4,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "02/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 14,
+            "deaths": 2,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "03/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 38,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "04/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 11,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "05/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 27,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "06/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 35,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "07/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 25,
+            "deaths": 3,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "08/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 19,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "09/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 19,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "10/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 19,
+            "deaths": 2,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "11/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 18,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "12/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 21,
+            "deaths": 2,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "13/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 16,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "14/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 8,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "15/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 13,
+            "deaths": 2,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "16/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 14,
+            "deaths": 2,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "17/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 9,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "18/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 14,
+            "deaths": 2,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "19/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 8,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "20/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 9,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "21/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 4,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "22/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 0,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "23/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 6,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "24/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 1,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "25/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 7,
+            "deaths": 3,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "26/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 2,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "27/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 7,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "28/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 3,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "29/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 0,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "30/04/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 0,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "01/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 2,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "02/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 1,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "03/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 1,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "04/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 1,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "05/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 2,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "06/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 1,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "07/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 0,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "08/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 1,
+            "deaths": 1,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "09/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 0,
+            "deaths": 0,
+            "cured": 0
+        },
+        {
+            "date": {
+                "id": 0,
+                "date": "10/05/2020",
+                "dateSeparator": "/",
+                "dateFormat": "dd/MM/yyyy"
+            },
+            "cases": 2,
+            "deaths": 1,
+            "cured": 0
+        }
+    ]
+}

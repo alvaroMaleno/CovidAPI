@@ -1,0 +1,33 @@
+[
+    {
+        "user": 
+        
+            {
+                "id": "mail@example.net",
+                "pass": "passExample"
+            }
+        ,
+
+        "covid_data":
+        {
+            "countries":
+            [
+                
+                "countryA",
+                "countryB",
+                "countryc"
+                
+            ],
+            "dates":
+            {
+                
+                "startDate": "xxxx",
+                "endDate": "xxxx"
+            
+            },
+
+            "dataType": "methodName"
+        }
+        
+    }
+]

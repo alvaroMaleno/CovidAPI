@@ -1,0 +1,6 @@
+{
+    "query": 
+    "INSERT INTO countries (geoID, code, name, population) VALUES ? ON conflict (geoID) DO update set geoID = Excluded.geoID, code = Excluded.code, name = Excluded.name, population = Excluded.population",
+    "valuesFormat":
+    "({0}, {1}, {2}, {3})"
+}

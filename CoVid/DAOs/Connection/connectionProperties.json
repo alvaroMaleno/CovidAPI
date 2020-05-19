@@ -1,0 +1,7 @@
+{
+    "server": "localhost",
+    "port": "p",
+    "userId": "u",
+    "pass": "p",
+    "dataBase": "d"
+}
