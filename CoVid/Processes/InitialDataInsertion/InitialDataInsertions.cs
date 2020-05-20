@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Linq;
 using System.Collections.Concurrent;
 using System;
@@ -7,7 +8,6 @@ using CoVid.Models;
 using CoVid.Processes.Interfaces;
 using CoVid.DAOs.Abstracts;
 using CoVid.Utils;
-using CoVid.Models.PathModels;
 
 namespace CoVid.Processes.InitialDataInsertion
 {
@@ -39,130 +39,46 @@ namespace CoVid.Processes.InitialDataInsertion
             
             if(_createGeoZoneDataTables)
             {
-                await this.CreateGeoZoneDataTable(_oInitDataGetting.oGeoZoneDictionary);
+                this.CreateGeoZoneDataTable(_oInitDataGetting.oGeoZoneDictionary);
             }
 
-            await this.InsertCovidData(_oInitDataGetting.oGeoZoneDictionary);
+            this.InsertCovidData(_oInitDataGetting.oGeoZoneDictionary);
+            
             
         }
 
-        private async Task InsertCovidData(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
+        private void InsertCovidData(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
         {
-            Task[] oTaskArray = new Task[_MAX_NUMBER_OF_TASKS];
-            int taskCounter = oTaskArray.Length - 1;
-            bool hasBeenCompletedOneTime = false;
-
             foreach (var oZoneCodeGeoZoneValue in oGeoZoneDictionary)
             {
-                if(!hasBeenCompletedOneTime)
-                {
-                    oTaskArray[taskCounter--] = this.InsertCovidDataInfo(oZoneCodeGeoZoneValue.Value);
-                }
-                else
-                {
-                    await oTaskArray[taskCounter];
-                    oTaskArray[taskCounter--] = this.InsertCovidDataInfo(oZoneCodeGeoZoneValue.Value);
-                }
-                if(taskCounter < 0)
-                {
-                    hasBeenCompletedOneTime = true;
-                    taskCounter = oTaskArray.Length - 1;
-                }
+                this._oCovidDao.InsertCovidDataList(oZoneCodeGeoZoneValue.Value.dataList.ToList(), oZoneCodeGeoZoneValue.Value);
             }
         }
 
-        private async Task InsertCovidDataInfo(GeoZone pGeoZone)
+        private void CreateGeoZoneDataTable(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
         {
-            this._oCovidDao.InsertCovidDataList(pGeoZone.dataList.ToList(), pGeoZone);
-        }
-
-        private async Task CreateGeoZoneDataTable(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
-        {
-            Task[] oTaskArray = new Task[_MAX_NUMBER_OF_TASKS];
-            int taskCounter = oTaskArray.Length - 1;
-            bool hasBeenCompletedOneTime = false;
-
+            List<string> oTablesNamesList = new List<string>();
             foreach (var oZoneCodeGeoZoneValue in oGeoZoneDictionary)
             {
-                if(!hasBeenCompletedOneTime)
-                {
-                    oTaskArray[taskCounter--] = this.CreateCountryTableIfDoesNotExists(oZoneCodeGeoZoneValue);
-                }
-                else
-                {
-                    await oTaskArray[taskCounter];
-                    oTaskArray[taskCounter--] = this.CreateCountryTableIfDoesNotExists(oZoneCodeGeoZoneValue);
-                }
-                if(taskCounter < 0)
-                {
-                    hasBeenCompletedOneTime = true;
-                    taskCounter = oTaskArray.Length - 1;
-                }
+                oTablesNamesList.Add(oZoneCodeGeoZoneValue.Value.geoID);
             }
-        }
-
-        private async Task CreateCountryTableIfDoesNotExists(KeyValuePair<string, GeoZone> oZoneCodeGeoZoneValue)
-        {
-            _oCovidDao.CreateNamedTable("name", oZoneCodeGeoZoneValue.Value.geoID);
+            _oCovidDao.CreateNamedTable("name", oTablesNamesList.ToArray());
         }
 
         private async Task InsertDateList(List<GeoZone> oGeoZonesList)
         {
             ConcurrentDictionary<string, CovidDate> oDateKeyCovidDateValue = new ConcurrentDictionary<string, CovidDate>();
             
-            await this.CompleteCovidDatesDictionary(oDateKeyCovidDateValue, oGeoZonesList);
+            await UtilsCovidDateManagement.GetInstance().CompleteCovidDatesDictionary(oDateKeyCovidDateValue, oGeoZonesList);
 
-            var oOrderedDateList = oDateKeyCovidDateValue.Keys.ToList().OrderBy(date => DateTime.Parse(date)).ToList();
             List<CovidDate> oCovidDateList = new List<CovidDate>();
-
-            ulong dateId = 1;
-            foreach (var date in oOrderedDateList)
+            foreach (var oDateKeyValue in oDateKeyCovidDateValue)
             {
-                var oDate = oDateKeyCovidDateValue[date];
-                oDate.id = dateId++;
-                oCovidDateList.Add(oDateKeyCovidDateValue[date]);
+                oCovidDateList.Add(oDateKeyValue.Value);
             }
                 
             _oCovidDao.InsertDateList(oCovidDateList);
         }
 
-
-        private async Task CompleteCovidDatesDictionary(
-            ConcurrentDictionary<string, CovidDate> oDateKeyCovidDateValue, 
-            List<GeoZone> oGeoZonesList)
-        {
-            Task[] oTaskArray = new Task[_MAX_NUMBER_OF_TASKS];
-            int taskCounter = oTaskArray.Length - 1;
-            bool hasBeenCompletedOneTime = false;
-
-            foreach (var oGeoZone in oGeoZonesList)
-            {
-                if(!hasBeenCompletedOneTime)
-                {
-                    oTaskArray[taskCounter--] = this.AddDateToConcurrentDictionary(oGeoZone, oDateKeyCovidDateValue);
-                }
-                else
-                {
-                    await oTaskArray[taskCounter];
-                    oTaskArray[taskCounter--] = this.AddDateToConcurrentDictionary(oGeoZone, oDateKeyCovidDateValue);
-                }
-                if(taskCounter < 0)
-                {
-                    hasBeenCompletedOneTime = true;
-                    taskCounter = oTaskArray.Length - 1;
-                }
-            }
-        }
-
-        private async Task AddDateToConcurrentDictionary(
-            GeoZone oGeoZone, 
-            ConcurrentDictionary<string, CovidDate> pDateKeyCovidDateValue)
-        {
-            foreach (var oData in oGeoZone.dataList)
-            {
-                if(!pDateKeyCovidDateValue.ContainsKey(oData.date.date))
-                    pDateKeyCovidDateValue.GetOrAdd(oData.date.date, oData.date);
-            }
-        }
     }
 }

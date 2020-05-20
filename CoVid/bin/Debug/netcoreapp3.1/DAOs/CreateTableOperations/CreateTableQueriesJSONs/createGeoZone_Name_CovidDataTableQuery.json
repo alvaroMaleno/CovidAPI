@@ -1,4 +1,4 @@
 {
     "query": 
-    "CREATE TABLE IF NOT EXISTS country_name (geoID varchar(15) NOT null references GeoZone(geoID), dateID bigint NOT null references Dates(id),CovidData text NOT null,PRIMARY KEY (geoID))"
+    "CREATE TABLE IF NOT EXISTS country_name (dateID bigint NOT null references Dates(id),CovidData text NOT null,PRIMARY KEY (dateID))"
 }

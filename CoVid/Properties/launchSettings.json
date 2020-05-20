@@ -3,6 +3,7 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "requireExactSource": false,
     "iisExpress": {
       "applicationUrl": "http://localhost:38545",
       "sslPort": 44317
@@ -17,6 +18,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+
     "CoVid": {
       "commandName": "Project",
       "launchBrowser": true,

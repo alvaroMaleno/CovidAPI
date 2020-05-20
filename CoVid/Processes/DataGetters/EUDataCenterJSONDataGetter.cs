@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using CoVid.Models;
 using CoVid.Processes.DataGetters.Interfaces;
+using CoVid.Utils;
 
 namespace CoVid.Processes.DataGetters
 {
@@ -42,6 +45,49 @@ namespace CoVid.Processes.DataGetters
             
             foreach (var oTask in oTaskList)
                 await oTask;
+            
+            var oDateList = await this.GetCovidDateList(this.GetGeoZones(pDicToComplete));
+
+            foreach (var oGeoIdKeyGeoZoneValue in pDicToComplete)
+            {
+                foreach (var oData in oGeoIdKeyGeoZoneValue.Value.dataList)
+                {
+                    var oDateToSetID = oDateList.Find(oDate => oDate.date == oData.date.date);
+                    oData.id = oDateToSetID.id;
+                    oData.date.id = oDateToSetID.id;
+                }
+            }
+        }
+
+        public List<GeoZone> GetGeoZones(ConcurrentDictionary<string, GeoZone> pGeoZoneDictionary)
+        {
+            var listToReturn = new List<GeoZone>();
+            foreach (var item in pGeoZoneDictionary)
+            {
+                listToReturn.Add(item.Value);
+            }
+            listToReturn.Sort();
+            return listToReturn;
+        }
+
+        private async Task<List<CovidDate>> GetCovidDateList(List<GeoZone> oGeoZonesList)
+        {
+            ConcurrentDictionary<string, CovidDate> oDateKeyCovidDateValue = new ConcurrentDictionary<string, CovidDate>();
+            
+            await UtilsCovidDateManagement.GetInstance().CompleteCovidDatesDictionary(oDateKeyCovidDateValue, oGeoZonesList);
+
+            var oOrderedDateList = oDateKeyCovidDateValue.Keys.ToList().OrderBy(date => DateTime.Parse(date)).ToList();
+            List<CovidDate> oCovidDateList = new List<CovidDate>();
+
+            ulong dateId = 1;
+            foreach (var date in oOrderedDateList)
+            {
+                var oDate = oDateKeyCovidDateValue[date];
+                oDate.id = dateId++;
+                oCovidDateList.Add(oDateKeyCovidDateValue[date]);
+            }
+
+            return oCovidDateList;
         }
 
         private async Task addItem(Record pItem, ConcurrentDictionary<string, GeoZone> pDicToComplete, int pDataId){

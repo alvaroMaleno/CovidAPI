@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
 using CoVid.Controllers.DAOs.Connection;
 using CoVid.Models.PathModels;
 using CoVid.Models.QueryModels;
@@ -25,7 +28,7 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
             }
             else
             {
-                createTablePaths = @".\Processes\InitialCreateTables\createTables_Unix_Paths.json";
+                createTablePaths = @".\Processes\InitialCreateTables\createTables_Windows_Paths.json";
             }
 
             var paths = UtilsStreamReaders.GetInstance().ReadStreamFile(createTablePaths);
@@ -41,17 +44,24 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
             
             return pConnector.ExecuteCommand(oQuery.query);
         }
+        public bool CreateTable(ConnectionPostgreSql pConnector, Query oQuery)
+        {
+            return pConnector.ExecuteCommand(oQuery.query);
+        }
 
         public bool CreateNamedDataTable(
             ConnectionPostgreSql pConnector, 
             string pPath, 
-            string pTableName)
+            params string[] pTableName)
         {
-            Query oQuery;
-            this.SetQuery(pPath, out oQuery);
-            oQuery.query = oQuery.query.Replace("country_name", pTableName);
-            
-            return pConnector.ExecuteCommand(oQuery.query);
+            List<string> oSentenceList = new List<string>();
+            foreach (var tableName in pTableName)
+            {
+                Query oQuery;
+                this.SetQuery(pPath, out oQuery);
+                oSentenceList.Add(oQuery.query.Replace("country_name", tableName));
+            }
+            return pConnector.ExecuteCommand(oSentenceList.ToArray());
         }
 
         public void SetQuery(string pPath, out Query pQuery)

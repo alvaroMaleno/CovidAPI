@@ -16,11 +16,13 @@ namespace CoVid
     {
         public static void Main(string[] args)
         {
-            InizializeInitialProceses();
+             Thread oThread = new Thread(
+                new ThreadStart(InizializeInitialProceses));
+            oThread.Start();
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static async Task InizializeInitialProceses()
+        public static void InizializeInitialProceses()
         {
             var oInitialCreateTables = InitialCreateTables.GetInstance(
                 CovidDAOPostgreImpl.GetInstance());
@@ -28,10 +30,7 @@ namespace CoVid
                 CovidDAOPostgreImpl.GetInstance(), true);
             TaskableThreadManager oTaskableThreadManager = new TaskableThreadManager(
                 true, oInitialCreateTables, oInitialInsertions);
-            Thread oThread = new Thread(
-                new ThreadStart(oTaskableThreadManager.ThreadProc));
-            oThread.Start();
-            oThread.Join();
+            oTaskableThreadManager.ThreadProc();
         }
 
 

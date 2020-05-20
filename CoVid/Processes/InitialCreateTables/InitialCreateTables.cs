@@ -1,9 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using CoVid.DAOs.Abstracts;
-using CoVid.Models.PathModels;
 using CoVid.Processes.Interfaces;
-using CoVid.Utils;
 
 namespace CoVid.Processes.InitialCreateTables
 {

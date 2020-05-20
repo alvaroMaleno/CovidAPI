@@ -1,6 +1,6 @@
 {
     "query": 
-    "INSERT INTO country_name (geoID, dateid, coviddata) VALUES ? ON conflict (geoID) DO update set geoID = Excluded.geoID, dateid = Excluded.dateid, coviddata = Excluded.coviddata",
+    "INSERT INTO country_name (dateid, coviddata) VALUES ? ON conflict (dateid) DO update set coviddata = Excluded.coviddata",
     "valuesFormat":
-    "({0}, {1}, {2})"
+    "({0}, {1})"
 }

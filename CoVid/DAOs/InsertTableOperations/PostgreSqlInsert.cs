@@ -77,7 +77,7 @@ namespace CoVid.DAOs.InsertTableOperations
         public bool InsertCovidDataList(List<CoVidData> pCovidData, GeoZone pGeoZone)
         {
             Query oQuery;
-            this.SetQuery(_INSERT_DATES_QUERY_PATH, out oQuery);
+            this.SetQuery(_INSERT_GEOZONE_NAME_QUERY_PATH, out oQuery);
             oQuery.query = oQuery.query.Replace("country_name", pGeoZone.geoID);
             this.SetCovidDataListQuery(pCovidData, pGeoZone, oQuery);
 
@@ -113,20 +113,19 @@ namespace CoVid.DAOs.InsertTableOperations
         {
             oStringBuilder.Append(
                     oQuery.valuesFormat.Replace(
-                        _ZERO_STRING,
-                        string.Join(
-                            string.Empty,
-                            _REPLACE_SINGLEQUOTE_CONSTANT,
-                            pGeoZone.geoID,
-                             _REPLACE_SINGLEQUOTE_CONSTANT)).Replace(
-                                _ONE_STRING,
+                                _ZERO_STRING,
                                 string.Join(
                                     string.Empty,
                                     _REPLACE_SINGLEQUOTE_CONSTANT,
                                     oCovidData.id.ToString(),
                                     _REPLACE_SINGLEQUOTE_CONSTANT)));
             oStringBuilder.Replace(
-                    _TWO_STRING, Utils.UtilsJSON.GetInstance().Serialize(oCovidData));
+                    _ONE_STRING,
+                    string.Join(
+                        string.Empty,
+                        _REPLACE_SINGLEQUOTE_CONSTANT,
+                        Utils.UtilsJSON.GetInstance().Serialize(oCovidData),
+                        _REPLACE_SINGLEQUOTE_CONSTANT));
         }
 
         public bool InsertDate(CovidDate pCovidDate)

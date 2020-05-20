@@ -21,7 +21,7 @@ namespace CoVid.Processes
             }
             return _instance;
         }
-        //TODO Think about pDataGetterTypeParam
+        
         private InitDataGetting(string pUrl, string pDataGetterType)
         {
             this.url = pUrl;
@@ -30,7 +30,6 @@ namespace CoVid.Processes
             _oIDataGetter.SetOwnDataModel(oGeoZoneDictionary);       
         }
 
-        //TODO Refactor to a Factory
         private void SetIDataGetter(string pType){
             switch (pType)
             {
@@ -41,16 +40,9 @@ namespace CoVid.Processes
             }
         }
 
-        //TODO Implement DataBase Insertion
         public List<GeoZone> GetGeoZones()
         {
-            var listToReturn = new List<GeoZone>();
-            foreach (var item in this.oGeoZoneDictionary)
-            {
-                listToReturn.Add(item.Value);
-            }
-            listToReturn.Sort();
-            return listToReturn;
+            return this._oIDataGetter.GetGeoZones(this.oGeoZoneDictionary);
         }
 
     }

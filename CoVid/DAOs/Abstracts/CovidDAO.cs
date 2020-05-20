@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using CoVid.Models;
+using CoVid.Models.QueryModels;
 
 namespace CoVid.DAOs.Abstracts
 {
     public abstract class CovidDAO
     {
+        public abstract bool CreateTable(Query pQuery);
         public abstract bool CreateTable(string pPath);
-        public abstract bool CreateNamedTable(string pPath, string pTableName);
+        public abstract bool CreateNamedTable(string pPath, params string[] pTableName);
         public abstract bool InsertGeoZone(GeoZone pGeoZone);
         public abstract bool InsertGeoZoneList(List<GeoZone> pGeoZone);
         public abstract bool InsertGeoZoneCountry(GeoZone pGeoZone);

@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using CoVid.Controllers.DAOs.Interfaces;
 using Npgsql;
@@ -17,7 +18,7 @@ namespace CoVid.Controllers.DAOs.Connection
 
         private void SetProperties()
         {
-            _connectionProperties = @"./DAOs/Connection/connectionProperties.json";
+            _connectionProperties = String.Empty;
             string so = Utils.UtilsSO.GetInstance().GetSO();
             if(so.Contains("unix"))
             {
@@ -81,6 +82,39 @@ namespace CoVid.Controllers.DAOs.Connection
                 using (var oCommand = new NpgsqlCommand(querySentence, oConnection))
                 {
                     oCommand.ExecuteNonQueryAsync();
+                }
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                if(oConnection != null)
+                    oConnection.Close();
+            }
+
+            return true;
+        }
+
+        public bool ExecuteCommand(params string[] pQuerySentences)
+        {
+            NpgsqlConnection oConnection = null;
+
+            try
+            {
+                //Experience has shown in a normal pc the database needs
+                //about 300 ms between sentences.
+                int milisecondsBetweenSentences = 350;
+                this.Connect();
+                oConnection = this.GetConnection();
+                foreach (var sentence in pQuerySentences)
+                {
+                    using (var oCommand = new NpgsqlCommand(sentence, oConnection))
+                    {
+                        oCommand.ExecuteNonQueryAsync();
+                        Thread.Sleep(milisecondsBetweenSentences);
+                    }
                 }
             }
             catch (System.Exception)

@@ -5,6 +5,7 @@ using CoVid.Controllers.DAOs.CreateTableOperations;
 using CoVid.DAOs.Abstracts;
 using CoVid.DAOs.InsertTableOperations;
 using CoVid.Models;
+using CoVid.Models.QueryModels;
 
 namespace CoVid.Controllers
 {
@@ -52,7 +53,7 @@ namespace CoVid.Controllers
             return isCreated;
         }
 
-        public override bool CreateNamedTable(string pPath, string pTableName)
+        public override bool CreateNamedTable(string pPath, params string[] pTableName)
         {
             if(this._oConnectionPostgreSql is null)
             {
@@ -175,5 +176,21 @@ namespace CoVid.Controllers
             return true;
         }
 
+        public override bool CreateTable(Query pQuery)
+        {
+            if(this._oConnectionPostgreSql is null)
+            {
+                this.SetConnection();
+            }
+
+            if(this._oPostgreSqlCreateTable is null)
+            {
+                this._oPostgreSqlCreateTable = new PostgreSqlCreateTable();
+            }
+            
+            bool isCreated = _oPostgreSqlCreateTable.CreateTable(_oConnectionPostgreSql, pQuery);
+
+            return isCreated;
+        }
     }
 }
