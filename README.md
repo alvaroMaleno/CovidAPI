@@ -1,8 +1,9 @@
 # Covid
 Proyecto Fin de FP
 
-En construcción: PUEDE HABER ERRORES\n
-Under construction: CAN BE ERRORS\n
+En construcción: PUEDE HABER ERRORES
+
+Under construction: CAN BE ERRORS
 
 Licencia CC BY-SA 
 
