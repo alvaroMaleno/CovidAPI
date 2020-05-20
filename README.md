@@ -50,7 +50,7 @@ aquella que proviene del centro de datos de la Unión Europea.
 A medida que se vayan incorporando más funcionalidades se irán
 añadiendo en este archivo.
 
-# Emplear otra base de datos
+# Emplear una base de datos distinta
 
 Para emplear una base de datos diferente a la escogida, será necesario generar
 ciertas clases específicas para la misma:
