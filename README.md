@@ -7,7 +7,7 @@ Under construction: CAN BE ERRORS\n
 Licencia CC BY-SA 
 
 
-#Puesta en Marcha
+# Puesta en Marcha
 
 Para iniciar la aplicación en modo test no es necesaria ninguna configuración,
 basta con dirigir las consultas a https://localhost:5001/api/covidTest modificando
