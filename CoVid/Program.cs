@@ -1,12 +1,14 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CoVid.Controllers;
+using CoVid.DAOs.SelectTableOperations;
+using CoVid.Models.InputModels;
 using CoVid.Models.PathModels;
 using CoVid.Processes;
 using CoVid.Processes.InitialCreateTables;
 using CoVid.Processes.InitialDataInsertion;
 using CoVid.Processes.Threading;
-using CoVid.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -19,6 +21,13 @@ namespace CoVid
              Thread oThread = new Thread(
                 new ThreadStart(InizializeInitialProceses));
             oThread.Start();
+            PostgreSqlSelect oPostgre = PostgreSqlSelect.GetInstance();
+            List<string> countryList = new List<string>(){"AO", "AG"};
+            Dates oDates = new Dates("01/05/2020", "06/05/2020");
+            CovidData oCo = new CovidData(countryList, oDates, "");
+            
+            oPostgre.GetGeoZoneData(oCo, new List<Models.GeoZone>());
+            
             CreateHostBuilder(args).Build().Run();
         }
 

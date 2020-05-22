@@ -14,6 +14,7 @@ namespace CoVid.Models.InputModels
         [JsonPropertyName("dataType")]
         public string dataType{get;set;}
 
+        public CovidData(){}
         public CovidData(List<string> pCountryList, Dates pDates, string pDataType)
         {
             this.oCountryList = pCountryList;

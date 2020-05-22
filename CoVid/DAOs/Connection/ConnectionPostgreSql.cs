@@ -2,6 +2,8 @@ using System.Threading;
 using System;
 using CoVid.Controllers.DAOs.Interfaces;
 using Npgsql;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace CoVid.Controllers.DAOs.Connection
 {
@@ -50,7 +52,7 @@ namespace CoVid.Controllers.DAOs.Connection
         public void Connect()
         {
             string conectString = string.Format(
-                "Server={0};Port={1};User Id={2};Password={3};Database={4};",
+                "Server={0};Port={1};User Id={2};Password={3};Database={4};Timeout=60;",
                 this._oProperties.server, this._oProperties.port, 
                 this._oProperties.userId, this._oProperties.pass, this._oProperties.dataBase);
 
@@ -127,6 +129,38 @@ namespace CoVid.Controllers.DAOs.Connection
                     oConnection.Close();
             }
 
+            return true;
+        }
+
+        public bool ExecuteSelectCommand(string querySentence, List<object[]> pResultList)
+        {
+            NpgsqlConnection oConnection = null;
+            NpgsqlDataReader oReader;
+            try
+            {
+                this.Connect();
+                oConnection = this.GetConnection();
+                using (var oCommand = new NpgsqlCommand(querySentence, oConnection))
+                {
+                    oReader = oCommand.ExecuteReader();
+                    while (oReader.Read())
+                    {
+                        object[] oRow = new object[oReader.FieldCount];
+                        oReader.GetValues(oRow);
+                        pResultList.Add(oRow);
+                    }
+                }
+                
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                if(oConnection != null)
+                    oConnection.Close();
+            }
             return true;
         }
 

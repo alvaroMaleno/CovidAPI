@@ -89,3 +89,9 @@
 /home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/Processes/InitialCreateTables/createTables_Windows_Paths.json
 /home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/Processes/InitialDataInsertion/insertData_Unix_Paths.json
 /home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/Processes/InitialDataInsertion/insertData_Windows_Paths.json
+/home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/CreateTableOperations/CreateTableQueriesJSONs/createUsersTable.json
+/home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectFromCountries.json
+/home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectFromGeoNameTableBetweenDates.json
+/home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectIDFromDates.json
+/home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectCountry.json

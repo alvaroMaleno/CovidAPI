@@ -44,15 +44,36 @@ namespace CoVid.Processes.InitialDataInsertion
 
             this.InsertCovidData(_oInitDataGetting.oGeoZoneDictionary);
             
-            
         }
 
-        private void InsertCovidData(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
+        private async void InsertCovidData(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
         {
+            //A database usually can manage about 100 connections at the same time.
+            Task[] oTaskArray = new Task[90];
+            bool hasBeenFinishedOneTime = false;
+            int index = oTaskArray.Length - 1;
             foreach (var oZoneCodeGeoZoneValue in oGeoZoneDictionary)
             {
-                this._oCovidDao.InsertCovidDataList(oZoneCodeGeoZoneValue.Value.dataList.ToList(), oZoneCodeGeoZoneValue.Value);
+                if(!hasBeenFinishedOneTime)
+                {
+                    oTaskArray[index--] = this.InsertCovidDataList(oZoneCodeGeoZoneValue);
+                }
+                else
+                {
+                    await oTaskArray[index];
+                    oTaskArray[index--] = this.InsertCovidDataList(oZoneCodeGeoZoneValue);
+                }
+                if(index < 0)
+                {
+                    hasBeenFinishedOneTime = true;
+                    index = oTaskArray.Length - 1;
+                }
             }
+        }
+
+        private async Task InsertCovidDataList(KeyValuePair<string, GeoZone> pZoneCodeGeoZoneValue)
+        {
+            this._oCovidDao.InsertCovidDataList(pZoneCodeGeoZoneValue.Value.dataList.ToList(), pZoneCodeGeoZoneValue.Value);
         }
 
         private void CreateGeoZoneDataTable(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)

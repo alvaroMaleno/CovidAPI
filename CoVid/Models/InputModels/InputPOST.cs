@@ -10,6 +10,7 @@ namespace CoVid.Models.InputModels
         [JsonPropertyName("covid_data")]
         public CovidData oCovidData{get;set;}
 
+        public InputPOST(){}
         public InputPOST(User pUser, CovidData pCovidData)
         {
             this.oUser = pUser;

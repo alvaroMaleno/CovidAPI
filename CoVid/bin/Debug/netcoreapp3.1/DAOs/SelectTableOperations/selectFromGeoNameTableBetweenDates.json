@@ -1,0 +1,4 @@
+{
+    "query": 
+    "select * from table_name where dateid between {0} and {1} order by dateid "
+}

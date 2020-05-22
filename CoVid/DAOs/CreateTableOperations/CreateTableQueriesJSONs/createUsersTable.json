@@ -1,0 +1,4 @@
+{
+    "query": 
+    "CREATE TABLE IF NOT EXISTS users (user text NOT null ,pass text NOT null, privatekey text NOT null, publickey text NOT null, PRIMARY KEY (user))"
+}

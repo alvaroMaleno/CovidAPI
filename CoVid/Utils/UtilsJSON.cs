@@ -1,5 +1,6 @@
+using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CoVid.Utils
 {
@@ -19,11 +20,35 @@ namespace CoVid.Utils
         }
 
         public void DeserializeFromString<R>(out R pTargetClass, string pStringToDeserialize){
-            pTargetClass = JsonSerializer.Deserialize<R>(pStringToDeserialize);
+            pTargetClass = System.Text.Json.JsonSerializer.Deserialize<R>(pStringToDeserialize);
         }
+
+        public void DeserializeFromUrl<R>(out R pTargetClass, string pUrl){
+            HttpClient oHttpClient = new HttpClient();
+            pTargetClass = System.Text.Json.JsonSerializer.Deserialize<R>(
+                oHttpClient.GetAsync(pUrl).Result.Content.ReadAsStringAsync().Result);
+            oHttpClient = null;
+        }
+
+        public void JsonParseJArrayFromUrl(out JArray pObject, string pUrl)
+        {
+            HttpClient oHttpClient = new HttpClient();
+            var json = oHttpClient.GetAsync(pUrl).Result.Content.ReadAsStringAsync().Result;
+            try
+            {
+                pObject = JArray.Parse(json);
+            }
+            catch (System.Exception)
+            {
+                pObject = null;
+            }
+              
+            oHttpClient = null;
+        }
+
         public string Serialize<R>(R pObjectToSerialize)
         {
-            return JsonSerializer.Serialize<R>(pObjectToSerialize);
+            return System.Text.Json.JsonSerializer.Serialize<R>(pObjectToSerialize);
         }
     }
 }
