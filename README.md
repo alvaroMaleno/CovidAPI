@@ -1,13 +1,14 @@
 # Covid
 Proyecto Fin de FP
 
-En construcción: PUEDE HABER ERRORES\n
-Under construction: CAN BE ERRORS\n
+En construcción: PUEDE HABER ERRORES
+
+Under construction: CAN BE ERRORS
 
 Licencia CC BY-SA 
 
 
-#Puesta en Marcha
+# Puesta en Marcha
 
 Para iniciar la aplicación en modo test no es necesaria ninguna configuración,
 basta con dirigir las consultas a https://localhost:5001/api/covidTest modificando
@@ -22,7 +23,7 @@ base de datos propia.
 
 - Iniciar la aplicación y esperar entre media hora y una hora y media, dependiendo
 del ordenador empleado y la velocidad de la base de datos propia. 
-Tras la espera, comprobar que ha generado correctamente todas las tablas y que se han 
+Tras la espera, comprobar que han generado correctamente todas las tablas y que se han 
 insertado datos en ellas.
 
 ¡Advertencia!
@@ -48,3 +49,24 @@ Por ahora únicamente genera las tablas e inserta una parte de los datos,
 aquella que proviene del centro de datos de la Unión Europea.
 A medida que se vayan incorporando más funcionalidades se irán
 añadiendo en este archivo.
+
+# Emplear una base de datos distinta
+
+Para emplear una base de datos diferente a la escogida, será necesario generar
+ciertas clases específicas para la misma:
+
+- Crear una clase que implemente la interfaz IDataBaseConnector.
+- Crear una clase que implemente la interfaz ICreate.
+- Crear una clase que implemente la interfaz IDataBaseInsert.
+- Crear una clase que implemente la interfaz IDatabaseAccess.
+
+Una vez generadas las clases precedentes, crear una implementación
+de la clase abstracta CovidDAO. Dicha clase estará compuesta por
+cada uno de los objetos que implementan las anteriores interfaces
+y los empleará para construir sus métodos.
+
+Por último, ir a la clase Program.cs y sustituir en la construcción
+de la clase InitialDataInsertions el parámetro correspondiente a la
+inyección de la clase CovidDAO.
+
+A medida que se añadan más funcionalidades serán necesarias más sustituciones.
