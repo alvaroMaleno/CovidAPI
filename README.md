@@ -63,10 +63,57 @@ ciertas clases específicas para la misma:
 Una vez generadas las clases precedentes, crear una implementación
 de la clase abstracta CovidDAO. Dicha clase estará compuesta por
 cada uno de los objetos que implementan las anteriores interfaces
-y los empleará para construir sus métodos.
+y los empleará para construir sus métodos. 
 
 Por último, ir a la clase Program.cs y sustituir en la construcción
 de la clase InitialDataInsertions el parámetro correspondiente a la
 inyección de la clase CovidDAO.
 
-A medida que se añadan más funcionalidades serán necesarias más sustituciones.
+Las pruebas indican una velocidad de acceso a datos elevada, no obstante,
+un almacén de datos en memoria RAM sería aún más veloz, como Redis, por 
+ejemplo.
+
+#Funcionalidades activas
+
+Ya es posible realizar consultas aunque no existe un control de errores
+definido. Una vez el programa ha generado la base de datos, será posible
+ acceder a los mismos realizando una llamada POST a https://localhost:5001/api/covid .
+
+La contraseña pedida por defecto para realizar pruebas es "secret". La estruc-
+tura de la petición será la siguiente:
+
+
+{
+    "user": 
+    
+        {
+            "id": "mail@example.net",
+            "pass": "secret"
+        }
+    ,
+
+    "covid_data":
+    {
+        "countries":
+        [
+            
+            "ao",
+            "sp",
+            "du"
+            
+        ],
+        "dates":
+        {
+            
+            "startDate": "31/12/2019",
+            "endDate": "22/05/2020"
+        
+        },
+
+        "dataType": "methodName"
+    }
+    
+}
+
+
+
