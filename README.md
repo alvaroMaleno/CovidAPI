@@ -50,48 +50,47 @@ aquella que proviene del centro de datos de la Unión Europea.
 A medida que se vayan incorporando más funcionalidades se irán
 añadiendo en este archivo.
 
-#Funcionalidades activas
+# Funcionalidades activas
 
-	Ya es posible realizar consultas aunque no existe un control de errores
+Ya es posible realizar consultas aunque no existe un control de errores
 completo. Una vez el programa ha generado la base de datos, será posible
 acceder a los datos de la misma realizando una llamada POST a https://localhost:5001/api/covid .
 
-La contraseña pedida por defecto para realizar pruebas es "secret". La estruc-
-tura de la petición será la siguiente:
+La contraseña pedida por defecto para realizar pruebas es "secret". La estructura de la petición será la siguiente:
 
 
-{
-    "user": 
+	{
+    	"user": 
     
-        {
-            "id": "mail@example.net",
-            "pass": "secret"
-        }
-    ,
+	        {
+	            "id": "mail@example.net",
+	            "pass": "secret"
+	        }
+	    ,
 
-    "covid_data":
-    {
-        "countries":
-        [
-            
-            "ao",
-            "sp",
-            "du"
-            
-        ],
-        "dates":
-        {
-            
-            "startDate": "31/12/2019",
-            "endDate": "22/05/2020"
-        
-        },
+	    "covid_data":
+	    {
+	        "countries":
+	        [
+	            
+	            "ao",
+	            "sp",
+	            "du"
+	            
+	        ],
+	        "dates":
+	        {
+	            
+	            "startDate": "31/12/2019",
+	            "endDate": "22/05/2020"
+	        
+	        },
 
-        "dataType": "methodName",
-        "statisticalMethod" : "anyAvailable"
-    }
+	        "dataType": "methodName",
+	        "statisticalMethod" : "anyAvailable"
+	    }
     
-}
+	}
 
 Se pueden incluir tantos países como se desee dentro de la lista "countries". Si 
 se quieren solicitar los datos relativos a la pandemia de todos los paises que hay
@@ -107,7 +106,7 @@ Hay, además, dos operaciones de consulta más:
 
 #Próxima funcionalidad a desarrollar
 
-	Lo próximo a desarrollar será el sistema de autentificación de usuarios. Para
+Lo próximo a desarrollar será el sistema de autentificación de usuarios. Para
 garantizar la seguridad se ha establecido el siguiente procedimiento:
 
 	1. El registro se realizará mediante el empleo de encriptación en Base64 únicamente
@@ -141,7 +140,7 @@ garantizar la seguridad se ha establecido el siguiente procedimiento:
 		que únicamente sean modificadas las permanentes en caso de inserción exitosa realizando
 		un volcado de las mismas tras haber efectuado todas las operaciones.
 
-	Se trata de un proceso algo complejo y vulnerable únicamente durante el momento de
+Se trata de un proceso algo complejo y vulnerable únicamente durante el momento de
 recibir el primer alta del usuario, ya que posteriormente, la obtención de las claves
 privadas con las que desencriptar la información sensible se complicará y además correrá
 contra reloj pues, un supuesto atacante, dispondría de 12 horas para eliminar la seguridad
@@ -151,7 +150,7 @@ asignadas, cada una de ellas a un usuario y, emplear cada una de esas claves pri
 desencriptar la información del usuario. Sin olvidar, que se debe de desencriptar la clave
 maestra SHA256 mediante.
 
-	Como ventaja, puede modificarse la regularidad en la variación de claves pasando de 12
+Como ventaja, puede modificarse la regularidad en la variación de claves pasando de 12
 horas a 20 minutos, por ejemplo, o, llegado el caso, incluso a uno o dos minutos.
 
 # Emplear una base de datos distinta
