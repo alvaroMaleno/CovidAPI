@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using CoVid.Controllers.DAOs;
 using CoVid.Controllers.DAOs.Connection;
@@ -21,6 +22,7 @@ namespace CoVid.DAOs.SelectTableOperations
         private string _SELECT_FROM_COUNTRIES_ID_QUERY_PATH = @"./DAOs/SelectTableOperations/selectCountry.json";
         private string _SELECT_FROM_GEONAMEDTABLE_QUERY_PATH = @"./DAOs/SelectTableOperations/selectFromGeoNameTableBetweenDates.json";
         private string _SELECT_ID_QUERY_PATH = @"./DAOs/SelectTableOperations/selectIDFromDates.json";
+        private string _SELECT_DATES_QUERY_PATH = @"./DAOs/SelectTableOperations/selectAllDates.json";
 
         private static PostgreSqlSelect _instance;
 
@@ -44,12 +46,15 @@ namespace CoVid.DAOs.SelectTableOperations
         public void GetGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete)
         {
             Tuple<string, string> oStartIDEndID;
-            
             this.GetDatesIDs(pCovidData, out oStartIDEndID);
 
             if(oStartIDEndID is null){return;}
             
-            this.GetGetGeoZoneListData(oStartIDEndID, pCovidData, pListToComplete);
+            List<GeoZone> oListToOrderComplete = new List<GeoZone>();
+            this.GetGetGeoZoneListData(oStartIDEndID, pCovidData, oListToOrderComplete);
+            
+            pListToComplete.AddRange(
+                oListToOrderComplete.OrderBy(oGeozone => oGeozone.geoID).ToList());
             
         }
 
@@ -174,7 +179,78 @@ namespace CoVid.DAOs.SelectTableOperations
 
         public void GetAllGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete)
         {
-            throw new System.NotImplementedException();
+            List<GeoZone>oGeoZoneCompleteList = new List<GeoZone>();
+            this.GetAllCountries(oGeoZoneCompleteList);
+            if(oGeoZoneCompleteList.Count == 0){return;}
+
+            pCovidData.oCountryList = new List<string>();
+            foreach (var oGeoZone in oGeoZoneCompleteList)
+            {
+                pCovidData.oCountryList.Add(oGeoZone.geoID);
+            }
+            this.GetGeoZoneData(pCovidData, pListToComplete);
+        }
+
+        public void GetAllDates(List<CovidDate> pCovidDateList)
+        {
+            Query oQuery;
+            List<object[]> oResultList = new List<object[]>();
+
+            this.SetQuery(_SELECT_DATES_QUERY_PATH, out oQuery);
+            
+            var isAWellResponse = this._oConnection.ExecuteSelectCommand(oQuery.query, oResultList);
+            if(!isAWellResponse || oResultList.Count == 0)
+            {
+                return;
+            }
+            
+            CovidDate oCovidDate;
+            int numberOfColumns = 2;
+            string dateFormat = "dd/MM/yyyy";
+            string dateSeparator = "/";
+            foreach (var oDateRow in oResultList)
+            {
+                if(oDateRow.Length != numberOfColumns)
+                {
+                    continue;
+                }
+                oCovidDate = new CovidDate();
+                oCovidDate.id = ulong.Parse(oDateRow[0].ToString());
+                oCovidDate.date = oDateRow[1].ToString();
+                oCovidDate.dateFormat = dateFormat;
+                oCovidDate.dateSeparator = dateSeparator;
+                pCovidDateList.Add(oCovidDate);
+            }
+        }
+
+        public void GetAllCountries(List<GeoZone> pCovidCountryList)
+        {
+            Query oQuery;
+            List<object[]> oResultList = new List<object[]>();
+
+            this.SetQuery(_SELECT_FROM_COUNTRIES_QUERY_PATH, out oQuery);
+            
+            var isAWellResponse = this._oConnection.ExecuteSelectCommand(oQuery.query, oResultList);
+            if(!isAWellResponse || oResultList.Count == 0)
+            {
+                return;
+            }
+            
+            GeoZone oGeoZone;
+            int numberOfColumns = 4;
+            foreach (var oDateRow in oResultList)
+            {
+                if(oDateRow.Length != numberOfColumns)
+                {
+                    continue;
+                }
+                oGeoZone = new GeoZone();
+                oGeoZone.geoID = oDateRow[0].ToString();
+                oGeoZone.code = oDateRow[1].ToString();
+                oGeoZone.name = oDateRow[2].ToString();
+                oGeoZone.population = int.Parse(oDateRow[3].ToString());
+                pCovidCountryList.Add(oGeoZone);
+            }
         }
 
         public void SetQuery(string pPath, out Query pQuery)

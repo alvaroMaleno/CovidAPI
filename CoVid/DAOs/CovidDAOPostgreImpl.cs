@@ -230,7 +230,44 @@ namespace CoVid.Controllers
 
         public override void GetAllGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete)
         {
-            throw new System.NotImplementedException();
+            if(this._oConnectionPostgreSql is null || this.timesConnected == _MAX_TIMES_OF_CONNECTION)
+            {
+                this.SetConnection();
+                this.timesConnected = 0;
+            }
+            if(_oPostgreSqlSelect is null)
+            {
+                this._oPostgreSqlSelect = PostgreSqlSelect.GetInstance(_oConnectionPostgreSql);
+            }
+            _oPostgreSqlSelect.GetAllGeoZoneData(pCovidData, pListToComplete);
+        }
+
+        public override void GetAllCountries(List<GeoZone> pCovidCountryList)
+        {
+            if(this._oConnectionPostgreSql is null || this.timesConnected == _MAX_TIMES_OF_CONNECTION)
+            {
+                this.SetConnection();
+                this.timesConnected = 0;
+            }
+            if(_oPostgreSqlSelect is null)
+            {
+                this._oPostgreSqlSelect = PostgreSqlSelect.GetInstance(_oConnectionPostgreSql);
+            }
+            _oPostgreSqlSelect.GetAllCountries(pCovidCountryList);
+        }
+
+        public override void GetAllDates(List<CovidDate> pCovidDateList)
+        {
+            if(this._oConnectionPostgreSql is null || this.timesConnected == _MAX_TIMES_OF_CONNECTION)
+            {
+                this.SetConnection();
+                this.timesConnected = 0;
+            }
+            if(_oPostgreSqlSelect is null)
+            {
+                this._oPostgreSqlSelect = PostgreSqlSelect.GetInstance(_oConnectionPostgreSql);
+            }
+            _oPostgreSqlSelect.GetAllDates(pCovidDateList);
         }
     }
 }

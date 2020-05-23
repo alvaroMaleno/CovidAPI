@@ -1,11 +1,9 @@
+using System.Net;
+using System;
 using System.Collections.Generic;
-using CoVid.Controllers.DAOs.Connection;
-using CoVid.Controllers.DAOs.CreateTableOperations;
 using CoVid.DAOs.Abstracts;
 using CoVid.Models;
 using CoVid.Models.InputModels;
-using CoVid.Processes;
-using CoVid.Processes.PropertiesReader;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoVid.Controllers
@@ -14,47 +12,100 @@ namespace CoVid.Controllers
     [Route("api/[controller]")]
     public class CovidController : Controller
     {
+        private readonly string _HTTP_ERROR = "Http Error: ";
         private CovidDAO _oCovidDao = CovidDAOPostgreImpl.GetInstance();
 
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }    
-        
-        // [HttpGet("{id}")]
-        // public GeoZone Get(string id)
-        // {
-        //     return InitDataGetting.GetInstance(_URL, "EUDataCenterJSONDataGetter").GetGeoZones().Find(x => x.geoID == id);
-        // }    
-        
         [HttpPost]
-        public List<GeoZone> Post([FromBody]InputPOST pPOST)
+        public object Post([FromBody]InputPOST pPOST)
         {
-            List<GeoZone> oListToReturn = new List<GeoZone>();
-            var pass = pPOST?.oUser?.pass?.ToLower() ?? string.Empty;
-            if(pass.Contains("secret"))
+            object oToReturn;
+            
+            bool isAuthenticated = this.AuthenticateUser(pPOST.oUser);
+            if(!isAuthenticated)
             {
-                _oCovidDao.GetGeoZoneData(pPOST.oCovidData, oListToReturn);
+                oToReturn = "User/Pass Error";
+                return oToReturn;
+            }
+
+            var dataType = pPOST?.oCovidData?.dataType.ToLower() ?? string.Empty;
+            switch (dataType)
+            {
+                case "getcountries":
+                    this.GetCountries(out oToReturn);
+                    break;
+                case "getdates":
+                    this.GetDates(out oToReturn);
+                    break;
+                default:
+                    this.GetGeoZoneData(pPOST.oCovidData, out oToReturn);
+                    break;
+            }
+
+            return oToReturn;
+        }
+
+        private void GetGeoZoneData(CovidData oCovidData, out object oToReturn)
+        {
+            if(oCovidData is null)
+            {
+                oToReturn = String.Concat(
+                    _HTTP_ERROR ,
+                     System.Net.HttpStatusCode.BadRequest);
+                return;
+            }
+
+            bool isDemandingAllGeoZoneData = false;
+            foreach (var country in oCovidData.oCountryList)
+            {
+                if(country == "*")
+                {
+                    isDemandingAllGeoZoneData = true;
+                }
+            }
+
+            List<GeoZone> oListToReturn = new List<GeoZone>();
+            if(isDemandingAllGeoZoneData)
+            {
+                _oCovidDao.GetAllGeoZoneData(oCovidData, oListToReturn);
             }
             else
             {
-                GeoZone oGeozone = new GeoZone();
-                oGeozone.name = "Pass Error";
-                oListToReturn.Add(oGeozone);
+                _oCovidDao.GetGeoZoneData(oCovidData, oListToReturn);
             }
-            
-            return oListToReturn;
-        }    
-        
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+
+            if(oListToReturn.Count == 0)
+            {
+                oToReturn = String.Concat(
+                    _HTTP_ERROR , 
+                    System.Net.HttpStatusCode.BadRequest);
+                return;
+            }
+
+            oToReturn = oListToReturn;
+        }
+
+        private void GetDates(out object oToReturn)
         {
-        }    
-        
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+            List<CovidDate> oListToReturn = new List<CovidDate>();
+            _oCovidDao.GetAllDates(oListToReturn);
+            oToReturn = oListToReturn;
+        }
+
+        private void GetCountries(out object oToReturn)
         {
+            List<GeoZone> oListToReturn = new List<GeoZone>();
+            _oCovidDao.GetAllCountries(oListToReturn);
+            oToReturn = oListToReturn;
+        }
+
+        private bool AuthenticateUser(Models.InputModels.User oUser)
+        {
+            var pass = oUser?.pass?.ToLower() ?? string.Empty;
+            if(pass.Contains("secret"))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

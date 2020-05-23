@@ -1,4 +1,4 @@
 {
     "query": 
-    "select * from countries"
+    "select * from countries order by geoid"
 }

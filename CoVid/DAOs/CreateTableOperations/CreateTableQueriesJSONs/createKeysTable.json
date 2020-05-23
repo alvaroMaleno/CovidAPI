@@ -1,0 +1,4 @@
+{
+    "query": 
+    "CREATE TABLE IF NOT EXISTS keys_table (publichashedkey text NOT null ,privatehashedkey text NOT null PRIMARY KEY (publichashedkey))"
+}

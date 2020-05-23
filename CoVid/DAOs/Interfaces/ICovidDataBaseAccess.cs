@@ -9,5 +9,7 @@ namespace CoVid.Controllers.DAOs
     {
         public void GetGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete);
         public void GetAllGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete);
+        public void GetAllCountries(List<GeoZone> pCovidCountryList);
+        public void GetAllDates(List<CovidDate> pCovidDateList);
     }
 }

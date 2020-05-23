@@ -39,11 +39,55 @@ namespace CoVid.Processes.InitialDataInsertion
             
             if(_createGeoZoneDataTables)
             {
-                this.CreateGeoZoneDataTable(_oInitDataGetting.oGeoZoneDictionary);
+                if(await this.StillBeingNecessaryCreateAllTables(_oInitDataGetting.oGeoZoneDictionary))
+                {
+                    this.CreateGeoZoneDataTable(_oInitDataGetting.oGeoZoneDictionary);
+                }
             }
 
             this.InsertCovidData(_oInitDataGetting.oGeoZoneDictionary);
             
+        }
+
+        private async Task<bool> StillBeingNecessaryCreateAllTables(ConcurrentDictionary<string, GeoZone> pGeoZoneDictionary)
+        {
+            List<string> oTablesNamesList = new List<string>();
+
+            this.FillTablesNamesList(pGeoZoneDictionary, oTablesNamesList);
+
+            List<Task<bool>> oTaskList = new List<Task<bool>>();
+            foreach (string table in oTablesNamesList)
+            {
+                oTaskList.Add(this.CheckTable(table));
+            }
+            foreach (var oTask in oTaskList)
+            {
+                if(await oTask == false)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private async Task<bool> CheckTable(string pTable)
+        {
+            CoVid.Models.InputModels.CovidData oCovidData = new CoVid.Models.InputModels.CovidData();
+            oCovidData.oDates = new Models.InputModels.Dates();
+            //Sample Dates
+            oCovidData.oDates.startDate = "10/05/2020";
+            oCovidData.oDates.endDate = "15/05/2020";
+            oCovidData.oCountryList = new List<string>(){pTable};
+            
+            List<GeoZone> oGeoZonesList = new List<GeoZone>();
+
+            _oCovidDao.GetGeoZoneData(oCovidData, oGeoZonesList);
+
+            if(oGeoZonesList.Count == 0)
+            {
+                return false;
+            }
+            return true;
         }
 
         private async void InsertCovidData(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
@@ -76,14 +120,21 @@ namespace CoVid.Processes.InitialDataInsertion
             this._oCovidDao.InsertCovidDataList(pZoneCodeGeoZoneValue.Value.dataList.ToList(), pZoneCodeGeoZoneValue.Value);
         }
 
-        private void CreateGeoZoneDataTable(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
+        private void CreateGeoZoneDataTable(ConcurrentDictionary<string, GeoZone> pGeoZoneDictionary)
         {
             List<string> oTablesNamesList = new List<string>();
-            foreach (var oZoneCodeGeoZoneValue in oGeoZoneDictionary)
-            {
-                oTablesNamesList.Add(oZoneCodeGeoZoneValue.Value.geoID);
-            }
+            this.FillTablesNamesList(pGeoZoneDictionary, oTablesNamesList);
             _oCovidDao.CreateNamedTable("name", oTablesNamesList.ToArray());
+        }
+
+        private void FillTablesNamesList(
+            ConcurrentDictionary<string, GeoZone> pGeoZoneDictionary, 
+            List<string> pTablesNamesList)
+        {
+            foreach (var oZoneCodeGeoZoneValue in pGeoZoneDictionary)
+            {
+                pTablesNamesList.Add(oZoneCodeGeoZoneValue.Value.geoID);
+            }
         }
 
         private async Task InsertDateList(List<GeoZone> oGeoZonesList)

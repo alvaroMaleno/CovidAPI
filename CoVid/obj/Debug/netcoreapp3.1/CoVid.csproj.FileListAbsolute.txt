@@ -95,3 +95,5 @@
 /home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectFromGeoNameTableBetweenDates.json
 /home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectIDFromDates.json
 /home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectCountry.json
+/home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectAllDates.json
+/home/alvaro/Documentos/Proyecto/Covid/CoVid/bin/Debug/netcoreapp3.1/DAOs/CreateTableOperations/CreateTableQueriesJSONs/createKeysTable.json

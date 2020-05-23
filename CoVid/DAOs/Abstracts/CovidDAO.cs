@@ -20,5 +20,7 @@ namespace CoVid.DAOs.Abstracts
         public abstract bool InsertDateList(List<CovidDate> pCovidDate);
         public abstract void GetGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete);
         public abstract void GetAllGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete);
+        public abstract void GetAllCountries(List<GeoZone> pCovidCountryList);
+        public abstract void GetAllDates(List<CovidDate> pCovidDateList);
     }
 }

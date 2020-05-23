@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,9 @@ using CoVid.Processes.InitialDataInsertion;
 using CoVid.Processes.Threading;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System;
+using CoVid.Models;
+using CoVid.Processes.Interfaces;
 
 namespace CoVid
 {
@@ -21,27 +25,46 @@ namespace CoVid
              Thread oThread = new Thread(
                 new ThreadStart(InizializeInitialProceses));
             oThread.Start();
-            PostgreSqlSelect oPostgre = PostgreSqlSelect.GetInstance();
-            List<string> countryList = new List<string>(){"AO", "AG"};
-            Dates oDates = new Dates("01/05/2020", "06/05/2020");
-            CovidData oCo = new CovidData(countryList, oDates, "");
-            
-            oPostgre.GetGeoZoneData(oCo, new List<Models.GeoZone>());
             
             CreateHostBuilder(args).Build().Run();
         }
 
         public static void InizializeInitialProceses()
         {
-            var oInitialCreateTables = InitialCreateTables.GetInstance(
-                CovidDAOPostgreImpl.GetInstance());
-            InitialDataInsertions oInitialInsertions = new InitialDataInsertions(
-                CovidDAOPostgreImpl.GetInstance(), true);
-            TaskableThreadManager oTaskableThreadManager = new TaskableThreadManager(
-                true, oInitialCreateTables, oInitialInsertions);
+            bool isNecessaryCreateTables;
+            isNecessaryCreateTables = CheckTables();
+
+            List<ITaskable> oITaskableList = new List<ITaskable>();
+            if(isNecessaryCreateTables)
+            {
+                oITaskableList.Add(InitialCreateTables.GetInstance(
+                                    CovidDAOPostgreImpl.GetInstance()));
+            }
+            oITaskableList.Add(new InitialDataInsertions(CovidDAOPostgreImpl.GetInstance(), true));
+
+            TaskableThreadManager oTaskableThreadManager = new TaskableThreadManager(true, oITaskableList.ToArray());
+                
             oTaskableThreadManager.ThreadProc();
         }
 
+        private static bool CheckTables()
+        {
+            CovidDAOPostgreImpl oCovidDAO = CovidDAOPostgreImpl.GetInstance();
+            List<GeoZone> oGeoZoneList = new List<GeoZone>();
+            oCovidDAO.GetAllCountries(oGeoZoneList);
+            if(oGeoZoneList.Count < 200)
+            {
+                return true;
+            }
+            List<CovidDate> oCovidDateList = new List<CovidDate>();
+            oCovidDAO.GetAllDates(oCovidDateList);
+            if(oCovidDateList.Count < 100)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
