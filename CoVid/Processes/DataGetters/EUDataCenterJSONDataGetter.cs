@@ -87,62 +87,69 @@ namespace CoVid.Processes.DataGetters
 
         private async Task CompleteEUDataByCountry(GeoZone pGeoZone)
         {
-            
-            string url = string.Join(string.Empty, this._URL_TO_COMPLETE_DATA, pGeoZone.geoID);
-            JArray oJArrayCountry;
-            UtilsJSON.GetInstance().JsonParseJArrayFromUrl(out oJArrayCountry, url);
-
-            if(oJArrayCountry is null)
-                return;
-
-            Country oCountry = new Country();
-            oCountry.oCountryList = new List<CountryData>();
-
-            CountryData oCountryData;
-            foreach (var oItem in oJArrayCountry)
+            try
             {
-                oCountryData = new CountryData();
+                string url = string.Join(string.Empty, this._URL_TO_COMPLETE_DATA, pGeoZone.geoID);
+                JArray oJArrayCountry;
+                UtilsJSON.GetInstance().JsonParseJArrayFromUrl(out oJArrayCountry, url);
+
+                if(oJArrayCountry is null)
+                    return;
+
+                Country oCountry = new Country();
+                oCountry.oCountryList = new List<CountryData>();
+
+                CountryData oCountryData;
+                foreach (var oItem in oJArrayCountry)
+                {
+                    oCountryData = new CountryData();
+                    
+                    oCountryData.Country = oItem?.Value<string>("Country");
+                    oCountryData.CountryCode = oItem?.Value<string>("CountryCode");
+                    oCountryData.province = oItem?.Value<string>("Province");
+                    oCountryData.City = oItem?.Value<string>("City");
+                    oCountryData.CityCode = oItem?.Value<string>("CityCode");
+                    oCountryData.Lat = oItem?.Value<string>("Lat");
+                    oCountryData.Lon = oItem?.Value<string>("Lon");
+                    oCountryData.Confirmed = oItem?.Value<string>("Confirmed");
+                    oCountryData.Deaths = oItem?.Value<string>("Deaths");
+                    oCountryData.Recovered = oItem?.Value<string>("Recovered");
+                    oCountryData.Active = oItem?.Value<string>("Active");
+                    oCountryData.Date = oItem?.Value<string>("Date");
+
+                    oCountry.oCountryList.Add(oCountryData);
+                }
+
+                Dictionary<string, CountryData> oDateCountryDataDictionary = new Dictionary<string, CountryData>();
+
+                foreach (var oCountryDataValuePair in oCountry.oCountryList)
+                {
+                    var oDateTime = DateTime.ParseExact(
+                        oCountryDataValuePair.Date.Split(" ")[0], 
+                        "MM/dd/yyyy", CultureInfo.CurrentCulture);
+                    if(oDateCountryDataDictionary.ContainsKey(oDateTime.ToString(_DATE_FORMAT)))
+                    {
+                        continue;
+                    }
+                    oDateCountryDataDictionary.Add(oDateTime.ToString(_DATE_FORMAT), oCountryDataValuePair);
+                }
+
+                foreach (var oData in pGeoZone.dataList)
+                {
+                    if(!oDateCountryDataDictionary.ContainsKey(oData.date.date))
+                    {
+                        continue;
+                    }
+                    var f_oCountryData = oDateCountryDataDictionary[oData.date.date];
+                    int cured;
+                    int.TryParse(f_oCountryData.Recovered, out cured);
+                    oData.cured = cured;
+                }
+            }
+            catch (System.Exception)
+            {
                 
-                oCountryData.Country = oItem?.Value<string>("Country");
-                oCountryData.CountryCode = oItem?.Value<string>("CountryCode");
-                oCountryData.province = oItem?.Value<string>("Province");
-                oCountryData.City = oItem?.Value<string>("City");
-                oCountryData.CityCode = oItem?.Value<string>("CityCode");
-                oCountryData.Lat = oItem?.Value<string>("Lat");
-                oCountryData.Lon = oItem?.Value<string>("Lon");
-                oCountryData.Confirmed = oItem?.Value<string>("Confirmed");
-                oCountryData.Deaths = oItem?.Value<string>("Deaths");
-                oCountryData.Recovered = oItem?.Value<string>("Recovered");
-                oCountryData.Active = oItem?.Value<string>("Active");
-                oCountryData.Date = oItem?.Value<string>("Date");
-
-                oCountry.oCountryList.Add(oCountryData);
-            }
-
-            Dictionary<string, CountryData> oDateCountryDataDictionary = new Dictionary<string, CountryData>();
-
-            foreach (var oCountryDataValuePair in oCountry.oCountryList)
-            {
-                var oDateTime = DateTime.ParseExact(
-                    oCountryDataValuePair.Date.Split(" ")[0], 
-                    "MM/dd/yyyy", CultureInfo.CurrentCulture);
-                if(oDateCountryDataDictionary.ContainsKey(oDateTime.ToString(_DATE_FORMAT)))
-                {
-                    continue;
-                }
-                oDateCountryDataDictionary.Add(oDateTime.ToString(_DATE_FORMAT), oCountryDataValuePair);
-            }
-
-            foreach (var oData in pGeoZone.dataList)
-            {
-                if(!oDateCountryDataDictionary.ContainsKey(oData.date.date))
-                {
-                    continue;
-                }
-                var f_oCountryData = oDateCountryDataDictionary[oData.date.date];
-                int cured;
-                int.TryParse(f_oCountryData.Recovered, out cured);
-                oData.cured = cured;
+                return;
             }
         }
 

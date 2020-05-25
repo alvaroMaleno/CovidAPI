@@ -60,6 +60,7 @@ namespace CoVid.Controllers
                 if(country == "*")
                 {
                     isDemandingAllGeoZoneData = true;
+                    break;
                 }
             }
 

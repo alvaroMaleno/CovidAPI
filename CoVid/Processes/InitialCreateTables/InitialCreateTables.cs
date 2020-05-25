@@ -13,7 +13,7 @@ namespace CoVid.Processes.InitialCreateTables
         private InitialCreateTables(CovidDAO pCovidDAO)
         {
             this._oCovidDAO = pCovidDAO;
-            this._oPathsArray = new string[]{"geozone", "dates", "countries"};
+            this._oPathsArray = new string[]{"geozone", "dates", "countries", "users", "keys"};
         }
 
         public static InitialCreateTables GetInstance(CovidDAO pCovidDAO)

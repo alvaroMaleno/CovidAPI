@@ -68,7 +68,11 @@ namespace CoVid.DAOs.SelectTableOperations
 
             foreach (var country in pCovidData.oCountryList)
             {
-                oTaskList.Add(this.FillCountryData(oConcurrentBagToFill, country, pStartIDEndID));
+                oTaskList.Add(this.FillCountryData(
+                    oConcurrentBagToFill, 
+                    country,
+                     pStartIDEndID.Item1, 
+                     pStartIDEndID.Item2));
             }
             foreach (var oTask in oTaskList)
             {
@@ -80,7 +84,8 @@ namespace CoVid.DAOs.SelectTableOperations
         private async Task FillCountryData(
             ConcurrentBag<GeoZone> oConcurrentBagToFill, 
             string country,
-             Tuple<string, string> pStartIDEndID)
+            string pStartDate,
+            string pEndDate)
         {
             Query oQuery;
                 List<object[]> oResultList;
@@ -99,8 +104,8 @@ namespace CoVid.DAOs.SelectTableOperations
                 }
 
                 this.SetQuery(_SELECT_FROM_GEONAMEDTABLE_QUERY_PATH, out oQuery);
-                oQuery.query = oQuery.query.Replace(_ZERO_STRING, pStartIDEndID.Item1);
-                oQuery.query = oQuery.query.Replace(_ONE_STRING, pStartIDEndID.Item2);
+                oQuery.query = oQuery.query.Replace(_ZERO_STRING, pStartDate);
+                oQuery.query = oQuery.query.Replace(_ONE_STRING, pEndDate);
                 oQuery.query = oQuery.query.Replace(_TABLE_NAME, countryToUpper);
                 this._oConnection.ExecuteSelectCommand(oQuery.query, oResultList);
 
@@ -245,7 +250,7 @@ namespace CoVid.DAOs.SelectTableOperations
                     continue;
                 }
                 oGeoZone = new GeoZone();
-                oGeoZone.geoID = oDateRow[0].ToString();
+                oGeoZone.geoID = oDateRow[0].ToString().TrimEnd();
                 oGeoZone.code = oDateRow[1].ToString();
                 oGeoZone.name = oDateRow[2].ToString();
                 oGeoZone.population = int.Parse(oDateRow[3].ToString());

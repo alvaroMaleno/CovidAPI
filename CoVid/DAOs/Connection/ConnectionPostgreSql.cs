@@ -2,7 +2,6 @@ using System.Threading;
 using System;
 using CoVid.Controllers.DAOs.Interfaces;
 using Npgsql;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace CoVid.Controllers.DAOs.Connection
@@ -40,6 +39,7 @@ namespace CoVid.Controllers.DAOs.Connection
         {
             try
             {
+                _oNpgsqlConnection.Dispose();
                 _oNpgsqlConnection.Close();
                 return true;
             }
@@ -52,7 +52,7 @@ namespace CoVid.Controllers.DAOs.Connection
         public void Connect()
         {
             string conectString = string.Format(
-                "Server={0};Port={1};User Id={2};Password={3};Database={4};Timeout=60;",
+                "Server={0};Port={1};User Id={2};Password={3};Database={4};Timeout=20;",
                 this._oProperties.server, this._oProperties.port, 
                 this._oProperties.userId, this._oProperties.pass, this._oProperties.dataBase);
 
@@ -64,7 +64,7 @@ namespace CoVid.Controllers.DAOs.Connection
             catch (System.Exception)
             {
                 if(_oNpgsqlConnection != null)
-                    _oNpgsqlConnection.Close();
+                    this.CloseConnection();
             }
         }
 
@@ -93,7 +93,7 @@ namespace CoVid.Controllers.DAOs.Connection
             finally
             {
                 if(oConnection != null)
-                    oConnection.Close();
+                    this.CloseConnection();
             }
 
             return true;
@@ -106,10 +106,11 @@ namespace CoVid.Controllers.DAOs.Connection
             try
             {
                 //Experience has shown in a normal pc the database needs
-                //about 300 ms between sentences.
+                //about 350 ms between sentences.
                 int milisecondsBetweenSentences = 350;
                 this.Connect();
                 oConnection = this.GetConnection();
+
                 foreach (var sentence in pQuerySentences)
                 {
                     using (var oCommand = new NpgsqlCommand(sentence, oConnection))
@@ -126,7 +127,7 @@ namespace CoVid.Controllers.DAOs.Connection
             finally
             {
                 if(oConnection != null)
-                    oConnection.Close();
+                    this.CloseConnection();
             }
 
             return true;
@@ -159,7 +160,7 @@ namespace CoVid.Controllers.DAOs.Connection
             finally
             {
                 if(oConnection != null)
-                    oConnection.Close();
+                    this.CloseConnection();
             }
             return true;
         }

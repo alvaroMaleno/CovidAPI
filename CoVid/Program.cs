@@ -22,7 +22,7 @@ namespace CoVid
     {
         public static void Main(string[] args)
         {
-             Thread oThread = new Thread(
+            Thread oThread = new Thread(
                 new ThreadStart(InizializeInitialProceses));
             oThread.Start();
             

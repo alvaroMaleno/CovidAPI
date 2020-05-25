@@ -21,6 +21,14 @@ namespace CoVid.Processes
             }
             return _instance;
         }
+
+        public void Clean()
+        {
+            this.url = null;
+            this.oGeoZoneDictionary = null;
+            _oIDataGetter = null;
+            _instance = null;
+        }
         
         private InitDataGetting(string pUrl, string pDataGetterType)
         {

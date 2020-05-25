@@ -81,6 +81,12 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
                 case "geozone":
                     path = _oPathsArray[0];
                     break;
+                case "users":
+                    path = _oPathsArray[4];
+                    break;
+                case "keys":
+                    path = _oPathsArray[5];
+                    break;
                 
                 default:
                     break;
