@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using CoVid.Controllers.DAOs.Connection;
-using CoVid.Controllers.DAOs.CreateTableOperations;
 using CoVid.Models;
 using CoVid.Processes;
 using CoVid.Processes.PropertiesReader;
@@ -24,7 +22,13 @@ namespace CoVid.Controllers
         [HttpGet("{id}")]
         public GeoZone Get(string id)
         {
-            return _oEuDataGetting.GetGeoZones().Find(x => x.geoID == id);
+            var toReturn = _oEuDataGetting.GetGeoZones().Find(x => x.geoID == id);
+            if(toReturn is null)
+            {
+                _oEuDataGetting = InitDataGetting.GetInstance(_URL, "EUDataCenterJSONDataGetter");
+                toReturn = _oEuDataGetting.GetGeoZones().Find(x => x.geoID == id);
+            }
+            return toReturn;
         }    
         
         [HttpPost]
@@ -32,7 +36,13 @@ namespace CoVid.Controllers
         {
             if(user.pass.Contains("Secret"))
             {
-                return _oEuDataGetting.GetGeoZones();
+                var toReturn = _oEuDataGetting.GetGeoZones();
+                if(toReturn is null)
+                {
+                    _oEuDataGetting = InitDataGetting.GetInstance(_URL, "EUDataCenterJSONDataGetter");
+                    toReturn = _oEuDataGetting.GetGeoZones();
+                }
+                return toReturn;
             }
             GeoZone oGeozone = new GeoZone();
             oGeozone.name = "Pass Error";

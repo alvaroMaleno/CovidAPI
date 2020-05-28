@@ -12,7 +12,6 @@ namespace CoVid.Processes
         public ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary {get;set;}
 
         private IDataGetter _oIDataGetter;
-
         private static InitDataGetting _instance;
 
         public static InitDataGetting GetInstance(string pUrl, string pDataGetterType){

@@ -34,20 +34,26 @@ namespace CoVid.Processes.InitialDataInsertion
                 var oGeoZonesList = _oInitDataGetting.GetGeoZones();
 
                 _oCovidDao.InsertGeoZoneList(oGeoZonesList);
+                System.GC.Collect();
                 _oCovidDao.InsertGeoZoneCountryList(oGeoZonesList);
+                System.GC.Collect();
                 await this.InsertDateList(oGeoZonesList);
+                System.GC.Collect();
                 
                 if(_createGeoZoneDataTables)
                 {
                     if(await this.StillBeingNecessaryCreateAllTables(_oInitDataGetting.oGeoZoneDictionary))
                     {
                         this.CreateGeoZoneDataTable(_oInitDataGetting.oGeoZoneDictionary);
+                        System.GC.Collect();
                     }
                 }
 
                 this.InsertCovidData(_oInitDataGetting.oGeoZoneDictionary);
+                System.GC.Collect();
                 
                 _oInitDataGetting.Clean();
+                System.GC.Collect();
                 //Miliseconds in a day
                 Thread.Sleep(24 * 60 * 60 * 1000);
             }

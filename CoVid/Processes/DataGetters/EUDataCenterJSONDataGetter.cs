@@ -146,9 +146,9 @@ namespace CoVid.Processes.DataGetters
                     oData.cured = cured;
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                
+                ex = null;
                 return;
             }
         }
