@@ -13,6 +13,7 @@ namespace CoVid.Controllers
     public class CovidTestController : Controller
     {
         private static readonly string _URL = "https://opendata.ecdc.europa.eu/covid19/casedistribution/json/";
+        private InitDataGetting _oEuDataGetting = InitDataGetting.GetInstance(_URL, "EUDataCenterJSONDataGetter");
 
         [HttpGet]
         public IEnumerable<string> Get()
@@ -23,7 +24,7 @@ namespace CoVid.Controllers
         [HttpGet("{id}")]
         public GeoZone Get(string id)
         {
-            return InitDataGetting.GetInstance(_URL, "EUDataCenterJSONDataGetter").GetGeoZones().Find(x => x.geoID == id);
+            return _oEuDataGetting.GetGeoZones().Find(x => x.geoID == id);
         }    
         
         [HttpPost]
@@ -31,7 +32,7 @@ namespace CoVid.Controllers
         {
             if(user.pass.Contains("Secret"))
             {
-                return InitDataGetting.GetInstance(_URL, "EUDataCenterJSONDataGetter").GetGeoZones();
+                return _oEuDataGetting.GetGeoZones();
             }
             GeoZone oGeozone = new GeoZone();
             oGeozone.name = "Pass Error";

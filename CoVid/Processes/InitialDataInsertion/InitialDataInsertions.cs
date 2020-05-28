@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Linq;
 using System.Collections.Concurrent;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoVid.Models;
@@ -13,7 +12,6 @@ namespace CoVid.Processes.InitialDataInsertion
 {
     public class InitialDataInsertions: ITaskable
     {
-        private readonly int _MAX_NUMBER_OF_TASKS = 200;
         private bool _createGeoZoneDataTables;
         private readonly string _EU_DATA_CENTER = "EUDataCenterJSONDataGetter";
         private static readonly string _EU_URL = "https://opendata.ecdc.europa.eu/covid19/casedistribution/json/";
@@ -47,7 +45,7 @@ namespace CoVid.Processes.InitialDataInsertion
                     }
                 }
 
-                await this.InsertCovidData(_oInitDataGetting.oGeoZoneDictionary);
+                this.InsertCovidData(_oInitDataGetting.oGeoZoneDictionary);
                 
                 _oInitDataGetting.Clean();
                 //Miliseconds in a day
@@ -97,53 +95,29 @@ namespace CoVid.Processes.InitialDataInsertion
             return true;
         }
 
-        private async Task InsertCovidData(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
+        private async void InsertCovidData(ConcurrentDictionary<string, GeoZone> oGeoZoneDictionary)
         {
             
-            //A database usually can manage about 100 connections at the same time.
-            Task[] oTaskArray = new Task[1];
-            bool hasBeenFinishedOneTime = false;
-            int index = oTaskArray.Length - 1;
             foreach (var oZoneCodeGeoZoneValue in oGeoZoneDictionary)
             {
-                if(!hasBeenFinishedOneTime)
-                {
-                    oTaskArray[index--] = this.InsertCovidDataList(oZoneCodeGeoZoneValue);
-                }
-                else
-                {
-                    await oTaskArray[index];
-                    oTaskArray[index--] = this.InsertCovidDataList(oZoneCodeGeoZoneValue);
-                }
-                if(index < 0)
-                {
-                    hasBeenFinishedOneTime = true;
-                    index = oTaskArray.Length - 1;
-                }
+                this.InsertCovidDataList(oZoneCodeGeoZoneValue);
+                //DataBase can fall down and experience has shown 300 ms are a good time.
+                Thread.Sleep(350);
             }
-            foreach (var oTask in oTaskArray)
-            {
-                if(oTask != null)
-                {
-                    await oTask;
-                }
-            }
-
-            oTaskArray = null;
 
             int times = 0;
             foreach (var oZoneCodeGeoZoneValue in oGeoZoneDictionary)
             {
                 while(! await this.CheckTable(oZoneCodeGeoZoneValue.Key) && times != 10)
                 {
-                    await this.InsertCovidDataList(oZoneCodeGeoZoneValue);
+                    this.InsertCovidDataList(oZoneCodeGeoZoneValue);
                     times++;
                 }
                 times = 0;
             }
         }
 
-        private async Task InsertCovidDataList(KeyValuePair<string, GeoZone> pZoneCodeGeoZoneValue)
+        private void InsertCovidDataList(KeyValuePair<string, GeoZone> pZoneCodeGeoZoneValue)
         {
             this._oCovidDao.InsertCovidDataList(pZoneCodeGeoZoneValue.Value.dataList.ToList(), pZoneCodeGeoZoneValue.Value);
         }
