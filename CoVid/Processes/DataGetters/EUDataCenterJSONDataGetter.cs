@@ -134,16 +134,32 @@ namespace CoVid.Processes.DataGetters
                     oDateCountryDataDictionary.Add(oDateTime.ToString(_DATE_FORMAT), oCountryDataValuePair);
                 }
 
+                string yesterdayDate = null;
                 foreach (var oData in pGeoZone.dataList)
                 {
                     if(!oDateCountryDataDictionary.ContainsKey(oData.date.date))
                     {
                         continue;
                     }
+                    
                     var f_oCountryData = oDateCountryDataDictionary[oData.date.date];
                     int cured;
                     int.TryParse(f_oCountryData.Recovered, out cured);
-                    oData.cured = cured;
+
+                    if(yesterdayDate != null && 
+                    oDateCountryDataDictionary.ContainsKey(oData.date.date))
+                    {
+                        var f_oCountryDataYesterday = oDateCountryDataDictionary[yesterdayDate];
+                        int curedYesterday;
+                        int.TryParse(f_oCountryDataYesterday.Recovered, out curedYesterday);
+                        oData.cured = cured - curedYesterday;
+                    }
+                    else
+                    {
+                        oData.cured = cured;
+                    }
+                    
+                    yesterdayDate = oData.date.date;
                 }
             }
             catch (Exception ex)
