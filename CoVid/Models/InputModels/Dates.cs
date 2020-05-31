@@ -9,6 +9,9 @@ namespace CoVid.Models.InputModels
         [JsonPropertyName("endDate")]
         public string endDate{get;set;}
 
+        [JsonPropertyName("separator")]
+        public string separator{get;set;}
+
         public Dates(){}
         public Dates(string pStartDate, string pEndDate)
         {

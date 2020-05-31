@@ -1,4 +1,3 @@
-using System.Net;
 using System;
 using System.Collections.Generic;
 using CoVid.DAOs.Abstracts;
@@ -53,6 +52,8 @@ namespace CoVid.Controllers
                      System.Net.HttpStatusCode.BadRequest);
                 return;
             }
+            
+            this.SetDateFormat(oCovidData);
 
             bool isDemandingAllGeoZoneData = false;
             foreach (var country in oCovidData.oCountryList)
@@ -83,6 +84,12 @@ namespace CoVid.Controllers
             }
 
             oToReturn = oListToReturn;
+        }
+
+        private void SetDateFormat(CovidData oCovidData)
+        {
+            oCovidData.oDates.startDate = oCovidData.oDates.startDate.Replace(oCovidData.oDates.separator, "/");
+            oCovidData.oDates.endDate = oCovidData.oDates.endDate.Replace(oCovidData.oDates.separator, "/");
         }
 
         private void GetDates(out object oToReturn)

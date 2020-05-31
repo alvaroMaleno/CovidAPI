@@ -1,8 +1,11 @@
+using System.Linq;
+using System;
 using System.Collections.Generic;
 using CoVid.Models;
 using CoVid.Processes;
 using CoVid.Processes.PropertiesReader;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Concurrent;
 
 namespace CoVid.Controllers
 {
@@ -30,7 +33,27 @@ namespace CoVid.Controllers
             }
             return toReturn;
         }    
-        
+
+        [HttpGet("datesfiltering/{data}")]
+        public GeoZone GetWithDatesFiltering(string data)
+        {
+            string[] dataFiltering = data.Split(';'); 
+            var toReturn = _oEuDataGetting.GetGeoZones().Find(x => x.geoID == dataFiltering[3]);
+            if(toReturn is null)
+            {
+                _oEuDataGetting = InitDataGetting.GetInstance(_URL, "EUDataCenterJSONDataGetter");
+                toReturn = _oEuDataGetting.GetGeoZones().Find(x => x.geoID == dataFiltering[3]);
+            }
+            dataFiltering[1] = dataFiltering[1].Replace(dataFiltering[0], "/");
+            dataFiltering[2] = dataFiltering[2].Replace(dataFiltering[0], "/");
+            List<CoVid.Models.CoVidData> oCovidDateList = toReturn.dataList.ToList();
+            var starDate = oCovidDateList.Find(oCoVidData => oCoVidData.date.date == dataFiltering[1]);
+            var endDate = oCovidDateList.Find(oCoVidData => oCoVidData.date.date == dataFiltering[2]);
+            oCovidDateList = oCovidDateList.FindAll(oCovidData => oCovidData.id >= starDate.id && oCovidData.id <= endDate.id);
+            toReturn.dataList = new ConcurrentBag<CoVid.Models.CoVidData>(oCovidDateList);
+            return toReturn;
+        }    
+
         [HttpPost]
         public List<GeoZone> Post([FromBody]User user)
         {
