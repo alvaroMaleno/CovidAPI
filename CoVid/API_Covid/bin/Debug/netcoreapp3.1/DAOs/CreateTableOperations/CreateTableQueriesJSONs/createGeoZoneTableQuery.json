@@ -1,0 +1,4 @@
+{
+    "query": 
+    "CREATE TABLE IF NOT EXISTS GeoZone (geoID char(15) NOT NULL,father char(15),sons boolean NOT NULL DEFAULT false,PRIMARY KEY (geoID))"
+}
