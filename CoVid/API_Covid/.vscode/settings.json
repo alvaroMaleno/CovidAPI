@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/5b58182c-866c-4813-8bfa-666684b8026a/resourceGroups/Covid/providers/Microsoft.Web/sites/covidpaucasesnoves",
-    "appService.deploySubpath": "publish"
-}
