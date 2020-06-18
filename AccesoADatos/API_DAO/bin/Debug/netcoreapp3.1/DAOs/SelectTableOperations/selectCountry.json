@@ -1,4 +1,0 @@
-{
-    "query": 
-    "select * from countries where geoid = '{0}'"
-}

@@ -1,9 +1,5 @@
-using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 namespace CoVid.Utils
@@ -19,7 +15,6 @@ namespace CoVid.Utils
             }
             return _instance;
         }
-        
         private UtilsJSON(){
 
         }
@@ -29,24 +24,16 @@ namespace CoVid.Utils
         }
 
         public void DeserializeFromUrl<R>(out R pTargetClass, string pUrl){
-            HttpClient oHttpClient = new HttpClient();
-            pTargetClass = System.Text.Json.JsonSerializer.Deserialize<R>(
-                oHttpClient.GetAsync(pUrl).Result.Content.ReadAsStringAsync().Result);
-            oHttpClient = null;
-        }
-
-        public async Task<R> DeserializeFromPOSTUrl<R, Input>(R pTargetClass, string pUrl, Input pJsonObject){
-            
-            HttpClientHandler clientHandler = new HttpClientHandler();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-
-            using (var client = new HttpClient(clientHandler))
+            try
             {
-                var response = await client.PostAsync(
-                    pUrl, 
-                    new StringContent(this.Serialize(pJsonObject), Encoding.UTF8, "application/json"));
-                
-                return System.Text.Json.JsonSerializer.Deserialize<R>(await response.Content.ReadAsStringAsync());
+                HttpClient oHttpClient = new HttpClient();
+                pTargetClass = System.Text.Json.JsonSerializer.Deserialize<R>(
+                    oHttpClient.GetAsync(pUrl).Result.Content.ReadAsStringAsync().Result);
+                oHttpClient = null;
+            }
+            catch
+            {
+                pTargetClass = default(R);
             }
         }
 

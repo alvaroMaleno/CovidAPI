@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
-using CoVid.DAOs.Abstracts;
-using CoVid.Models;
+using System.Threading.Tasks;
 using CoVid.Models.InputModels;
+using CoVid.Models.OutputModels;
+using CoVid.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoVid.Controllers
@@ -12,12 +12,12 @@ namespace CoVid.Controllers
     public class CovidController : Controller
     {
         private readonly string _HTTP_ERROR = "Http Error: ";
-        private CovidDAO _oCovidDao = CovidDAOPostgreImpl.GetInstance();
+        private readonly string _URL_DATA_REST = "https://localhost:5005/CovidDataBase";
 
         [HttpPost]
         public object Post([FromBody]InputPOST pPOST)
         {
-            object oToReturn;
+            object oToReturn = null;
             
             bool isAuthenticated = this.AuthenticateUser(pPOST.oUser);
             if(!isAuthenticated)
@@ -25,15 +25,22 @@ namespace CoVid.Controllers
                 oToReturn = "User/Pass Error";
                 return oToReturn;
             }
+            if(pPOST.oCovidData is null)
+            {
+                oToReturn = String.Concat(
+                    _HTTP_ERROR ,
+                     System.Net.HttpStatusCode.BadRequest);
+                return oToReturn;
+            }
 
             var dataType = pPOST?.oCovidData?.dataType.ToLower() ?? string.Empty;
             switch (dataType)
             {
                 case "getcountries":
-                    this.GetCountries(out oToReturn);
+                    oToReturn = this.GetFromDAO(pPOST.oCovidData, "GetAllCountries").Result;
                     break;
                 case "getdates":
-                    this.GetDates(out oToReturn);
+                    oToReturn = this.GetFromDAO(pPOST.oCovidData, "GetAllDates").Result;
                     break;
                 default:
                     this.GetGeoZoneData(pPOST.oCovidData, out oToReturn);
@@ -45,14 +52,6 @@ namespace CoVid.Controllers
 
         private void GetGeoZoneData(CovidData oCovidData, out object oToReturn)
         {
-            if(oCovidData is null)
-            {
-                oToReturn = String.Concat(
-                    _HTTP_ERROR ,
-                     System.Net.HttpStatusCode.BadRequest);
-                return;
-            }
-            
             this.SetDateFormat(oCovidData);
 
             bool isDemandingAllGeoZoneData = false;
@@ -65,54 +64,36 @@ namespace CoVid.Controllers
                 }
             }
 
-            List<GeoZone> oListToReturn = new List<GeoZone>();
             if(isDemandingAllGeoZoneData)
-            {
-                _oCovidDao.GetAllGeoZoneData(oCovidData, oListToReturn);
-            }
+                oToReturn = this.GetFromDAO(oCovidData, "GetAllGeoZoneData").Result;
             else
-            {
-                _oCovidDao.GetGeoZoneData(oCovidData, oListToReturn);
-            }
-
-            if(oListToReturn.Count == 0)
-            {
-                oToReturn = String.Concat(
-                    _HTTP_ERROR , 
-                    System.Net.HttpStatusCode.BadRequest);
-                return;
-            }
-
-            oToReturn = oListToReturn;
+                oToReturn = this.GetFromDAO(oCovidData, "GetGeoZoneData").Result;
         }
 
         private void SetDateFormat(CovidData oCovidData)
         {
-            oCovidData.oDates.startDate = oCovidData.oDates.startDate.Replace(oCovidData.oDates.separator, "/");
-            oCovidData.oDates.endDate = oCovidData.oDates.endDate.Replace(oCovidData.oDates.separator, "/");
+            string RIGHT_BAR = "/";
+            if(oCovidData.oDates.separator == RIGHT_BAR)
+                return;
+
+            oCovidData.oDates.startDate = oCovidData.oDates.startDate.Replace(oCovidData.oDates.separator, RIGHT_BAR);
+            oCovidData.oDates.endDate = oCovidData.oDates.endDate.Replace(oCovidData.oDates.separator, RIGHT_BAR);
         }
 
-        private void GetDates(out object oToReturn)
+        private async Task<object> GetFromDAO(CovidData pCovidData, string pMethod)
         {
-            List<CovidDate> oListToReturn = new List<CovidDate>();
-            _oCovidDao.GetAllDates(oListToReturn);
-            oToReturn = oListToReturn;
-        }
-
-        private void GetCountries(out object oToReturn)
-        {
-            List<GeoZone> oListToReturn = new List<GeoZone>();
-            _oCovidDao.GetAllCountries(oListToReturn);
-            oToReturn = oListToReturn;
+            object oListToReturn = null;
+            DAOModelPOST oDAOModelPOST = new DAOModelPOST(pMethod, pCovidData);
+            oListToReturn = await UtilsJSON.GetInstance().DeserializeFromPOSTUrl(oListToReturn, this._URL_DATA_REST, oDAOModelPOST);
+            return oListToReturn;
         }
 
         private bool AuthenticateUser(Models.InputModels.User oUser)
         {
             var pass = oUser?.pass?.ToLower() ?? string.Empty;
             if(pass.Contains("secret"))
-            {
                 return true;
-            }
+            
             return false;
         }
     }
