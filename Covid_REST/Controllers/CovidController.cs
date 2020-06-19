@@ -1,8 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using CoVid.Cache;
 using CoVid.Models.InputModels;
 using CoVid.Models.OutputModels;
 using CoVid.Utils;
+using Covid_REST.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoVid.Controllers
@@ -13,6 +15,7 @@ namespace CoVid.Controllers
     {
         private readonly string _HTTP_ERROR = "Http Error: ";
         private readonly string _URL_DATA_REST = "https://localhost:5005/CovidDataBase";
+        private CovidCache _oCovidCache = CovidCache.GetInstance();
 
         [HttpPost]
         public object Post([FromBody]InputPOST pPOST)
@@ -65,7 +68,8 @@ namespace CoVid.Controllers
             }
 
             if(isDemandingAllGeoZoneData)
-                oToReturn = this.GetFromDAO(oCovidData, "GetAllGeoZoneData").Result;
+                _oCovidCache.GetListFilteredByDate(
+                    oCovidData.oDates.startDate, oCovidData.oDates.endDate, out oToReturn);
             else
                 oToReturn = this.GetFromDAO(oCovidData, "GetGeoZoneData").Result;
         }
@@ -82,10 +86,8 @@ namespace CoVid.Controllers
 
         private async Task<object> GetFromDAO(CovidData pCovidData, string pMethod)
         {
-            object oListToReturn = null;
             DAOModelPOST oDAOModelPOST = new DAOModelPOST(pMethod, pCovidData);
-            oListToReturn = await UtilsJSON.GetInstance().DeserializeFromPOSTUrl(oListToReturn, this._URL_DATA_REST, oDAOModelPOST);
-            return oListToReturn;
+            return await UtilsHTTP.GetInstance().POSTJsonAsyncToURL(this._URL_DATA_REST, oDAOModelPOST);
         }
 
         private bool AuthenticateUser(Models.InputModels.User oUser)

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using AccesoADatos_REST.Cache;
 using CoVid.Controllers.DAOs.Connection;
 using CoVid.Controllers.DAOs.CreateTableOperations;
 using CoVid.DAOs.Abstracts;
@@ -209,42 +207,6 @@ namespace CoVid.DAO
                 this._oPostgreSqlSelect = PostgreSqlSelect.GetInstance(oConnection);
             }
             _oPostgreSqlSelect.GetAllGeoZoneDataForAllDates(pListToComplete);
-        }
-
-        public override void GetAllGeoZoneDataFromCache(
-            CovidData pCovidData, List<GeoZone> pListToComplete, CovidCache pCovidCache)
-        {
-            ConnectionPostgreSql oConnection;
-            this.SetConnection(out oConnection);
-
-            if(_oPostgreSqlSelect is null)
-            {
-                this._oPostgreSqlSelect = PostgreSqlSelect.GetInstance(oConnection);
-            }
-
-            Tuple<string, string> oStartEndDateTuple;
-            _oPostgreSqlSelect.GetDatesIDs(pCovidData, out oStartEndDateTuple);
-
-            if(oStartEndDateTuple is null)
-                return;
-                
-            ulong startId = ulong.Parse(oStartEndDateTuple.Item1);
-            ulong endId = ulong.Parse(oStartEndDateTuple.Item2);
-            ConcurrentBag<CoVidData> dataList;
-            GeoZone oGeoZoneToAdd;
-
-            foreach (var oGeoZone in pCovidCache.GetCompleteList())
-            {
-                oGeoZoneToAdd = new GeoZone(oGeoZone, false);
-                dataList = new ConcurrentBag<CoVidData>();
-
-                foreach (var oData in oGeoZone.dataList)
-                    if(oData.id >= startId && oData.id <= endId)
-                        dataList.Add(oData);
-
-                oGeoZoneToAdd.dataList = dataList;
-                pListToComplete.Add(oGeoZoneToAdd);
-            }
         }
 
         public override void GetAllCountries(List<GeoZone> pCovidCountryList)

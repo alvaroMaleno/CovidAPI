@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AccesoADatos_REST.Cache;
 using CoVid.Models;
 using CoVid.Models.InputModels;
 using CoVid.Models.QueryModels;
@@ -21,7 +20,6 @@ namespace CoVid.DAOs.Abstracts
         public abstract bool InsertDateList(List<CovidDate> pCovidDate);
         public abstract void GetGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete);
         public abstract void GetAllGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete);
-        public abstract void GetAllGeoZoneDataFromCache(CovidData pCovidData, List<GeoZone> pListToComplete, CovidCache pCovidCache);
         public abstract void GetAllGeoZoneDataForAllDates(List<GeoZone> pListToComplete);
         public abstract void GetAllCountries(List<GeoZone> pCovidCountryList);
         public abstract void GetAllDates(List<CovidDate> pCovidDateList);

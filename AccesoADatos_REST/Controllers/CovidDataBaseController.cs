@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using AccesoADatos_REST.Cache;
 using CoVid.DAO;
 using CoVid.DAOs.Abstracts;
 using CoVid.Models;
@@ -17,7 +15,6 @@ namespace API_DAO.Controllers
 
         private readonly ILogger<CovidDataBaseController> _logger;
         private CovidDAO _oCovidDAO = CovidDAOPostgreImpl.GetInstance();
-        private CovidCache _oCovidCache = CovidCache.GetInstance();
 
         public CovidDataBaseController(ILogger<CovidDataBaseController> logger)
         {
@@ -44,7 +41,10 @@ namespace API_DAO.Controllers
                     _oCovidDAO.GetGeoZoneData(pInputPOST._oCovidData, oListToReturn);
                     break;
                 case "GetAllGeoZoneData":
-                    _oCovidDAO.GetAllGeoZoneDataFromCache(pInputPOST._oCovidData, oListToReturn, _oCovidCache);
+                    _oCovidDAO.GetAllGeoZoneData(pInputPOST._oCovidData, oListToReturn);
+                    break;
+                case "GetAllGeoZoneDataForAllDates":
+                    _oCovidDAO.GetAllGeoZoneDataForAllDates(oListToReturn);
                     break;
                 case "GetAllCountries":
                     _oCovidDAO.GetAllCountries(oListToReturn);
@@ -59,6 +59,5 @@ namespace API_DAO.Controllers
             }
             return oListToReturn;
         }
-
     }
 }

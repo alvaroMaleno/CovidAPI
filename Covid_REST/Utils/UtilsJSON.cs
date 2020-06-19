@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Covid_REST.Utils;
 using Newtonsoft.Json.Linq;
 
 namespace CoVid.Utils
@@ -37,17 +38,8 @@ namespace CoVid.Utils
 
         public async Task<R> DeserializeFromPOSTUrl<R, Input>(R pTargetClass, string pUrl, Input pJsonObject){
             
-            HttpClientHandler clientHandler = new HttpClientHandler();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-
-            using (var client = new HttpClient(clientHandler))
-            {
-                var response = await client.PostAsync(
-                    pUrl, 
-                    new StringContent(this.Serialize(pJsonObject), Encoding.UTF8, "application/json"));
-                
-                return System.Text.Json.JsonSerializer.Deserialize<R>(await response.Content.ReadAsStringAsync());
-            }
+            return System.Text.Json.JsonSerializer.Deserialize<R>(
+                await UtilsHTTP.GetInstance().POSTJsonAsyncToURL(pUrl, pJsonObject));
         }
 
         public void JsonParseJArrayFromUrl(out JArray pObject, string pUrl)
