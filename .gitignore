@@ -1,6 +1,5 @@
 
-AccesoADatos_REST/bin/Debug/netcoreapp3.1/DAOs/Connection/connectionProperties.json
+./AccesoADatos_REST/bin/Debug/netcoreapp3.1/DAOs/Connection/connectionProperties.json
 .vscode
-AccesoADatos_REST/DAOs/Connection/connectionProperties.json
-
+./AccesoADatos_REST/DAOs/Connection/connectionProperties.json
 
