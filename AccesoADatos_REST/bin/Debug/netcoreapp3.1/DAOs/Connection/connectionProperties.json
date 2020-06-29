@@ -1,7 +1,7 @@
 {
     "server": "localhost",
-    "port": "p",
-    "userId": "p",
-    "pass": "p",
-    "dataBase": "p"
+    "port": "5432",
+    "userId": "postgres",
+    "pass": "covidAlvaro",
+    "dataBase": "postgres"
 }

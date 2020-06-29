@@ -34,7 +34,7 @@ namespace CoVid.Processes
             this.url = pUrl;
             this.oGeoZoneDictionary = new ConcurrentDictionary<string, GeoZone>();
             this.SetIDataGetter(pDataGetterType);
-            if(oGeoZoneDictionary.Count > 0)
+            if(oGeoZoneDictionary.Count == 0)
             {
                 _oIDataGetter.SetOwnDataModel(oGeoZoneDictionary);
             }

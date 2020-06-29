@@ -10,7 +10,7 @@ namespace CoVid.Models
         public string geoID {get;set;}
         public string code {get;set;}
         public string name {get;set;}
-        public int population {get;set;}
+        public int? population {get;set;}
         public ConcurrentBag<CoVidData> dataList {get;set;}
 
         public GeoZone()

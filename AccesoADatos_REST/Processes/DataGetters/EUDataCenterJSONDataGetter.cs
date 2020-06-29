@@ -206,27 +206,21 @@ namespace CoVid.Processes.DataGetters
             CoVidData oCoviData;
             if(!pDicToComplete.ContainsKey(pItem.geoId))
             {
-                    
                 oGeoZone = new GeoZone();
                 oGeoZone.geoID = pItem.geoId;
                 oGeoZone.code = pItem.countryterritoryCode;
                 oGeoZone.dataList = new ConcurrentBag<CoVidData>();
                 oGeoZone.name = pItem.countriesAndTerritories;
-                int pop;
-                int.TryParse(pItem.popData2018, out pop);
-                oGeoZone.population = pop;
+                oGeoZone.population = pItem.popData2019;
 
                 pDicToComplete.GetOrAdd(pItem.geoId, oGeoZone);
             }
 
             oCoviData = new CoVidData();
             
-            int auxiliarInt;
-            int.TryParse(pItem.cases, out auxiliarInt);
-            oCoviData.cases = auxiliarInt;
+            oCoviData.cases = pItem.cases;
             oCoviData.date = new CovidDate(ulong.Parse(pDataId.ToString()), pItem.dateRep, _RIGHT_BAR, _DATE_FORMAT);
-            int.TryParse(pItem.deaths, out auxiliarInt);
-            oCoviData.deaths = auxiliarInt;
+            oCoviData.deaths = pItem.deaths;
             pDicToComplete[pItem.geoId].dataList.Add(oCoviData);
         }
 

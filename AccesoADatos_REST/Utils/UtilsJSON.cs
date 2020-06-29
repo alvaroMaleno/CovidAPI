@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
@@ -27,11 +28,11 @@ namespace CoVid.Utils
             try
             {
                 HttpClient oHttpClient = new HttpClient();
-                pTargetClass = System.Text.Json.JsonSerializer.Deserialize<R>(
-                    oHttpClient.GetAsync(pUrl).Result.Content.ReadAsStringAsync().Result);
+                var result = oHttpClient.GetAsync(pUrl).Result.Content.ReadAsStringAsync().Result;
+                pTargetClass = System.Text.Json.JsonSerializer.Deserialize<R>(result);
                 oHttpClient = null;
             }
-            catch
+            catch(Exception ex)
             {
                 pTargetClass = default(R);
             }

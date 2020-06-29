@@ -54,6 +54,8 @@ namespace CoVid.Utils
         {
             foreach (var oData in oGeoZone.dataList)
             {
+                if(oData?.date?.date is null)
+                    continue;
                 if(!pDateKeyCovidDateValue.ContainsKey(oData.date.date))
                     pDateKeyCovidDateValue.GetOrAdd(oData.date.date, oData.date);
             }
