@@ -1,11 +1,12 @@
+using System;
 using System.Security.Cryptography;
 
 namespace Security_REST.Security
 {
     public class RSAManager
     {
-        private RSACryptoServiceProvider _oRSASCryptoServiceProvider;
         private static RSAManager _instance;
+        private readonly string _KEY_CONTAINER_NAME = "GenericContainer";
 
         public static RSAManager GetInstance()
         {
@@ -15,41 +16,62 @@ namespace Security_REST.Security
             return _instance;
         }
 
-        private RSAManager(){}
-
-        public object CreateKeyPair()
+        private RSAManager()
         {
-            return null;
         }
 
-        public object GetPublicKey()
+        private void CreateKeyPair(out Tuple<string, string> pPublicAndPrivateKey, bool pSaveKeys)
         {
-            return null;
+            RSACryptoServiceProvider oRSACryptoServiceProvider;
+            
+            this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider, pSaveKeys);
+            
+            var publicKey = oRSACryptoServiceProvider.ToXmlString(false);
+            var privateKey = oRSACryptoServiceProvider.ToXmlString(true);
+            pPublicAndPrivateKey = new Tuple<string, string>(publicKey, privateKey);
         }
 
-        public object GetPrivateKey()
+        private void CreateRSACryptoServiceProvider(out RSACryptoServiceProvider pRSACryptoServiceProvider, bool pSaveKeys)
         {
-            return null;
+            if(pSaveKeys)
+            {
+                var oCspParameters = new CspParameters
+                {
+                    KeyContainerName = _KEY_CONTAINER_NAME
+                };
+                pRSACryptoServiceProvider = new RSACryptoServiceProvider(oCspParameters);
+            }
+            else
+            {
+                pRSACryptoServiceProvider = new RSACryptoServiceProvider();
+            }
         }
 
-        public object SubstituteKeyPair()
+        public string GetPublicKey()
         {
-            return null;
+            RSACryptoServiceProvider oRSACryptoServiceProvider;
+            
+            this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider, true);
+            return oRSACryptoServiceProvider.ToXmlString(false);
         }
 
-        public object GetPublicKeyToNewUsers()
+        public string GetPrivateKey()
         {
-            return null;
+            RSACryptoServiceProvider oRSACryptoServiceProvider;
+            
+            this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider, true);
+            return oRSACryptoServiceProvider.ToXmlString(true);
         }
 
-        public object GetPrivateKeyToNewUsers()
+        public void SubstituteKeyPair()
         {
-            return null;
+            Tuple<string, string> oPublicAndPrivateKey;
+            this.CreateKeyPair(out oPublicAndPrivateKey, true);
         }
 
-        public void ChangePublicAndPrivateKeyToNewUsers()
+        public void GetPublicKeyAndPrivateKeyToNewUsers(out Tuple<string, string> pPublicAndPrivateKey)
         {
-
+            this.CreateKeyPair(out pPublicAndPrivateKey, false);
         }
 
     }

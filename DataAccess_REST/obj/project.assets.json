@@ -128,11 +128,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/alvaro/Documentos/Proyecto/Covid/AccesoADatos_REST/API_DAO.csproj",
+      "projectUniqueName": "/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/API_DAO.csproj",
       "projectName": "API_DAO",
-      "projectPath": "/home/alvaro/Documentos/Proyecto/Covid/AccesoADatos_REST/API_DAO.csproj",
+      "projectPath": "/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/API_DAO.csproj",
       "packagesPath": "/home/alvaro/.nuget/packages/",
-      "outputPath": "/home/alvaro/Documentos/Proyecto/Covid/AccesoADatos_REST/obj/",
+      "outputPath": "/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/alvaro/.nuget/NuGet/NuGet.Config"
