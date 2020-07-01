@@ -1,12 +1,7 @@
-using System.Linq;
-using System.Text;
-using System.Collections.Generic;
-using CoVid.Controllers.DAOs;
 using CoVid.Controllers.DAOs.Connection;
-using CoVid.Models;
 using CoVid.Models.QueryModels;
 using CoVid.Models.PathModels;
-using CoVid.Utils;
+using Security_REST.Utils;
 
 namespace CoVid.DAOs.InsertTableOperations
 {
@@ -66,8 +61,8 @@ namespace CoVid.DAOs.InsertTableOperations
 
         public void SetQuery(string pPath, out Query pQuery)
         {
-            string query = Utils.UtilsStreamReaders.GetInstance().ReadStreamFile(pPath);
-            Utils.UtilsJSON.GetInstance().DeserializeFromString(out pQuery, query);
+            string query = UtilsStreamReaders.GetInstance().ReadStreamFile(pPath);
+            UtilsJSON.GetInstance().DeserializeFromString(out pQuery, query);
         }
     }
 }

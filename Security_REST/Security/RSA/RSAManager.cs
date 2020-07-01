@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Security_REST.Security
 {
@@ -47,7 +48,7 @@ namespace Security_REST.Security
             }
         }
 
-        public string GetPublicKey()
+        private string GetPublicKey()
         {
             RSACryptoServiceProvider oRSACryptoServiceProvider;
             
@@ -55,7 +56,7 @@ namespace Security_REST.Security
             return oRSACryptoServiceProvider.ToXmlString(false);
         }
 
-        public string GetPrivateKey()
+        private string GetPrivateKey()
         {
             RSACryptoServiceProvider oRSACryptoServiceProvider;
             
@@ -69,9 +70,46 @@ namespace Security_REST.Security
             this.CreateKeyPair(out oPublicAndPrivateKey, true);
         }
 
-        public void GetPublicKeyAndPrivateKeyToNewUsers(out Tuple<string, string> pPublicAndPrivateKey)
+        public void GetPublicKeyAndPrivateKeyForNewUsers(out Tuple<string, string> pPublicAndPrivateKey)
         {
             this.CreateKeyPair(out pPublicAndPrivateKey, false);
+        }
+
+        public string DesencryptWithOwnKeyString(string pToDesencrypt)
+        {
+            RSACryptoServiceProvider oRSACryptoServiceProvider;
+            
+            this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider, true);
+            
+            return Encoding.ASCII.GetString(oRSACryptoServiceProvider.Decrypt(Encoding.ASCII.GetBytes(pToDesencrypt), false));
+        }
+
+        public string EncryptWithOwnKeyString(string pToEncrypt)
+        {
+            RSACryptoServiceProvider oRSACryptoServiceProvider;
+            
+            this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider, true);
+            
+            return Encoding.ASCII.GetString(oRSACryptoServiceProvider.Encrypt(Encoding.ASCII.GetBytes(pToEncrypt), false));
+        }
+
+        public string DesencryptWithPrivateKeyString(string pToDesencrypt, string pPrivateKey)
+        {
+            RSACryptoServiceProvider oRSACryptoServiceProvider;
+            this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider, false);
+            oRSACryptoServiceProvider.FromXmlString(pPrivateKey);
+            return 
+                Encoding.ASCII.GetString(
+                    oRSACryptoServiceProvider.Decrypt(
+                        Encoding.ASCII.GetBytes(pToDesencrypt), false));
+        }
+
+        public string EncryptWithPublicKeyString(string pToEncrypt, string pPublicKey)
+        {
+            RSACryptoServiceProvider oRSACryptoServiceProvider;
+            this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider, false);
+            oRSACryptoServiceProvider.FromXmlString(pPublicKey);
+            return Encoding.ASCII.GetString(oRSACryptoServiceProvider.Encrypt(Encoding.ASCII.GetBytes(pToEncrypt), false));
         }
 
     }

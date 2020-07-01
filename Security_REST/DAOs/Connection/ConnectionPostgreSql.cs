@@ -3,6 +3,7 @@ using System;
 using CoVid.Controllers.DAOs.Interfaces;
 using Npgsql;
 using System.Collections.Generic;
+using Security_REST.Utils;
 
 namespace CoVid.Controllers.DAOs.Connection
 {
@@ -20,7 +21,7 @@ namespace CoVid.Controllers.DAOs.Connection
         private void SetProperties()
         {
             _connectionProperties = String.Empty;
-            string so = Utils.UtilsSO.GetInstance().GetSO();
+            string so = UtilsSO.GetInstance().GetSO();
             if(so.Contains("unix"))
             {
                 _connectionProperties = @"./DAOs/Connection/connectionProperties.json";
@@ -30,8 +31,8 @@ namespace CoVid.Controllers.DAOs.Connection
                 _connectionProperties = @".\DAOs\Connection\connectionProperties.json";
             }
 
-            var connectionProp = Utils.UtilsStreamReaders.GetInstance().ReadStreamFile(_connectionProperties);
-            Utils.UtilsJSON.GetInstance().DeserializeFromString(out _oProperties, connectionProp);
+            var connectionProp = UtilsStreamReaders.GetInstance().ReadStreamFile(_connectionProperties);
+            UtilsJSON.GetInstance().DeserializeFromString(out _oProperties, connectionProp);
             
         }
 

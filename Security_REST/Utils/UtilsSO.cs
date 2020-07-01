@@ -1,4 +1,4 @@
-namespace CoVid.Utils
+namespace Security_REST.Utils
 {
     public class UtilsSO
     {

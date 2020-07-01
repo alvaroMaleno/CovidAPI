@@ -4,7 +4,7 @@ using System.Text;
 using CoVid.Controllers.DAOs.Connection;
 using CoVid.Models.PathModels;
 using CoVid.Models.QueryModels;
-using CoVid.Utils;
+using Security_REST.Utils;
 
 namespace CoVid.Controllers.DAOs.CreateTableOperations
 {
@@ -91,8 +91,8 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
                 default:
                     break;
             }
-            string query = Utils.UtilsStreamReaders.GetInstance().ReadStreamFile(path);
-            Utils.UtilsJSON.GetInstance().DeserializeFromString(out pQuery, query);
+            string query = UtilsStreamReaders.GetInstance().ReadStreamFile(path);
+            UtilsJSON.GetInstance().DeserializeFromString(out pQuery, query);
         }
     }
 }

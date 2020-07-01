@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 
-namespace CoVid.Utils
+namespace Security_REST.Utils
 {
     public class UtilsJSON
     {
@@ -58,5 +58,6 @@ namespace CoVid.Utils
         {
             return System.Text.Json.JsonSerializer.Serialize<R>(pObjectToSerialize);
         }
+
     }
 }

@@ -1,5 +1,6 @@
 using CoVid.Controllers.DAOs.Connection;
 using CoVid.Models.QueryModels;
+using Security_REST.Utils;
 
 namespace CoVid.DAOs.SelectTableOperations
 {
@@ -37,9 +38,9 @@ namespace CoVid.DAOs.SelectTableOperations
 
         public void SetQuery(string pPath, out Query pQuery)
         {
-            Utils.UtilsJSON.GetInstance().DeserializeFromString(
+            UtilsJSON.GetInstance().DeserializeFromString(
                 out pQuery, 
-                Utils.UtilsStreamReaders.GetInstance().ReadStreamFile(pPath));
+                UtilsStreamReaders.GetInstance().ReadStreamFile(pPath));
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace CoVid.Utils
+namespace Security_REST.Utils
 {
     public class UtilsStreamReaders
     {
@@ -20,9 +20,9 @@ namespace CoVid.Utils
 
         public string ReadStreamFile(string pPath){
             string file;
-            using (StreamReader jsonStream = File.OpenText(pPath))
+            using (StreamReader oJsonStream = File.OpenText(pPath))
             {
-                file = jsonStream.ReadToEnd();
+                file = oJsonStream.ReadToEnd();
             }
             return file;
         }
