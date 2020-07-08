@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace CoVid.Controllers.DAOs.Connection
+namespace Security_REST.Controllers.DAOs.Connection
 {
     public class ConnectionPostgreProperties
     {

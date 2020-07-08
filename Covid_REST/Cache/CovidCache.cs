@@ -10,14 +10,11 @@ namespace CoVid.Cache
     {
         private List<GeoZone> _oAllGeoZoneList;
         private Dictionary<string, ulong> _oAllDatesDic;
-        private static CovidCache _instance;
+        private static CovidCache _instance = new CovidCache();
         private readonly string _URL_DATA_REST = "https://localhost:5005/CovidDataBase";
 
         public static CovidCache GetInstance()
         {
-            if(_instance is null)
-                _instance = new CovidCache();
-            
             return _instance;
         }
 

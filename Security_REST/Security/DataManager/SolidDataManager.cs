@@ -1,4 +1,4 @@
-using CoVid.Models.PathModels;
+using Security_REST.Models.PathModels;
 using Security_REST.Utils;
 
 namespace Security_REST.Security.DataManager
@@ -51,6 +51,8 @@ namespace Security_REST.Security.DataManager
         {
             if(pIsEncrypted)
                 this.DesencryptEachPersistentFile(pPaths);
+                
+            _oRSAManager.SubstituteKeyPair();
             this.EncryptEachPersistentFile(pPaths);
         }
 

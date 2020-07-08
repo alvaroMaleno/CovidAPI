@@ -1,11 +1,13 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using Security_REST.Models.DataModels;
 
 namespace Security_REST.Security
 {
     public class RSAManager
     {
+        //TODO To change encryptation must be a method to delete old keys after desencrypt each file.
         private static RSAManager _instance;
         private readonly string _KEY_CONTAINER_NAME = "GenericContainer";
 
@@ -21,7 +23,7 @@ namespace Security_REST.Security
         {
         }
 
-        private void CreateKeyPair(out Tuple<string, string> pPublicAndPrivateKey, bool pSaveKeys)
+        private void CreateKeyPair(out KeyPair pKeyPair, bool pSaveKeys)
         {
             RSACryptoServiceProvider oRSACryptoServiceProvider;
             
@@ -29,7 +31,7 @@ namespace Security_REST.Security
             
             var publicKey = oRSACryptoServiceProvider.ToXmlString(false);
             var privateKey = oRSACryptoServiceProvider.ToXmlString(true);
-            pPublicAndPrivateKey = new Tuple<string, string>(publicKey, privateKey);
+            pKeyPair = new KeyPair(publicKey, privateKey);
         }
 
         private void CreateRSACryptoServiceProvider(out RSACryptoServiceProvider pRSACryptoServiceProvider, bool pSaveKeys)
@@ -66,13 +68,14 @@ namespace Security_REST.Security
 
         public void SubstituteKeyPair()
         {
-            Tuple<string, string> oPublicAndPrivateKey;
-            this.CreateKeyPair(out oPublicAndPrivateKey, true);
+            // KeyPair oKeyPair;
+            // this.CreateKeyPair(out oKeyPair, true);
+            throw new NotImplementedException();
         }
 
-        public void GetPublicKeyAndPrivateKeyForNewUsers(out Tuple<string, string> pPublicAndPrivateKey)
+        public void GetPublicKeyAndPrivateKeyForNewUsers(out KeyPair pKeyPair)
         {
-            this.CreateKeyPair(out pPublicAndPrivateKey, false);
+            this.CreateKeyPair(out pKeyPair, false);
         }
 
         public string DesencryptWithOwnKeyString(string pToDesencrypt)

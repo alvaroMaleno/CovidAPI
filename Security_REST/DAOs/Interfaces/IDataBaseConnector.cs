@@ -1,4 +1,4 @@
-namespace CoVid.Controllers.DAOs.Interfaces
+namespace Security_REST.Controllers.DAOs.Interfaces
 {
     public interface IDataBaseConnector<out R>
     {

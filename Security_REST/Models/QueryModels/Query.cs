@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace CoVid.Models.QueryModels
+namespace Security_REST.Models.QueryModels
 {
     public class Query
     {

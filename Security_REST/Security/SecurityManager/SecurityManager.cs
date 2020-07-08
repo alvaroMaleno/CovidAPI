@@ -1,4 +1,7 @@
-using CoVid.DAOs.Abstracts;
+using Security_REST.Controllers;
+using Security_REST.DAOs.Abstracts;
+using Security_REST.Models.DataModels;
+using Security_REST.Models.PathModels;
 using Security_REST.Security.DataManager;
 using Security_REST.Security.SecurityManager.Interfaces;
 
@@ -10,11 +13,17 @@ namespace Security_REST.Security.SecurityManager
         private DAO _oDAO;
         private RSAManager _oRSAManager;
         private SolidDataManager _oSolidDataManager;
+        private Paths _oPathPersistentFiles;
         private int _numberOfUsersAddedWithActualKey;
+        private readonly string _USER_TABLE_NAME;
 
         private SecurityManager()
         {
-
+            _oDAO = SecurityDAOPostgreImpl.GetInstance();
+            _oRSAManager = RSAManager.GetInstance();
+            _oSolidDataManager = SolidDataManager.GetInstance();
+            _numberOfUsersAddedWithActualKey = 0;
+            //TODO Paths
         }
 
         public static SecurityManager GetInstance()
@@ -25,24 +34,25 @@ namespace Security_REST.Security.SecurityManager
             return _instance;
         }
         
-        public void AddUser(object pUser)
+        public void AddUser(User pUser)
+        {
+            _oDAO.InsertUser(pUser, _oSolidDataManager.DesencryptFile(_USER_TABLE_NAME));
+            _numberOfUsersAddedWithActualKey++;
+        }
+
+        public bool ValidateUser(User pUser)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool ValidateUser(object pUser)
+        private void GenerateKeyPair(out KeyPair oKeyPair)
         {
-            throw new System.NotImplementedException();
+            _oRSAManager.GetPublicKeyAndPrivateKeyForNewUsers(out oKeyPair);
         }
 
-        private object GenerateKeyPair()
+        private void SaveKeyPairOnDB(KeyPair pKeyPair)
         {
-            throw new System.NotImplementedException();
-        }
-
-        private void SaveKeyPairOnDB(object pKeyPair)
-        {
-            throw new System.NotImplementedException();
+            _oDAO.InsertKeyPair(pKeyPair, _USER_TABLE_NAME);
         }
         
         private void ChangeDBEncriptation()
@@ -55,14 +65,10 @@ namespace Security_REST.Security.SecurityManager
             throw new System.NotImplementedException();
         }
 
-        private void ChangePublicAndPrivateKeyToNewUsers()
+        private void ChangePublicAndPrivateKey()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public object GetActualPublicKeyToNewUsers()
-        {
-            throw new System.NotImplementedException();
+            //TODO Persitent Files Without Encryptation
+            _oSolidDataManager.ChangePersistentFileEncryptation(_oPathPersistentFiles, true);
         }
 
     }

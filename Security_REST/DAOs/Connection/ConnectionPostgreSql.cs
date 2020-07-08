@@ -1,11 +1,12 @@
 using System.Threading;
 using System;
-using CoVid.Controllers.DAOs.Interfaces;
+using Security_REST.Controllers.DAOs.Interfaces;
 using Npgsql;
 using System.Collections.Generic;
 using Security_REST.Utils;
+using Security_REST.Controllers.DAOs.Connection;
 
-namespace CoVid.Controllers.DAOs.Connection
+namespace Security_REST.Controllers.DAOs.Connection
 {
     public class ConnectionPostgreSql : IDataBaseConnector<NpgsqlConnection>
     {

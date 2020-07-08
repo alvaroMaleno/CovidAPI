@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
-using CoVid.Controllers.DAOs.Connection;
-using CoVid.Models.PathModels;
-using CoVid.Models.QueryModels;
+using Security_REST.Models.PathModels;
+using Security_REST.Models.QueryModels;
+using Security_REST.Controllers.DAOs.Connection;
 using Security_REST.Utils;
 
-namespace CoVid.Controllers.DAOs.CreateTableOperations
+namespace Security_REST.Controllers.DAOs.CreateTableOperations
 {
     public class PostgreSqlCreateTable : ICreate<ConnectionPostgreSql>
     {
+        private readonly string _TABLE_NAME = "table_name";
         private string[] _oPathsArray;
 
         public PostgreSqlCreateTable()
@@ -59,7 +58,7 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
             {
                 Query oQuery;
                 this.SetQuery(pPath, out oQuery);
-                oSentenceList.Add(oQuery.query.Replace("country_name", tableName));
+                oSentenceList.Add(oQuery.query.Replace(_TABLE_NAME, tableName));
             }
             return pConnector.ExecuteCommand(oSentenceList.ToArray());
         }
@@ -69,25 +68,12 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
             string path = string.Empty;
             switch (pPath.ToLower())
             {   
-                case "countries":
-                    path = _oPathsArray[1];
-                    break;
-                case "dates":
-                    path = _oPathsArray[2];
-                    break;
-                case "name":
-                    path = _oPathsArray[3];
-                    break;
-                case "geozone":
+                case "users":
                     path = _oPathsArray[0];
                     break;
-                case "users":
-                    path = _oPathsArray[4];
-                    break;
                 case "keys":
-                    path = _oPathsArray[5];
+                    path = _oPathsArray[1];
                     break;
-                
                 default:
                     break;
             }

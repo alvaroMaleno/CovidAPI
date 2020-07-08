@@ -1,8 +1,8 @@
 
-using CoVid.DAOs.Interfaces;
-using CoVid.Models.QueryModels;
+using Security_REST.DAOs.Interfaces;
+using Security_REST.Models.QueryModels;
 
-namespace CoVid.Controllers.DAOs.CreateTableOperations
+namespace Security_REST.Controllers.DAOs.CreateTableOperations
 {
     public interface ICreate<in R> : IQuery
     {

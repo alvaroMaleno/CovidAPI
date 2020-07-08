@@ -1,26 +1,24 @@
-using CoVid.Controllers.DAOs.Connection;
-using CoVid.Models.QueryModels;
-using CoVid.Models.PathModels;
+using System;
+using Security_REST.Models.QueryModels;
+using Security_REST.Models.PathModels;
 using Security_REST.Utils;
+using Security_REST.Controllers.DAOs.Connection;
+using Security_REST.DAOs.Interfaces;
+using Security_REST.Models.DataModels;
+using System.Collections.Generic;
 
-namespace CoVid.DAOs.InsertTableOperations
+namespace Security_REST.DAOs.InsertTableOperations
 {
-    public class PostgreSqlInsert 
+    public class PostgreSqlInsert : IQuery
     {
-        private readonly int _ONE = 1;
         private readonly string _REPLACE_QUERY_CONSTANT = "?";
         private readonly string _REPLACE_SINGLEQUOTE_CONSTANT = "'";
-        private readonly string _THREE_STRING = "{3}";
-        private readonly string _TWO_STRING = "{2}";
         private readonly string _ONE_STRING = "{1}";
         private readonly string _ZERO_STRING = "{0}";
         private readonly string _COME = ",";
-        private readonly string _NULL = "null";
-        private string _INSERT_DATES_QUERY_PATH;
-        private string _INSERT_GEOZONE_NAME_QUERY_PATH;
-        private string _INSERT_GEOZONE_QUERY_PATH;
-        private string _INSERT_GEOZONE_COUNTRIES_QUERY_PATH;
+        private Paths _oPathsArray;
         public ConnectionPostgreSql oConnectionPostgreSql { get; set; }
+
         private static PostgreSqlInsert _instance; 
 
         private PostgreSqlInsert(ConnectionPostgreSql pConnectionPostgreSql)
@@ -50,12 +48,8 @@ namespace CoVid.DAOs.InsertTableOperations
             }
             
             var paths = UtilsStreamReaders.GetInstance().ReadStreamFile(createTablePaths);
-            Paths oPathsArray;
-            UtilsJSON.GetInstance().DeserializeFromString(out oPathsArray, paths);
-            this._INSERT_DATES_QUERY_PATH = oPathsArray.oPaths[0];
-            this._INSERT_GEOZONE_COUNTRIES_QUERY_PATH = oPathsArray.oPaths[3];
-            this._INSERT_GEOZONE_NAME_QUERY_PATH = oPathsArray.oPaths[1];
-            this._INSERT_GEOZONE_QUERY_PATH = oPathsArray.oPaths[2];
+            UtilsJSON.GetInstance().DeserializeFromString(out _oPathsArray, paths);
+
         }
 
 
@@ -63,6 +57,21 @@ namespace CoVid.DAOs.InsertTableOperations
         {
             string query = UtilsStreamReaders.GetInstance().ReadStreamFile(pPath);
             UtilsJSON.GetInstance().DeserializeFromString(out pQuery, query);
+        }
+
+        public void InsertUser(User pUser, string pTableName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertUsers(List<User> pUserList, string pTableName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertKeyPair(KeyPair pKeyPair, string pTableName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

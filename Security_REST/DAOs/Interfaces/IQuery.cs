@@ -1,7 +1,7 @@
 
-using CoVid.Models.QueryModels;
+using Security_REST.Models.QueryModels;
 
-namespace CoVid.DAOs.Interfaces
+namespace Security_REST.DAOs.Interfaces
 {
     public interface IQuery
     {

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace CoVid.Models.PathModels
+namespace Security_REST.Models.PathModels
 {
     public class Paths
     {
