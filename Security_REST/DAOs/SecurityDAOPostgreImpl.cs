@@ -61,7 +61,13 @@ namespace Security_REST.Controllers
 
         public override bool CreateTable(Query pQuery)
         {
-            throw new System.NotImplementedException();
+            ConnectionPostgreSql oConnection;
+            this.SetConnection(out oConnection);
+
+            if(this._oPostgreSqlCreateTable is null)
+                this._oPostgreSqlCreateTable = new PostgreSqlCreateTable();
+
+            return _oPostgreSqlCreateTable.CreateTable(oConnection, pQuery);
         }
 
         public override void InsertUser(User pUser, string pTableName)
@@ -139,6 +145,16 @@ namespace Security_REST.Controllers
                 _oPostgreSqlSelect = PostgreSqlSelect.GetInstance(oConnection);
 
             _oPostgreSqlSelect.SelectAllUsers(pUserList, pTableName);
+        }
+
+        public override void GetCreateQuery(out Query pQuery)
+        {
+            _oPostgreSqlCreateTable.SetQuery(string.Empty, out pQuery);
+        }
+
+        public override void GetSelectQuery(string pPath, out Query pQuery)
+        {
+            _oPostgreSqlSelect.SetQuery(pPath, out pQuery);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Security_REST.DAOs.Abstracts
         public abstract bool CreateTable(Query pQuery);
         public abstract bool CreateTable(string pPath);
         public abstract bool CreateNamedTable(string pPath, params string[] pTableName);
+        public abstract void GetCreateQuery(out Query pQuery);
         public abstract void InsertUser(User pUser, string pTableName);
         public abstract void InsertUsers(List<User> pUserList, string pTableName);
         public abstract void InsertKeyPair(KeyPair pKeyPair, string pTableName);
@@ -16,5 +17,6 @@ namespace Security_REST.DAOs.Abstracts
         public abstract void SelectAllKeyPairs(List<KeyPair> pKeyPairList, string pTableName);
         public abstract void SelectUser(User pUser, string pTableName);
         public abstract void SelectAllUsers(List<User> pUserList, string pTableName);
+        public abstract void GetSelectQuery(string pPath, out Query pQuery);
     }
 }

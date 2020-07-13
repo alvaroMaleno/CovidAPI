@@ -1,4 +1,0 @@
-{
-    "query": 
-    "select * from dates order by id"
-}

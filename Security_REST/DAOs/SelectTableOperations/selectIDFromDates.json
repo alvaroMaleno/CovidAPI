@@ -1,4 +1,0 @@
-{
-    "query": 
-    "select id from dates where date_string = '{0}'"
-}

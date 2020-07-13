@@ -8,8 +8,7 @@ namespace Security_REST.Controllers.DAOs.CreateTableOperations
 {
     public class PostgreSqlCreateTable : ICreate<ConnectionPostgreSql>
     {
-        private readonly string _TABLE_NAME = "table_name";
-        private string[] _oPathsArray;
+        private Paths _oPaths;
 
         public PostgreSqlCreateTable()
         {
@@ -22,18 +21,12 @@ namespace Security_REST.Controllers.DAOs.CreateTableOperations
             string so = UtilsSO.GetInstance().GetSO();
 
             if(so.Contains("unix"))
-            {
-                createTablePaths = @"./Processes/InitialCreateTables/createTables_Unix_Paths.json";
-            }
+                createTablePaths = @"./DAOs/PathsFiles/createTables_Unix_Paths.json";
             else
-            {
-                createTablePaths = @".\Processes\InitialCreateTables\createTables_Windows_Paths.json";
-            }
+                createTablePaths = @".\DAOs\PathsFiles\createTables_Windows_Paths.json";
 
             var paths = UtilsStreamReaders.GetInstance().ReadStreamFile(createTablePaths);
-            Paths oPathsArray;
-            UtilsJSON.GetInstance().DeserializeFromString(out oPathsArray, paths);
-            _oPathsArray = oPathsArray.oPaths;
+            UtilsJSON.GetInstance().DeserializeFromString(out _oPaths, paths);
         }
 
         public bool CreateTable(ConnectionPostgreSql pConnector, string pPath)
@@ -58,26 +51,14 @@ namespace Security_REST.Controllers.DAOs.CreateTableOperations
             {
                 Query oQuery;
                 this.SetQuery(pPath, out oQuery);
-                oSentenceList.Add(oQuery.query.Replace(_TABLE_NAME, tableName));
+                oSentenceList.Add(oQuery.query.Replace(UtilsConstants._TABLE_NAME, tableName));
             }
             return pConnector.ExecuteCommand(oSentenceList.ToArray());
         }
 
         public void SetQuery(string pPath, out Query pQuery)
         {
-            string path = string.Empty;
-            switch (pPath.ToLower())
-            {   
-                case "users":
-                    path = _oPathsArray[0];
-                    break;
-                case "keys":
-                    path = _oPathsArray[1];
-                    break;
-                default:
-                    break;
-            }
-            string query = UtilsStreamReaders.GetInstance().ReadStreamFile(path);
+            string query = UtilsStreamReaders.GetInstance().ReadStreamFile(_oPaths.oPaths[0]);
             UtilsJSON.GetInstance().DeserializeFromString(out pQuery, query);
         }
     }

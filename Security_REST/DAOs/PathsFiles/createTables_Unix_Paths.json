@@ -1,0 +1,6 @@
+{
+    "create_table_relatives_paths":
+    [ 
+        "./DAOs/CreateTableOperations/CreateTableQueriesJSONs/createTableTwoColumnsQuery.json" 
+    ]
+}

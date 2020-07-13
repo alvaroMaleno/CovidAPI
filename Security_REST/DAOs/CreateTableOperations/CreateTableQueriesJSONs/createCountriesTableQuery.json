@@ -1,4 +1,0 @@
-{
-    "query": 
-    "CREATE TABLE IF NOT EXISTS Countries (geoID char(15) NOT null references GeoZone(geoID), code text NOT NULL,name text ,population bigint,PRIMARY KEY (geoID))"
-}

@@ -32,7 +32,7 @@ namespace Security_REST.Utils
                 pTargetClass = System.Text.Json.JsonSerializer.Deserialize<R>(result);
                 oHttpClient = null;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 pTargetClass = default(R);
             }

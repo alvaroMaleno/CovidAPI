@@ -6,6 +6,7 @@ namespace Security_REST.Models.DataModels
     {
         [JsonPropertyName("email")]
         public string email{get;set;}
+        
         [JsonPropertyName("pass")]
         public string pass{get;set;}
     }

@@ -1,0 +1,7 @@
+{
+    "select_table_relatives_paths":
+    [ 
+        "./DAOs/SelectTableOperations/selectAllFromTable.json", 
+        "./DAOs/SelectTableOperations/selectColumnWhere.json"
+    ]
+}

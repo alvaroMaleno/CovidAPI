@@ -1,4 +1,0 @@
-{
-    "query": 
-    "CREATE TABLE IF NOT EXISTS country_name (dateID bigint NOT null references Dates(id),CovidData text NOT null,PRIMARY KEY (dateID))"
-}

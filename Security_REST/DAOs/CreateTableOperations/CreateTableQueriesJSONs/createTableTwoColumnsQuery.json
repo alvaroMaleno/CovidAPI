@@ -1,0 +1,4 @@
+{
+    "query": 
+    "CREATE TABLE IF NOT EXISTS {table_name} ({0} text, {1} text)"
+}

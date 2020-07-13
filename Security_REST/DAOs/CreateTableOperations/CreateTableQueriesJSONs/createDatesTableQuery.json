@@ -1,4 +1,0 @@
-{
-    "query": 
-    "CREATE TABLE IF NOT EXISTS Dates (id bigserial NOT NULL , date_string text NOT NULL,PRIMARY KEY (id))"
-}

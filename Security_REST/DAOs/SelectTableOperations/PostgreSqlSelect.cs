@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Security_REST.Controllers.DAOs.Connection;
 using Security_REST.DAOs.Interfaces;
 using Security_REST.Models.DataModels;
+using Security_REST.Models.PathModels;
 using Security_REST.Models.QueryModels;
 using Security_REST.Utils;
 
@@ -11,12 +12,9 @@ namespace Security_REST.DAOs.SelectTableOperations
     public class PostgreSqlSelect : IQuery
     {
         private ConnectionPostgreSql _oConnection { get; set; }
-
-        private readonly string _ONE_STRING = "{1}";
-        private readonly string _ZERO_STRING = "{0}";
-        private readonly string _TABLE_NAME = "table_name";
-
         private static PostgreSqlSelect _instance;
+        private Paths _oPaths;
+
 
         private PostgreSqlSelect(ConnectionPostgreSql pConnection = null)
         {
@@ -24,6 +22,22 @@ namespace Security_REST.DAOs.SelectTableOperations
                 this._oConnection = new ConnectionPostgreSql();
             else
                 this._oConnection = pConnection;
+
+            var file = Utils.UtilsStreamReaders.GetInstance().ReadStreamFile(this.GetSelectPath());
+            Utils.UtilsJSON.GetInstance().DeserializeFromString(out _oPaths, file);
+        }
+
+        private string GetSelectPath()
+        {
+            string selectPaths;
+            string so = UtilsSO.GetInstance().GetSO();
+
+            if(so.Contains("unix"))
+                selectPaths = @"./DAOs/PathsFiles/selectQueries_Unix_Paths.json";
+            else
+                selectPaths = @".\DAOs\PathsFiles\selectQueries_Windows_Paths.json";
+
+            return selectPaths;
         }
 
         public static PostgreSqlSelect GetInstance(ConnectionPostgreSql pConnection = null)
@@ -37,9 +51,23 @@ namespace Security_REST.DAOs.SelectTableOperations
 
         public void SetQuery(string pPath, out Query pQuery)
         {
+            string path;
+            switch (pPath)
+            {
+                case "all":
+                    path = _oPaths.oPaths[0];
+                    break;
+                case "column":
+                    path = _oPaths.oPaths[1];
+                    break;
+                default:
+                    path = string.Empty;
+                    break;
+            }
+            
             UtilsJSON.GetInstance().DeserializeFromString(
                 out pQuery,
-                UtilsStreamReaders.GetInstance().ReadStreamFile(pPath));
+                UtilsStreamReaders.GetInstance().ReadStreamFile(path));
         }
 
         public void SelectKeyPair(KeyPair pKeyPair, string pTableName)

@@ -4,6 +4,7 @@ using Security_REST.Models.DataModels;
 using Security_REST.Models.PathModels;
 using Security_REST.Security.DataManager;
 using Security_REST.Security.SecurityManager.Interfaces;
+using Security_REST.Utils;
 
 namespace Security_REST.Security.SecurityManager
 {
@@ -23,7 +24,21 @@ namespace Security_REST.Security.SecurityManager
             _oRSAManager = RSAManager.GetInstance();
             _oSolidDataManager = SolidDataManager.GetInstance();
             _numberOfUsersAddedWithActualKey = 0;
-            //TODO Paths
+            var file = Utils.UtilsStreamReaders.GetInstance().ReadStreamFile(this.GetFilePath());
+            UtilsJSON.GetInstance().DeserializeFromString(out  _oPathPersistentFiles, file);
+        }
+
+        private string GetFilePath()
+        {
+            string selectPaths;
+            string so = UtilsSO.GetInstance().GetSO();
+
+            if(so.Contains("unix"))
+                selectPaths = @"./Security/DataManager/EncryptedNames/names";
+            else
+                selectPaths = @".\Security\DataManager\EncryptedNames\names";
+
+            return selectPaths;
         }
 
         public static SecurityManager GetInstance()
