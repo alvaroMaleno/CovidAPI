@@ -47,11 +47,9 @@ namespace Security_REST.Security.DataManager
             }
         }
 
-        public void ChangePersistentFileEncryptation(Paths pPaths, bool pIsEncrypted)
+        public void ChangePersistentFileEncryptation(Paths pPaths)
         {
-            if(pIsEncrypted)
-                this.DesencryptEachPersistentFile(pPaths);
-                
+            this.DesencryptEachPersistentFile(pPaths);
             _oRSAManager.SubstituteKeyPair();
             this.EncryptEachPersistentFile(pPaths);
         }

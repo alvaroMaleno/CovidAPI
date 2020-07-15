@@ -8,7 +8,7 @@ using Security_REST.DAOs.SelectTableOperations;
 using Security_REST.Models.DataModels;
 using Security_REST.Models.QueryModels;
 
-namespace Security_REST.Controllers
+namespace Security_REST.DAOs
 {
     public class SecurityDAOPostgreImpl : DAO
     {
@@ -149,6 +149,8 @@ namespace Security_REST.Controllers
 
         public override void GetCreateQuery(out Query pQuery)
         {
+            if(this._oPostgreSqlCreateTable is null)
+                this._oPostgreSqlCreateTable = new PostgreSqlCreateTable();
             _oPostgreSqlCreateTable.SetQuery(string.Empty, out pQuery);
         }
 

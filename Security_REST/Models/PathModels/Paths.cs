@@ -4,7 +4,7 @@ namespace Security_REST.Models.PathModels
 {
     public class Paths
     {
-        [JsonPropertyName("table_relatives_paths")]
+        [JsonPropertyName("relatives_paths")]
         public string[] oPaths{get;set;}
     }
 }

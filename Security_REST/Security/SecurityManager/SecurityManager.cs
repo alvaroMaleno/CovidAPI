@@ -1,7 +1,9 @@
-using Security_REST.Controllers;
+using System;
+using Security_REST.DAOs;
 using Security_REST.DAOs.Abstracts;
 using Security_REST.Models.DataModels;
 using Security_REST.Models.PathModels;
+using Security_REST.Models.QueryModels;
 using Security_REST.Security.DataManager;
 using Security_REST.Security.SecurityManager.Interfaces;
 using Security_REST.Utils;
@@ -14,7 +16,6 @@ namespace Security_REST.Security.SecurityManager
         private DAO _oDAO;
         private RSAManager _oRSAManager;
         private SolidDataManager _oSolidDataManager;
-        private Paths _oPathPersistentFiles;
         private int _numberOfUsersAddedWithActualKey;
         private readonly string _USER_TABLE_NAME;
 
@@ -24,8 +25,6 @@ namespace Security_REST.Security.SecurityManager
             _oRSAManager = RSAManager.GetInstance();
             _oSolidDataManager = SolidDataManager.GetInstance();
             _numberOfUsersAddedWithActualKey = 0;
-            var file = Utils.UtilsStreamReaders.GetInstance().ReadStreamFile(this.GetFilePath());
-            UtilsJSON.GetInstance().DeserializeFromString(out  _oPathPersistentFiles, file);
         }
 
         private string GetFilePath()
@@ -75,15 +74,66 @@ namespace Security_REST.Security.SecurityManager
             throw new System.NotImplementedException();
         }
 
-        private void CreateSecurityTables()
+        public void CreateSecurityTables()
         {
-            throw new System.NotImplementedException();
+            string[] oLinesArray;
+            this.GetLinesArrayFromAFile(out oLinesArray);
+
+            if(!oLinesArray[0].Contains("false"))
+                return;
+
+            this.CreateTableByFirstTime(oLinesArray);
+            var fileToPersist = this.GetFileToPersistFromLinesArray(oLinesArray);
+            UtilsStreamWritters.GetInstance().WritteStringToFile(fileToPersist, this.GetFilePath());
+            _oSolidDataManager.EncryptFile(this.GetFilePath());
+        }
+
+
+        private string GetFileToPersistFromLinesArray(string[] oLinesArray)
+        {
+            string toReturn = string.Empty;
+            
+            foreach (var line in oLinesArray)
+                if(string.IsNullOrEmpty(toReturn))
+                    toReturn = line;
+                else
+                    toReturn = string.Concat(toReturn, Environment.NewLine, line);
+            
+            return toReturn;
+        }
+
+        private void CreateTableByFirstTime(string[] oLinesArray)
+        {
+            string[] oTableAndColumnsNamesArray;
+            
+            for (int i = 1; i < oLinesArray.Length; i++)
+            {
+                oTableAndColumnsNamesArray = oLinesArray[i].Split(",");
+                Query oQuery;
+                _oDAO.GetCreateQuery(out oQuery);
+                oQuery.query = oQuery.query.Replace(UtilsConstants._TABLE_NAME, oTableAndColumnsNamesArray[0]);
+                oQuery.query = oQuery.query.Replace(
+                                string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._ONE_STRING),
+                                oTableAndColumnsNamesArray[1]);
+                oQuery.query = oQuery.query.Replace(
+                                    string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._TWO_STRING),
+                                    oTableAndColumnsNamesArray[2]);
+                _oDAO.CreateTable(oQuery);
+            }
+            oLinesArray[0] = "true";
+        }
+
+        private void GetLinesArrayFromAFile(out string[] oLinesArray)
+        {
+            var file = UtilsStreamReaders.GetInstance().
+                                        ReadStreamFile(this.GetFilePath());
+            oLinesArray = file.Split(Environment.NewLine);
         }
 
         private void ChangePublicAndPrivateKey()
         {
             //TODO Persitent Files Without Encryptation
-            _oSolidDataManager.ChangePersistentFileEncryptation(_oPathPersistentFiles, true);
+            // _oSolidDataManager.ChangePersistentFileEncryptation(_oPathPersistentFiles, true);
         }
 
     }
