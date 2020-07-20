@@ -1,6 +1,0 @@
-{
-    "query": 
-    "INSERT INTO geozone (geoID, father, sons) VALUES ? ON conflict (geoID) DO update set geoID = Excluded.geoID, father = Excluded.father, sons = Excluded.sons",
-    "valuesFormat":
-    "({0}, {1}, {2})"
-}

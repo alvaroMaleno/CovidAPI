@@ -1,6 +1,0 @@
-{
-    "query": 
-    "INSERT INTO dates (id, date_string) VALUES ? ON conflict (id) DO update set id = Excluded.id, date_string = Excluded.date_string",
-    "valuesFormat":
-    "({0}, {1})"
-}

@@ -1,5 +1,4 @@
 using Security_REST.DAOs.Abstracts;
-using Security_REST.Models.QueryModels;
 using Security_REST.Security.SecurityManager;
 
 namespace Security_REST.DAOs.Processes.InitialTableCreation

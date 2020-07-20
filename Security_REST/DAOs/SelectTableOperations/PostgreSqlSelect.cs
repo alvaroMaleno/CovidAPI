@@ -70,7 +70,7 @@ namespace Security_REST.DAOs.SelectTableOperations
                 UtilsStreamReaders.GetInstance().ReadStreamFile(path));
         }
 
-        public void SelectKeyPair(KeyPair pKeyPair, string pTableName)
+        public void SelectKeyPair(KeyPair pKeyPair, string[] pTableLine)
         {
             throw new NotImplementedException();
         }
@@ -80,7 +80,7 @@ namespace Security_REST.DAOs.SelectTableOperations
             throw new NotImplementedException();
         }
         
-        public void SelectUser(User pUser, string pTableName)
+        public void SelectUser(User pUser, string[] pTableLine)
         {
             throw new NotImplementedException();
         }

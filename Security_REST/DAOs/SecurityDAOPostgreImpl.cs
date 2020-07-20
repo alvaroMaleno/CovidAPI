@@ -70,7 +70,7 @@ namespace Security_REST.DAOs
             return _oPostgreSqlCreateTable.CreateTable(oConnection, pQuery);
         }
 
-        public override void InsertUser(User pUser, string pTableName)
+        public override void InsertUser(User pUser, string[] pTableLine)
         {
             ConnectionPostgreSql oConnection;
             this.SetConnection(out oConnection);
@@ -78,10 +78,10 @@ namespace Security_REST.DAOs
             if(_oPostgreSqlInsert is null)
                 _oPostgreSqlInsert = PostgreSqlInsert.GetInstance(oConnection);
 
-            _oPostgreSqlInsert.InsertUser(pUser, pTableName);
+            _oPostgreSqlInsert.InsertUser(pUser, pTableLine);
         }
 
-        public override void InsertUsers(List<User> pUserList, string pTableName)
+        public override void InsertUsers(List<User> pUserList, string[] pTableLine)
         {
             ConnectionPostgreSql oConnection;
             this.SetConnection(out oConnection);
@@ -89,10 +89,10 @@ namespace Security_REST.DAOs
             if(_oPostgreSqlInsert is null)
                 _oPostgreSqlInsert = PostgreSqlInsert.GetInstance(oConnection);
 
-            _oPostgreSqlInsert.InsertUsers(pUserList, pTableName);
+            _oPostgreSqlInsert.InsertUsers(pUserList, pTableLine);
         }
 
-        public override void InsertKeyPair(KeyPair pKeyPair, string pTableName)
+        public override void InsertKeyPair(KeyPair pKeyPair, string[] pTableLine)
         {
             ConnectionPostgreSql oConnection;
             this.SetConnection(out oConnection);
@@ -100,10 +100,10 @@ namespace Security_REST.DAOs
             if(_oPostgreSqlInsert is null)
                 _oPostgreSqlInsert = PostgreSqlInsert.GetInstance(oConnection);
 
-            _oPostgreSqlInsert.InsertKeyPair(pKeyPair, pTableName);
+            _oPostgreSqlInsert.InsertKeyPair(pKeyPair, pTableLine);
         }
 
-        public override void SelectKeyPair(KeyPair pKeyPair, string pTableName)
+        public override void SelectKeyPair(KeyPair pKeyPair, string[] pTableLine)
         {
             ConnectionPostgreSql oConnection;
             this.SetConnection(out oConnection);
@@ -111,7 +111,7 @@ namespace Security_REST.DAOs
             if(_oPostgreSqlSelect is null)
                 _oPostgreSqlSelect = PostgreSqlSelect.GetInstance(oConnection);
 
-            _oPostgreSqlSelect.SelectKeyPair(pKeyPair, pTableName);
+            _oPostgreSqlSelect.SelectKeyPair(pKeyPair, pTableLine);
         }
 
         public override void SelectAllKeyPairs(List<KeyPair> pKeyPairList, string pTableName)
@@ -125,7 +125,7 @@ namespace Security_REST.DAOs
             _oPostgreSqlSelect.SelectAllKeyPairs(pKeyPairList, pTableName);
         }
 
-        public override void SelectUser(User pUser, string pTableName)
+        public override void SelectUser(User pUser, string[] pTableLine)
         {
             ConnectionPostgreSql oConnection;
             this.SetConnection(out oConnection);
@@ -133,7 +133,7 @@ namespace Security_REST.DAOs
             if(_oPostgreSqlSelect is null)
                 _oPostgreSqlSelect = PostgreSqlSelect.GetInstance(oConnection);
 
-            _oPostgreSqlSelect.SelectUser(pUser, pTableName);
+            _oPostgreSqlSelect.SelectUser(pUser, pTableLine);
         }
 
         public override void SelectAllUsers(List<User> pUserList, string pTableName)

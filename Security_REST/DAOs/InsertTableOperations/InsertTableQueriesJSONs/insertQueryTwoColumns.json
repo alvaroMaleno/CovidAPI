@@ -1,0 +1,5 @@
+{
+    "query": 
+    "INSERT INTO table_name (column_name1, column_name2, column_name3) VALUES ?",
+    "valuesFormat":"({0}, {1}, {2})"
+}

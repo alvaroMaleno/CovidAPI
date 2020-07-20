@@ -1,3 +1,4 @@
+using Security_REST.Models.DataModels;
 using Security_REST.Models.PathModels;
 using Security_REST.Utils;
 
@@ -21,51 +22,48 @@ namespace Security_REST.Security.DataManager
             return _instance;
         }
 
-        private void EncryptEachPersistentFile(Paths pPaths)
+        private void EncryptEachPersistentFile(KeyPair pKeyPair, Paths pPaths)
         {
             string dataToWritte;
             foreach (var path in pPaths.oPaths)
             {
                 dataToWritte = _oRSAManager.
-                                EncryptWithOwnKeyString(
-                                    UtilsStreamReaders.GetInstance().ReadStreamFile(path));
+                                EncryptWithPublicKeyString(
+                                    UtilsStreamReaders.GetInstance().ReadStreamFile(path),
+                                    pKeyPair.public_string);
                 
                 UtilsStreamWritters.GetInstance().WritteStringToFile(dataToWritte, path);
             }
         }
 
-        private void DesencryptEachPersistentFile(Paths pPaths)
+        private void DesencryptEachPersistentFile(KeyPair pKeyPair, Paths pPaths)
         {
             string dataToWritte;
             foreach (var path in pPaths.oPaths)
             {
                 dataToWritte = _oRSAManager.
-                                DesencryptWithOwnKeyString(
-                                    UtilsStreamReaders.GetInstance().ReadStreamFile(path));
+                                DesencryptWithPrivateKeyString(
+                                    UtilsStreamReaders.GetInstance().ReadStreamFile(path),
+                                    pKeyPair.private_string);
                 
                 UtilsStreamWritters.GetInstance().WritteStringToFile(dataToWritte, path);
             }
         }
 
-        public void ChangePersistentFileEncryptation(Paths pPaths)
-        {
-            this.DesencryptEachPersistentFile(pPaths);
-            _oRSAManager.SubstituteKeyPair();
-            this.EncryptEachPersistentFile(pPaths);
-        }
-
-        public string DesencryptFile(string pPath)
+        public string DesencryptFile(KeyPair pKeyPair, string pPath)
         {
             return _oRSAManager.
-                    DesencryptWithOwnKeyString(
-                        UtilsStreamReaders.GetInstance().ReadStreamFile(pPath));
+                    DesencryptWithPrivateKeyString(
+                        UtilsStreamReaders.GetInstance().ReadStreamFile(pPath),
+                        pKeyPair.private_string);
         }
 
-        public string EncryptFile(string pPath)
+        public string EncryptFile(KeyPair pKeyPair, string pPath)
         {
             return _oRSAManager.
-                    EncryptWithOwnKeyString(
-                        UtilsStreamReaders.GetInstance().ReadStreamFile(pPath));
+                    EncryptWithPublicKeyString(
+                        UtilsStreamReaders.GetInstance().ReadStreamFile(pPath),
+                        pKeyPair.public_string);
         }
         
     }

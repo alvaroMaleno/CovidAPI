@@ -4,7 +4,6 @@ using Security_REST.Controllers.DAOs.Interfaces;
 using Npgsql;
 using System.Collections.Generic;
 using Security_REST.Utils;
-using Security_REST.Controllers.DAOs.Connection;
 
 namespace Security_REST.Controllers.DAOs.Connection
 {
@@ -24,13 +23,9 @@ namespace Security_REST.Controllers.DAOs.Connection
             _connectionProperties = String.Empty;
             string so = UtilsSO.GetInstance().GetSO();
             if(so.Contains("unix"))
-            {
                 _connectionProperties = @"./DAOs/Connection/connectionProperties.json";
-            }
             else
-            {
                 _connectionProperties = @".\DAOs\Connection\connectionProperties.json";
-            }
 
             var connectionProp = UtilsStreamReaders.GetInstance().ReadStreamFile(_connectionProperties);
             UtilsJSON.GetInstance().DeserializeFromString(out _oProperties, connectionProp);

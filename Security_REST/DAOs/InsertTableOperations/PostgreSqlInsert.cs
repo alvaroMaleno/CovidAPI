@@ -39,13 +39,9 @@ namespace Security_REST.DAOs.InsertTableOperations
             string so = UtilsSO.GetInstance().GetSO();
 
             if(so.Contains("unix"))
-            {
-                createTablePaths = @"./Processes/InitialDataInsertion/insertData_Unix_Paths.json";
-            }
+                createTablePaths = @"./DAOs/PathsFiles/insertQueries_Unix_Paths.json";
             else
-            {
-                createTablePaths = @".\Processes\InitialDataInsertion\insertData_Windows_Paths.json";
-            }
+                createTablePaths = @".\DAOs\PathsFiles\insertQueries_Unix_Paths.json";
             
             var paths = UtilsStreamReaders.GetInstance().ReadStreamFile(createTablePaths);
             UtilsJSON.GetInstance().DeserializeFromString(out _oPathsArray, paths);
@@ -59,19 +55,62 @@ namespace Security_REST.DAOs.InsertTableOperations
             UtilsJSON.GetInstance().DeserializeFromString(out pQuery, query);
         }
 
-        public void InsertUser(User pUser, string pTableName)
+        public void InsertUser(User pUser, string[] pTableLine)
         {
-            throw new NotImplementedException();
+            // Query oQuery;
+            
+            // this.SetQuery(_oPathsArray.oPaths[UtilsConstants._ZERO], out oQuery);
+            // oQuery.query = oQuery.query.Replace(UtilsConstants._TABLE_NAME, pTableName.Trim());
+            // oQuery.query = oQuery.query.Replace(
+            //     string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._ONE_STRING), pUser.email);
+            // oQuery.query = oQuery.query.Replace(
+            //     string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._TWO_STRING), pUser.pass);
+            // oConnectionPostgreSql.ExecuteCommand(oQuery.query);
         }
 
-        public void InsertUsers(List<User> pUserList, string pTableName)
+        public void InsertUsers(List<User> pUserList, string[] pTableLine)
         {
-            throw new NotImplementedException();
+            // foreach (var oUser in pUserList)
+            // {
+            //     Query oQuery;
+            
+            //     this.SetQuery(_oPathsArray.oPaths[UtilsConstants._ZERO], out oQuery);
+            //     oQuery.query = oQuery.query.Replace(UtilsConstants._TABLE_NAME, pTableName.Trim());
+            //     oQuery.query = oQuery.query.Replace(
+            //         string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._ONE_STRING), oUser.email);
+            //     oQuery.query = oQuery.query.Replace(
+            //         string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._TWO_STRING), oUser.pass);
+            //     oConnectionPostgreSql.ExecuteCommand(oQuery.query);
+            // }
         }
 
-        public void InsertKeyPair(KeyPair pKeyPair, string pTableName)
+        public void InsertKeyPair(KeyPair pKeyPair, string[] pTableLine)
         {
-            throw new NotImplementedException();
+            Query oQuery;
+            
+            this.SetQuery(_oPathsArray.oPaths[UtilsConstants._ZERO], out oQuery);
+            oQuery.query = oQuery.query.Replace(
+                UtilsConstants._TABLE_NAME, pTableLine[UtilsConstants._ZERO].Trim());
+            oQuery.query = oQuery.query.Replace(
+                string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._ONE_STRING), 
+                pTableLine[UtilsConstants._ONE].Trim());
+            oQuery.query = oQuery.query.Replace(
+                string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._TWO_STRING), 
+                pTableLine[UtilsConstants._TWO].Trim());
+            oQuery.query = oQuery.query.Replace(
+                string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._THREE_STRING), 
+                pTableLine[UtilsConstants._THREE].Trim());
+            oQuery.valuesFormat = oQuery.valuesFormat.Replace(
+                UtilsConstants._ZERO_QUERY_STRING, 
+                string.Concat("'", pKeyPair.public_string, "'"));
+            oQuery.valuesFormat = oQuery.valuesFormat.Replace(
+                UtilsConstants._ONE_QUERY_STRING, 
+                string.Concat("'", pKeyPair.private_string, "'"));
+            oQuery.valuesFormat = oQuery.valuesFormat.Replace(
+                UtilsConstants._TWO_QUERY_STRING, 
+                string.Concat("'", UtilsConstants._TWO_QUERY_STRING, "'"));
+            oConnectionPostgreSql.ExecuteCommand(
+                oQuery.query.Replace(UtilsConstants._INTERROGANT, oQuery.valuesFormat));
         }
     }
 }

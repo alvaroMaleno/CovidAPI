@@ -2,7 +2,6 @@ using System;
 using Security_REST.DAOs;
 using Security_REST.DAOs.Abstracts;
 using Security_REST.Models.DataModels;
-using Security_REST.Models.PathModels;
 using Security_REST.Models.QueryModels;
 using Security_REST.Security.DataManager;
 using Security_REST.Security.SecurityManager.Interfaces;
@@ -24,7 +23,7 @@ namespace Security_REST.Security.SecurityManager
             _oDAO = SecurityDAOPostgreImpl.GetInstance();
             _oRSAManager = RSAManager.GetInstance();
             _oSolidDataManager = SolidDataManager.GetInstance();
-            _numberOfUsersAddedWithActualKey = 0;
+            _numberOfUsersAddedWithActualKey = UtilsConstants._ZERO;
         }
 
         private string GetFilePath()
@@ -50,8 +49,9 @@ namespace Security_REST.Security.SecurityManager
         
         public void AddUser(User pUser)
         {
-            _oDAO.InsertUser(pUser, _oSolidDataManager.DesencryptFile(_USER_TABLE_NAME));
-            _numberOfUsersAddedWithActualKey++;
+            //TODO
+            // _oDAO.InsertUser(pUser, _oSolidDataManager.DesencryptFile(_USER_TABLE_NAME));
+            // _numberOfUsersAddedWithActualKey++;
         }
 
         public bool ValidateUser(User pUser)
@@ -61,12 +61,16 @@ namespace Security_REST.Security.SecurityManager
 
         private void GenerateKeyPair(out KeyPair oKeyPair)
         {
-            _oRSAManager.GetPublicKeyAndPrivateKeyForNewUsers(out oKeyPair);
+            _oRSAManager.CreateKeyPair(out oKeyPair);
         }
 
-        private void SaveKeyPairOnDB(KeyPair pKeyPair)
+        private void SaveUserKeyPairOnDB(KeyPair pKeyPair)
         {
-            _oDAO.InsertKeyPair(pKeyPair, _USER_TABLE_NAME);
+            string[] oLinesArray;
+            this.GetLinesArrayFromAFile(out oLinesArray);
+            _oDAO.InsertKeyPair(
+                pKeyPair, 
+                oLinesArray[UtilsConstants._ONE].Split(UtilsConstants._COME));
         }
         
         private void ChangeDBEncriptation()
@@ -79,15 +83,23 @@ namespace Security_REST.Security.SecurityManager
             string[] oLinesArray;
             this.GetLinesArrayFromAFile(out oLinesArray);
 
-            if(!oLinesArray[0].Contains("false"))
+            if(oLinesArray[UtilsConstants._ZERO].Contains("true"))
                 return;
 
             this.CreateTableByFirstTime(oLinesArray);
             var fileToPersist = this.GetFileToPersistFromLinesArray(oLinesArray);
             UtilsStreamWritters.GetInstance().WritteStringToFile(fileToPersist, this.GetFilePath());
-            _oSolidDataManager.EncryptFile(this.GetFilePath());
+            this.CreateFirstPublicKeyPair(oLinesArray);
         }
 
+        private void CreateFirstPublicKeyPair(string[] oLinesArray)
+        {
+            KeyPair oKeyPair;
+            _oRSAManager.CreateKeyPair(out oKeyPair);
+            _oDAO.InsertKeyPair(
+                oKeyPair, 
+                oLinesArray[UtilsConstants._THREE].Split(UtilsConstants._COME));
+        }
 
         private string GetFileToPersistFromLinesArray(string[] oLinesArray)
         {
@@ -108,19 +120,23 @@ namespace Security_REST.Security.SecurityManager
             
             for (int i = 1; i < oLinesArray.Length; i++)
             {
-                oTableAndColumnsNamesArray = oLinesArray[i].Split(",");
+                oTableAndColumnsNamesArray = oLinesArray[i].Split(UtilsConstants._COME);
                 Query oQuery;
                 _oDAO.GetCreateQuery(out oQuery);
-                oQuery.query = oQuery.query.Replace(UtilsConstants._TABLE_NAME, oTableAndColumnsNamesArray[0]);
+                oQuery.query = oQuery.query.Replace(
+                                UtilsConstants._TABLE_NAME, oTableAndColumnsNamesArray[UtilsConstants._ZERO]);
                 oQuery.query = oQuery.query.Replace(
                                 string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._ONE_STRING),
-                                oTableAndColumnsNamesArray[1]);
+                                oTableAndColumnsNamesArray[UtilsConstants._ONE]);
                 oQuery.query = oQuery.query.Replace(
                                     string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._TWO_STRING),
-                                    oTableAndColumnsNamesArray[2]);
+                                    oTableAndColumnsNamesArray[UtilsConstants._TWO]);
+                oQuery.query = oQuery.query.Replace(
+                                    string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._THREE),
+                                    oTableAndColumnsNamesArray[UtilsConstants._THREE]);
                 _oDAO.CreateTable(oQuery);
             }
-            oLinesArray[0] = "true";
+            oLinesArray[UtilsConstants._ZERO] = "true";
         }
 
         private void GetLinesArrayFromAFile(out string[] oLinesArray)
@@ -132,8 +148,7 @@ namespace Security_REST.Security.SecurityManager
 
         private void ChangePublicAndPrivateKey()
         {
-            //TODO Persitent Files Without Encryptation
-            // _oSolidDataManager.ChangePersistentFileEncryptation(_oPathPersistentFiles, true);
+
         }
 
     }
