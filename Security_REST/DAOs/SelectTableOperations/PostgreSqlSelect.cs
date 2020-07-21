@@ -14,6 +14,8 @@ namespace Security_REST.DAOs.SelectTableOperations
         private ConnectionPostgreSql _oConnection { get; set; }
         private static PostgreSqlSelect _instance;
         private Paths _oPaths;
+        private string _ALL = "all";
+        private string _COLUMN = "column";
 
 
         private PostgreSqlSelect(ConnectionPostgreSql pConnection = null)
@@ -77,7 +79,21 @@ namespace Security_REST.DAOs.SelectTableOperations
 
         public void SelectAllKeyPairs(List<KeyPair> pKeyPairList, string pTableName)
         {
-            throw new NotImplementedException();
+            Query oQuery;
+            this.SetQuery(_ALL, out oQuery);
+            oQuery.query = oQuery.query.Replace(UtilsConstants._TABLE_NAME, pTableName);
+
+            List<object[]> oQueryResult = new List<object[]>();
+            _oConnection.ExecuteSelectCommand(oQuery.query, oQueryResult);
+
+            KeyPair oKeyPair;
+            foreach (var oRow in oQueryResult)
+            {
+                oKeyPair = new KeyPair(
+                    (string)oRow[UtilsConstants._ZERO], 
+                    (string)oRow[UtilsConstants._ONE]);
+                pKeyPairList.Add(oKeyPair);
+            }
         }
         
         public void SelectUser(User pUser, string[] pTableLine)

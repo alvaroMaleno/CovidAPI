@@ -103,6 +103,20 @@ namespace Security_REST.DAOs
             _oPostgreSqlInsert.InsertKeyPair(pKeyPair, pTableLine);
         }
 
+        public override void InsertKeyPair(
+            KeyPair pKeyPair, 
+            User pUser, 
+            string[] pTableLine)
+        {
+            ConnectionPostgreSql oConnection;
+            this.SetConnection(out oConnection);
+
+            if(_oPostgreSqlInsert is null)
+                _oPostgreSqlInsert = PostgreSqlInsert.GetInstance(oConnection);
+
+            _oPostgreSqlInsert.InsertKeyPair(pKeyPair, pUser, pTableLine);
+        }
+
         public override void SelectKeyPair(KeyPair pKeyPair, string[] pTableLine)
         {
             ConnectionPostgreSql oConnection;
@@ -158,5 +172,6 @@ namespace Security_REST.DAOs
         {
             _oPostgreSqlSelect.SetQuery(pPath, out pQuery);
         }
+
     }
 }

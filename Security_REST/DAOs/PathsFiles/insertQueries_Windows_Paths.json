@@ -1,6 +1,6 @@
 {
     "relatives_paths":
     [ 
-        ".\\DAOs\\InsertTableOperations\\InsertTableQueriesJSONs\\insertQueryTwoColumns.json" 
+        ".\\DAOs\\InsertTableOperations\\InsertTableQueriesJSONs\\insertQueryColumns.json" 
     ]
 }

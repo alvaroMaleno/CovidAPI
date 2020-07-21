@@ -13,6 +13,7 @@ namespace Security_REST.DAOs.Abstracts
         public abstract void InsertUser(User pUser, string[] pTableLine);
         public abstract void InsertUsers(List<User> pUserList, string[] pTableLine);
         public abstract void InsertKeyPair(KeyPair pKeyPair, string[] pTableLine);
+        public abstract void InsertKeyPair(KeyPair pKeyPair, User pUser, string[] pTableLine);
         public abstract void SelectKeyPair(KeyPair pKeyPair, string[] pTableLine);
         public abstract void SelectAllKeyPairs(List<KeyPair> pKeyPairList, string pTableName);
         public abstract void SelectUser(User pUser, string[] pTableLine);

@@ -15,6 +15,7 @@ namespace Security_REST.Utils
         public static readonly string _COLUMN_NAME = "column_name";
         public static readonly string _COME = ",";
         public static readonly string _INTERROGANT = "?";
+        public static readonly string _PLEASE_ENCRYPT_ERROR = "Please, encrypt data before send it.";
         public static readonly int _ZERO = 0;
         public static readonly int _ONE = 1;
         public static readonly int _TWO = 2;

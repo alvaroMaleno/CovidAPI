@@ -28,7 +28,6 @@
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/appsettings.json
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/Connection/connectionProperties.json
-/home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/CreateTableOperations/CreateTableQueriesJSONs/createTableTwoColumnsQuery.json
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/PathsFiles/createTables_Unix_Paths.json
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/PathsFiles/createTables_Windows_Paths.json
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/PathsFiles/selectQueries_Unix_Paths.json
@@ -45,6 +44,7 @@
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/Npgsql.dll
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/obj/Debug/netcoreapp3.1/API_Security.RazorTargetAssemblyInfo.cache
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/obj/Debug/netcoreapp3.1/API_Security.csproj.CopyComplete
-/home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/InsertTableOperations/InsertTableQueriesJSONs/insertQueryTwoColumns.json
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/PathsFiles/insertQueries_Unix_Paths.json
 /home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/PathsFiles/insertQueries_Windows_Paths.json
+/home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/CreateTableOperations/CreateTableQueriesJSONs/createTableColumnsQuery.json
+/home/alvaro/Documentos/Proyecto/Covid/Security_REST/bin/Debug/netcoreapp3.1/DAOs/InsertTableOperations/InsertTableQueriesJSONs/insertQueryColumns.json

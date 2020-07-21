@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Security_REST.DAOs;
 using Security_REST.DAOs.Abstracts;
 using Security_REST.Models.DataModels;
@@ -47,11 +48,62 @@ namespace Security_REST.Security.SecurityManager
             return _instance;
         }
         
-        public void AddUser(User pUser)
+        public void GetAPIKeyPair(out KeyPair pKeyPair)
         {
-            //TODO
-            // _oDAO.InsertUser(pUser, _oSolidDataManager.DesencryptFile(_USER_TABLE_NAME));
-            // _numberOfUsersAddedWithActualKey++;
+            string[] oLinesArray;
+            this.GetLinesArrayFromAFile(out oLinesArray); 
+            this.GetAPIKeypairFromDB(out pKeyPair, oLinesArray);
+        }
+
+        public string AddUser(User pUser)
+        {
+            string[] oLinesArray;
+            this.GetLinesArrayFromAFile(out oLinesArray); 
+
+            KeyPair oKeyPair;
+            this.GetAPIKeypairFromDB(out oKeyPair, oLinesArray);
+
+            try
+            {
+                pUser.email = _oRSAManager.DesencryptWithPrivateKeyString(pUser.email, oKeyPair.private_string);
+                pUser.pass = _oRSAManager.DesencryptWithPrivateKeyString(pUser.pass, oKeyPair.private_string);
+            }
+            catch (System.Exception)
+            {
+                return UtilsConstants._PLEASE_ENCRYPT_ERROR;
+            }
+
+            KeyPair oUserKeyPair;
+            _oRSAManager.CreateKeyPair(out oUserKeyPair);
+            pUser.email = _oRSAManager.EncryptWithPublicKeyString(pUser.email, oUserKeyPair.public_string);
+            pUser.pass = _oRSAManager.EncryptWithPublicKeyString(pUser.pass, oUserKeyPair.public_string);
+
+            _oDAO.InsertUser(pUser, oLinesArray[UtilsConstants._ONE].Split(UtilsConstants._COME));
+            this.IncrementNumberOfUsersAddedWithActualKey();
+            _oDAO.InsertKeyPair(
+                oUserKeyPair, 
+                pUser, 
+                oLinesArray[UtilsConstants._TWO].Split(UtilsConstants._COME));
+
+            return oUserKeyPair.public_string;
+        }
+
+        private void IncrementNumberOfUsersAddedWithActualKey()
+        {
+            _numberOfUsersAddedWithActualKey++;
+        }
+
+        private void GetAPIKeypairFromDB(out KeyPair pKeyPair, string[] pLinesArray)
+        {
+            List<KeyPair> oKeyPairList = new List<KeyPair>(UtilsConstants._THREE);
+
+            _oDAO.SelectAllKeyPairs(
+                oKeyPairList, 
+                pLinesArray[UtilsConstants._THREE].Split(UtilsConstants._COME)[UtilsConstants._ZERO].Trim());
+
+            pKeyPair = new KeyPair(
+                oKeyPairList[UtilsConstants._ZERO].public_string, 
+                oKeyPairList[UtilsConstants._ZERO].private_string);
         }
 
         public bool ValidateUser(User pUser)

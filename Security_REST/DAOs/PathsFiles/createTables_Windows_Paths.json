@@ -1,6 +1,6 @@
 {
     "relatives_paths":
     [ 
-        ".\\DAOs\\CreateTableOperations\\CreateTableQueriesJSONs\\createTableTwoColumnsQuery.json" 
+        ".\\DAOs\\CreateTableOperations\\CreateTableQueriesJSONs\\createTableColumnsQuery.json" 
     ]
 }
