@@ -56,7 +56,9 @@ namespace Security_REST.DAOs.InsertTableOperations
             this.SetQuery(_oPathsArray.oPaths[UtilsConstants._ZERO], out oQuery);
             this.PrepareQueryForInsertUser(oQuery, pUser, pTableLine);
 
-            oConnectionPostgreSql.ExecuteCommand(oQuery.query);
+            oConnectionPostgreSql.ExecuteCommand(
+                oQuery.query.Replace(
+                    UtilsConstants._INTERROGANT, oQuery.valuesFormat));
         }
 
         public void InsertUsers(List<User> pUserList, string[] pTableLine)
@@ -67,7 +69,9 @@ namespace Security_REST.DAOs.InsertTableOperations
             
                 this.SetQuery(_oPathsArray.oPaths[UtilsConstants._ZERO], out oQuery);
                 this.PrepareQueryForInsertUser(oQuery, oUser, pTableLine);
-                oConnectionPostgreSql.ExecuteCommand(oQuery.query);
+                oConnectionPostgreSql.ExecuteCommand(
+                    oQuery.query.Replace(
+                        UtilsConstants._INTERROGANT, oQuery.valuesFormat));
             }
         }
 
@@ -88,8 +92,7 @@ namespace Security_REST.DAOs.InsertTableOperations
             this.SetQuery(_oPathsArray.oPaths[UtilsConstants._ZERO], out oQuery);
             this.PrepareQueryForInsertKeyPair(oQuery, pKeyPair, pTableLine);
             oQuery.valuesFormat = oQuery.valuesFormat.Replace(
-                UtilsConstants._TWO_QUERY_STRING, 
-                string.Concat(_REPLACE_SINGLEQUOTE_CONSTANT, pUser.email, _REPLACE_SINGLEQUOTE_CONSTANT));
+                UtilsConstants._TWO_QUERY_STRING, pUser.email);
             oConnectionPostgreSql.ExecuteCommand(
                 oQuery.query.Replace(UtilsConstants._INTERROGANT, oQuery.valuesFormat));
         }
@@ -98,22 +101,18 @@ namespace Security_REST.DAOs.InsertTableOperations
         {
             this.PrepareQueryForInsert(pQuery, pTableLine);
             pQuery.valuesFormat = pQuery.valuesFormat.Replace(
-                UtilsConstants._ZERO_QUERY_STRING, 
-                string.Concat(_REPLACE_SINGLEQUOTE_CONSTANT, pKeyPair.public_string, _REPLACE_SINGLEQUOTE_CONSTANT));
+                UtilsConstants._ZERO_QUERY_STRING, pKeyPair.public_string);
             pQuery.valuesFormat = pQuery.valuesFormat.Replace(
-                UtilsConstants._ONE_QUERY_STRING, 
-                string.Concat(_REPLACE_SINGLEQUOTE_CONSTANT, pKeyPair.private_string, _REPLACE_SINGLEQUOTE_CONSTANT));
+                UtilsConstants._ONE_QUERY_STRING, pKeyPair.private_string);
         }
 
         private void PrepareQueryForInsertUser(Query pQuery, User pUser, string[] pTableLine)
         {
             this.PrepareQueryForInsert(pQuery, pTableLine);
             pQuery.valuesFormat = pQuery.valuesFormat.Replace(
-                UtilsConstants._ZERO_QUERY_STRING, 
-                string.Concat(_REPLACE_SINGLEQUOTE_CONSTANT, pUser.email, _REPLACE_SINGLEQUOTE_CONSTANT));
+                UtilsConstants._ZERO_QUERY_STRING, pUser.email);
             pQuery.valuesFormat = pQuery.valuesFormat.Replace(
-                UtilsConstants._ONE_QUERY_STRING, 
-                string.Concat(_REPLACE_SINGLEQUOTE_CONSTANT, pUser.pass, _REPLACE_SINGLEQUOTE_CONSTANT));
+                UtilsConstants._ONE_QUERY_STRING, pUser.pass);
         }
 
         private void PrepareQueryForInsert(Query pQuery, string[] pTableLine)

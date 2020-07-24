@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Security_REST.DAOs;
 using Security_REST.DAOs.Abstracts;
@@ -27,19 +26,6 @@ namespace Security_REST.Security.SecurityManager
             _numberOfUsersAddedWithActualKey = UtilsConstants._ZERO;
         }
 
-        private string GetFilePath()
-        {
-            string selectPaths;
-            string so = UtilsSO.GetInstance().GetSO();
-
-            if(so.Contains("unix"))
-                selectPaths = @"./Security/DataManager/EncryptedNames/names";
-            else
-                selectPaths = @".\Security\DataManager\EncryptedNames\names";
-
-            return selectPaths;
-        }
-
         public static SecurityManager GetInstance()
         {
             if(_instance is null)
@@ -51,41 +37,55 @@ namespace Security_REST.Security.SecurityManager
         public void GetAPIKeyPair(out KeyPair pKeyPair)
         {
             string[] oLinesArray;
-            this.GetLinesArrayFromAFile(out oLinesArray); 
+            _oSolidDataManager.GetLinesArrayFromAFile(out oLinesArray); 
             this.GetAPIKeypairFromDB(out pKeyPair, oLinesArray);
         }
 
         public string AddUser(User pUser)
         {
             string[] oLinesArray;
-            this.GetLinesArrayFromAFile(out oLinesArray); 
+            _oSolidDataManager.GetLinesArrayFromAFile(out oLinesArray); 
 
             KeyPair oKeyPair;
             this.GetAPIKeypairFromDB(out oKeyPair, oLinesArray);
 
             try
             {
-                pUser.email = _oRSAManager.DesencryptWithPrivateKeyString(pUser.email, oKeyPair.private_string);
-                pUser.pass = _oRSAManager.DesencryptWithPrivateKeyString(pUser.pass, oKeyPair.private_string);
+                pUser.email = _oRSAManager.DesencryptWithPrivateKeyString(pUser.email, oKeyPair);
+                pUser.pass = _oRSAManager.DesencryptWithPrivateKeyString(pUser.pass, oKeyPair);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 return UtilsConstants._PLEASE_ENCRYPT_ERROR;
             }
 
             KeyPair oUserKeyPair;
-            _oRSAManager.CreateKeyPair(out oUserKeyPair);
-            pUser.email = _oRSAManager.EncryptWithPublicKeyString(pUser.email, oUserKeyPair.public_string);
-            pUser.pass = _oRSAManager.EncryptWithPublicKeyString(pUser.pass, oUserKeyPair.public_string);
-
-            _oDAO.InsertUser(pUser, oLinesArray[UtilsConstants._ONE].Split(UtilsConstants._COME));
-            this.IncrementNumberOfUsersAddedWithActualKey();
-            _oDAO.InsertKeyPair(
-                oUserKeyPair, 
-                pUser, 
-                oLinesArray[UtilsConstants._TWO].Split(UtilsConstants._COME));
+            this.GetUserKeyPairAndEncryptedUser(pUser, oKeyPair, out oUserKeyPair);
+            this.InsertUserWithKeyPair(pUser, oUserKeyPair, oLinesArray);
 
             return oUserKeyPair.public_string;
+        }
+
+        private void InsertUserWithKeyPair(User pUser, KeyPair pUserKeyPair, string[] pLinesArray)
+        {
+             _oDAO.InsertUser(pUser, pLinesArray[UtilsConstants._ONE].Split(UtilsConstants._COME));
+            this.IncrementNumberOfUsersAddedWithActualKey();
+            _oDAO.InsertKeyPair(
+                pUserKeyPair, 
+                pUser, 
+                pLinesArray[UtilsConstants._TWO].Split(UtilsConstants._COME));
+        }
+
+        private void GetUserKeyPairAndEncryptedUser(User pUser, KeyPair pKeyPair, out KeyPair pUserKeyPair)
+        {
+            _oRSAManager.CreateKeyPair(out pUserKeyPair);
+            pUser.email = _oRSAManager.EncryptWithPublicKeyString(pUser.email, pUserKeyPair.public_string);
+            pUser.pass = _oRSAManager.EncryptWithPublicKeyString(pUser.pass, pUserKeyPair.public_string);
+            pUserKeyPair.public_string = _oRSAManager.EncryptWithPublicKeyString(
+                pUserKeyPair.public_string, pKeyPair.public_string);
+            pUserKeyPair.private_string= _oRSAManager.EncryptWithPublicKeyString(
+                pUserKeyPair.private_string, pKeyPair.public_string);
+            
         }
 
         private void IncrementNumberOfUsersAddedWithActualKey()
@@ -119,7 +119,7 @@ namespace Security_REST.Security.SecurityManager
         private void SaveUserKeyPairOnDB(KeyPair pKeyPair)
         {
             string[] oLinesArray;
-            this.GetLinesArrayFromAFile(out oLinesArray);
+            _oSolidDataManager.GetLinesArrayFromAFile(out oLinesArray);
             _oDAO.InsertKeyPair(
                 pKeyPair, 
                 oLinesArray[UtilsConstants._ONE].Split(UtilsConstants._COME));
@@ -133,14 +133,14 @@ namespace Security_REST.Security.SecurityManager
         public void CreateSecurityTables()
         {
             string[] oLinesArray;
-            this.GetLinesArrayFromAFile(out oLinesArray);
+            _oSolidDataManager.GetLinesArrayFromAFile(out oLinesArray);
 
             if(oLinesArray[UtilsConstants._ZERO].Contains("true"))
                 return;
 
             this.CreateTableByFirstTime(oLinesArray);
-            var fileToPersist = this.GetFileToPersistFromLinesArray(oLinesArray);
-            UtilsStreamWritters.GetInstance().WritteStringToFile(fileToPersist, this.GetFilePath());
+            var fileToPersist = _oSolidDataManager.GetFileToPersistFromLinesArray(oLinesArray);
+            UtilsStreamWritters.GetInstance().WritteStringToFile(fileToPersist, _oSolidDataManager.GetFilePath());
             this.CreateFirstPublicKeyPair(oLinesArray);
         }
 
@@ -148,22 +148,10 @@ namespace Security_REST.Security.SecurityManager
         {
             KeyPair oKeyPair;
             _oRSAManager.CreateKeyPair(out oKeyPair);
+            
             _oDAO.InsertKeyPair(
                 oKeyPair, 
                 oLinesArray[UtilsConstants._THREE].Split(UtilsConstants._COME));
-        }
-
-        private string GetFileToPersistFromLinesArray(string[] oLinesArray)
-        {
-            string toReturn = string.Empty;
-            
-            foreach (var line in oLinesArray)
-                if(string.IsNullOrEmpty(toReturn))
-                    toReturn = line;
-                else
-                    toReturn = string.Concat(toReturn, Environment.NewLine, line);
-            
-            return toReturn;
         }
 
         private void CreateTableByFirstTime(string[] oLinesArray)
@@ -189,13 +177,6 @@ namespace Security_REST.Security.SecurityManager
                 _oDAO.CreateTable(oQuery);
             }
             oLinesArray[UtilsConstants._ZERO] = "true";
-        }
-
-        private void GetLinesArrayFromAFile(out string[] oLinesArray)
-        {
-            var file = UtilsStreamReaders.GetInstance().
-                                        ReadStreamFile(this.GetFilePath());
-            oLinesArray = file.Split(Environment.NewLine);
         }
 
         private void ChangePublicAndPrivateKey()

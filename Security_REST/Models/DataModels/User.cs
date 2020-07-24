@@ -9,5 +9,8 @@ namespace Security_REST.Models.DataModels
         
         [JsonPropertyName("pass")]
         public string pass{get;set;}
+
+        [JsonPropertyName("new")]
+        public bool? newUser{get;set;}
     }
 }

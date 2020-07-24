@@ -1,3 +1,4 @@
+using System;
 using Security_REST.Models.DataModels;
 using Security_REST.Models.PathModels;
 using Security_REST.Utils;
@@ -22,7 +23,40 @@ namespace Security_REST.Security.DataManager
             return _instance;
         }
 
-        private void EncryptEachPersistentFile(KeyPair pKeyPair, Paths pPaths)
+        public string GetFilePath()
+        {
+            string selectPaths;
+            string so = UtilsSO.GetInstance().GetSO();
+
+            if(so.Contains("unix"))
+                selectPaths = @"./Security/DataManager/EncryptedNames/names";
+            else
+                selectPaths = @".\Security\DataManager\EncryptedNames\names";
+
+            return selectPaths;
+        }
+
+        public void GetLinesArrayFromAFile(out string[] oLinesArray)
+        {
+            var file = UtilsStreamReaders.GetInstance().
+                                        ReadStreamFile(this.GetFilePath());
+            oLinesArray = file.Split(Environment.NewLine);
+        }
+
+        public string GetFileToPersistFromLinesArray(string[] oLinesArray)
+        {
+            string toReturn = string.Empty;
+            
+            foreach (var line in oLinesArray)
+                if(string.IsNullOrEmpty(toReturn))
+                    toReturn = line;
+                else
+                    toReturn = string.Concat(toReturn, Environment.NewLine, line);
+            
+            return toReturn;
+        }
+
+        public void EncryptEachPersistentFile(KeyPair pKeyPair, Paths pPaths)
         {
             string dataToWritte;
             foreach (var path in pPaths.oPaths)
@@ -36,7 +70,7 @@ namespace Security_REST.Security.DataManager
             }
         }
 
-        private void DesencryptEachPersistentFile(KeyPair pKeyPair, Paths pPaths)
+        public void DesencryptEachPersistentFile(KeyPair pKeyPair, Paths pPaths)
         {
             string dataToWritte;
             foreach (var path in pPaths.oPaths)
@@ -44,7 +78,7 @@ namespace Security_REST.Security.DataManager
                 dataToWritte = _oRSAManager.
                                 DesencryptWithPrivateKeyString(
                                     UtilsStreamReaders.GetInstance().ReadStreamFile(path),
-                                    pKeyPair.private_string);
+                                    pKeyPair);
                 
                 UtilsStreamWritters.GetInstance().WritteStringToFile(dataToWritte, path);
             }
@@ -55,7 +89,7 @@ namespace Security_REST.Security.DataManager
             return _oRSAManager.
                     DesencryptWithPrivateKeyString(
                         UtilsStreamReaders.GetInstance().ReadStreamFile(pPath),
-                        pKeyPair.private_string);
+                        pKeyPair);
         }
 
         public string EncryptFile(KeyPair pKeyPair, string pPath)

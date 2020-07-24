@@ -37,18 +37,19 @@ namespace Security_REST.Security
 
         private void CreateRSACryptoServiceProvider(out RSACryptoServiceProvider pRSACryptoServiceProvider)
         {
-            pRSACryptoServiceProvider = new RSACryptoServiceProvider();
+            pRSACryptoServiceProvider = new RSACryptoServiceProvider(10024);
         }
 
-        public string DesencryptWithPrivateKeyString(string pToDesencrypt, string pPrivateKey)
+        public string DesencryptWithPrivateKeyString(string pToDesencrypt, KeyPair pKeyPair)
         {
             RSACryptoServiceProvider oRSACryptoServiceProvider;
             this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider);
-            oRSACryptoServiceProvider.FromXmlString(pPrivateKey);
+
+            oRSACryptoServiceProvider.FromXmlString(pKeyPair.private_string);
+            var ToDecrypt = Convert.FromBase64String(pToDesencrypt);
             return 
                 Encoding.ASCII.GetString(
-                    oRSACryptoServiceProvider.Decrypt(
-                        Encoding.ASCII.GetBytes(pToDesencrypt), false));
+                    oRSACryptoServiceProvider.Decrypt(ToDecrypt, false));
         }
 
         public string EncryptWithPublicKeyString(string pToEncrypt, string pPublicKey)
@@ -56,7 +57,10 @@ namespace Security_REST.Security
             RSACryptoServiceProvider oRSACryptoServiceProvider;
             this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider);
             oRSACryptoServiceProvider.FromXmlString(pPublicKey);
-            return Encoding.ASCII.GetString(oRSACryptoServiceProvider.Encrypt(Encoding.ASCII.GetBytes(pToEncrypt), false));
+            return 
+                Convert.ToBase64String(
+                    oRSACryptoServiceProvider.Encrypt(
+                        Encoding.ASCII.GetBytes(pToEncrypt), false));
         }
 
     }
