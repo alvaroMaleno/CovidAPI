@@ -16,6 +16,7 @@ namespace Security_REST.DAOs.SelectTableOperations
         private Paths _oPaths;
         private string _ALL = "all";
         private string _COLUMN = "column";
+        private string _ASTERISC = "*";
 
 
         private PostgreSqlSelect(ConnectionPostgreSql pConnection = null)
@@ -72,9 +73,46 @@ namespace Security_REST.DAOs.SelectTableOperations
                 UtilsStreamReaders.GetInstance().ReadStreamFile(path));
         }
 
-        public void SelectKeyPair(KeyPair pKeyPair, string[] pTableLine)
+        public void SelectKeyPairFromUser(User pUser, string[] pTableLineout, out KeyPair pKeyPair)
         {
-            throw new NotImplementedException();
+            Query oQuery;
+            this.SetQuery(_COLUMN, out oQuery);
+            this.PrepareQueryForSelectKeyPairFromColumn(oQuery, pTableLineout, pUser);
+
+            List<object[]> oQueryResult = new List<object[]>();
+            _oConnection.ExecuteSelectCommand(oQuery.query, oQueryResult);
+
+            if(oQueryResult.Count < UtilsConstants._ONE)
+                pKeyPair = new KeyPair(string.Empty, string.Empty);
+            
+            pKeyPair = new KeyPair(
+                (string) oQueryResult[UtilsConstants._ZERO][UtilsConstants._ZERO], 
+                (string) oQueryResult[UtilsConstants._ZERO][UtilsConstants._ONE]);
+        }
+
+        private void PrepareQueryForSelectKeyPairFromColumn(Query pQuery, string[] pTableLineout, User pUser)
+        {
+            this.PrepareQueryForSelectFromColumn(
+                pQuery, 
+                _ASTERISC, 
+                pTableLineout[UtilsConstants._ZERO].Trim(), 
+                pTableLineout[UtilsConstants._ONE].Trim());
+            pQuery.query = pQuery.query.Replace(UtilsConstants._ZERO_QUERY_STRING, pUser.public_key);
+        }
+
+        private void PrepareQueryForSelectFromColumn(
+            Query pQuery, 
+            string pToSelect, 
+            string pTable, 
+            string pColumnToCompare)
+        {
+            pQuery.query = pQuery.query.Replace(
+                string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._ONE_STRING),
+                pToSelect);
+            pQuery.query = pQuery.query.Replace(
+                string.Concat(UtilsConstants._COLUMN_NAME, UtilsConstants._TWO),
+                pColumnToCompare);
+            pQuery.query = pQuery.query.Replace(UtilsConstants._TABLE_NAME, pTable);
         }
 
         public void SelectAllKeyPairs(List<KeyPair> pKeyPairList, string pTableName)
@@ -96,11 +134,38 @@ namespace Security_REST.DAOs.SelectTableOperations
             }
         }
         
-        public void SelectUser(User pUser, string[] pTableLine)
+        public void SelectUser(User pUser, string[] pTableLine, out User pSelectedUser)
         {
-            throw new NotImplementedException();
+            Query oQuery;
+            this.SetQuery(_COLUMN, out oQuery);
+            this.PrepareQueryForSelectUserFromColumn(oQuery, pTableLine, pUser);
+
+            List<object[]> oQueryResult = new List<object[]>();
+            _oConnection.ExecuteSelectCommand(oQuery.query, oQueryResult);
+
+            pSelectedUser = new User();
+            
+            if(oQueryResult.Count < UtilsConstants._ONE)
+            {
+                pSelectedUser.email = string.Empty;
+                pSelectedUser.pass = string.Empty;
+                return;
+            }
+
+            pSelectedUser.email = (string)oQueryResult[UtilsConstants._ZERO][UtilsConstants._ZERO];
+            pSelectedUser.pass = (string)oQueryResult[UtilsConstants._ZERO][UtilsConstants._ONE];
         }
-        
+
+        private void PrepareQueryForSelectUserFromColumn(Query pQuery, string[] pTableLine, User pUser)
+        {
+            this.PrepareQueryForSelectFromColumn(
+                pQuery, 
+                _ASTERISC, 
+                pTableLine[UtilsConstants._ZERO].Trim(), 
+                pTableLine[UtilsConstants._ONE].Trim());
+            pQuery.query = pQuery.query.Replace(UtilsConstants._ZERO_QUERY_STRING, pUser.email);
+        }
+
         public void SelectAllUsers(List<User> pUserList, string pTableName)
         {
             throw new NotImplementedException();

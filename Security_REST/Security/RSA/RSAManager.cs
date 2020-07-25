@@ -37,7 +37,7 @@ namespace Security_REST.Security
 
         private void CreateRSACryptoServiceProvider(out RSACryptoServiceProvider pRSACryptoServiceProvider)
         {
-            pRSACryptoServiceProvider = new RSACryptoServiceProvider(10024);
+            pRSACryptoServiceProvider = new RSACryptoServiceProvider(3072);
         }
 
         public string DesencryptWithPrivateKeyString(string pToDesencrypt, KeyPair pKeyPair)

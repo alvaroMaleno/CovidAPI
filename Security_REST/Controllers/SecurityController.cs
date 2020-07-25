@@ -1,9 +1,11 @@
+using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Security_REST.Models.DataModels;
 using Security_REST.Security.SecurityManager;
+using Security_REST.Utils;
 
 namespace API_Security.Controllers
 {
@@ -34,10 +36,15 @@ namespace API_Security.Controllers
             if(this.ThereArePostError(pUser))
                 return new Microsoft.AspNetCore.Mvc.BadRequestResult();
             
-            if(pUser?.newUser == true)
-                return _oSecurityManager.AddUser(pUser);
+            if(pUser?.newUser != true)
+                return _oSecurityManager.ValidateUser(pUser);
 
-            return _oSecurityManager.ValidateUser(pUser);
+            _oSecurityManager.AddUser(pUser);
+
+            if(pUser.public_key == UtilsConstants._PLEASE_ENCRYPT_ERROR)
+                return UtilsConstants._PLEASE_ENCRYPT_ERROR;
+            
+            return pUser.public_key;
         }
 
         private bool ThereArePostError(User pUser)

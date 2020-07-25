@@ -14,10 +14,13 @@ namespace Security_REST.DAOs.Abstracts
         public abstract void InsertUsers(List<User> pUserList, string[] pTableLine);
         public abstract void InsertKeyPair(KeyPair pKeyPair, string[] pTableLine);
         public abstract void InsertKeyPair(KeyPair pKeyPair, User pUser, string[] pTableLine);
-        public abstract void SelectKeyPair(KeyPair pKeyPair, string[] pTableLine);
+        public abstract void SelectKeyPairFromUser(User pUser, string[] pTableLine, out KeyPair pKeyPair);
         public abstract void SelectAllKeyPairs(List<KeyPair> pKeyPairList, string pTableName);
-        public abstract void SelectUser(User pUser, string[] pTableLine);
+        public abstract void SelectUser(User pUser, string[] pTableLine, out User pSelectedUser);
         public abstract void SelectAllUsers(List<User> pUserList, string pTableName);
         public abstract void GetSelectQuery(string pPath, out Query pQuery);
+        public abstract void UpdatePublicKey(KeyPair pOldKeyPair, KeyPair pNewKeyPair, string[] pTableLine);
+        public abstract void UpdatePrivateKey(KeyPair pOldKeyPair, KeyPair pNewKeyPair, string[] pTableLine);
+        public abstract void UpdatePrivateFromPublicKey(KeyPair pOldKeyPair, KeyPair pNewKeyPair, string[] pTableLine);
     }
 }

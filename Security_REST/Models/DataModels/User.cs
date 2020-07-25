@@ -12,5 +12,8 @@ namespace Security_REST.Models.DataModels
 
         [JsonPropertyName("new")]
         public bool? newUser{get;set;}
+
+        [JsonPropertyName("public_key")]
+        public string public_key{get;set;}
     }
 }

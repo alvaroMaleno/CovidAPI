@@ -5,6 +5,7 @@ using Security_REST.Controllers.DAOs.CreateTableOperations;
 using Security_REST.DAOs.Abstracts;
 using Security_REST.DAOs.InsertTableOperations;
 using Security_REST.DAOs.SelectTableOperations;
+using Security_REST.DAOs.UpdateTableOperations;
 using Security_REST.Models.DataModels;
 using Security_REST.Models.QueryModels;
 
@@ -15,6 +16,7 @@ namespace Security_REST.DAOs
         private PostgreSqlCreateTable _oPostgreSqlCreateTable{get;set;}
         private PostgreSqlInsert _oPostgreSqlInsert{get;set;}
         private PostgreSqlSelect _oPostgreSqlSelect{get;set;}
+        private PostgreSqlUpdate _oPostgreSqlUpdate{get;set;}
         private static SecurityDAOPostgreImpl _instance;
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -117,7 +119,7 @@ namespace Security_REST.DAOs
             _oPostgreSqlInsert.InsertKeyPair(pKeyPair, pUser, pTableLine);
         }
 
-        public override void SelectKeyPair(KeyPair pKeyPair, string[] pTableLine)
+        public override void SelectKeyPairFromUser(User pUser, string[] pTableLine, out KeyPair pKeyPair)
         {
             ConnectionPostgreSql oConnection;
             this.SetConnection(out oConnection);
@@ -125,7 +127,7 @@ namespace Security_REST.DAOs
             if(_oPostgreSqlSelect is null)
                 _oPostgreSqlSelect = PostgreSqlSelect.GetInstance(oConnection);
 
-            _oPostgreSqlSelect.SelectKeyPair(pKeyPair, pTableLine);
+            _oPostgreSqlSelect.SelectKeyPairFromUser(pUser, pTableLine, out pKeyPair);
         }
 
         public override void SelectAllKeyPairs(List<KeyPair> pKeyPairList, string pTableName)
@@ -139,7 +141,7 @@ namespace Security_REST.DAOs
             _oPostgreSqlSelect.SelectAllKeyPairs(pKeyPairList, pTableName);
         }
 
-        public override void SelectUser(User pUser, string[] pTableLine)
+        public override void SelectUser(User pUser, string[] pTableLine, out User pSelectedUser)
         {
             ConnectionPostgreSql oConnection;
             this.SetConnection(out oConnection);
@@ -147,7 +149,7 @@ namespace Security_REST.DAOs
             if(_oPostgreSqlSelect is null)
                 _oPostgreSqlSelect = PostgreSqlSelect.GetInstance(oConnection);
 
-            _oPostgreSqlSelect.SelectUser(pUser, pTableLine);
+            _oPostgreSqlSelect.SelectUser(pUser, pTableLine, out pSelectedUser);
         }
 
         public override void SelectAllUsers(List<User> pUserList, string pTableName)
@@ -173,5 +175,37 @@ namespace Security_REST.DAOs
             _oPostgreSqlSelect.SetQuery(pPath, out pQuery);
         }
 
+        public override void UpdatePublicKey(KeyPair pOldKeyPair, KeyPair pNewKeyPair, string[] pTableLine)
+        {
+            ConnectionPostgreSql oConnection;
+            this.SetConnection(out oConnection);
+
+            if(_oPostgreSqlUpdate is null)
+                _oPostgreSqlUpdate = PostgreSqlUpdate.GetInstance(oConnection);
+
+            _oPostgreSqlUpdate.UpdatePublicKey(pOldKeyPair, pNewKeyPair, pTableLine);
+        }
+
+        public override void UpdatePrivateKey(KeyPair pOldKeyPair, KeyPair pNewKeyPair, string[] pTableLine)
+        {
+            ConnectionPostgreSql oConnection;
+            this.SetConnection(out oConnection);
+
+            if(_oPostgreSqlUpdate is null)
+                _oPostgreSqlUpdate = PostgreSqlUpdate.GetInstance(oConnection);
+
+            _oPostgreSqlUpdate.UpdatePrivateKey(pOldKeyPair, pNewKeyPair, pTableLine);
+        }
+
+        public override void UpdatePrivateFromPublicKey(KeyPair pOldKeyPair, KeyPair pNewKeyPair, string[] pTableLine)
+        {
+            ConnectionPostgreSql oConnection;
+            this.SetConnection(out oConnection);
+
+            if(_oPostgreSqlUpdate is null)
+                _oPostgreSqlUpdate = PostgreSqlUpdate.GetInstance(oConnection);
+
+            _oPostgreSqlUpdate.UpdatePrivateFromPublicKey(pOldKeyPair, pNewKeyPair, pTableLine);
+        }
     }
 }
