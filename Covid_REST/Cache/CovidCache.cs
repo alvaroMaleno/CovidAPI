@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic.CompilerServices;
 using System.Collections.Generic;
 using CoVid.Models;
 using System.Threading;
@@ -58,10 +59,20 @@ namespace CoVid.Cache
 
         public void GetListFilteredByDate(string pStartDate, string pEndDate, out object objectToReturn)
         {
+            if(_oAllDatesDic is null || _oAllDatesDic.Count < 1)
+                this.CompleteDatesDictionary();
+            
             ulong startDate = this._oAllDatesDic[pStartDate];
             ulong endDate = this._oAllDatesDic[pEndDate];
             GeoZone oGeoZoneToReturn;
             List<GeoZone> oListToFill = new List<GeoZone>();
+
+            if(_oAllGeoZoneList is null || _oAllGeoZoneList.Count < 1)
+            {
+                DAOModelPOST oDAOModelPOST = new DAOModelPOST("GetAllGeoZoneDataForAllDates", null);
+                _oAllGeoZoneList = UtilsJSON.GetInstance().DeserializeFromPOSTUrl(
+                    _oAllGeoZoneList, _URL_DATA_REST, oDAOModelPOST).Result;
+            }
 
             foreach (var oGeoZone in this._oAllGeoZoneList)
             {

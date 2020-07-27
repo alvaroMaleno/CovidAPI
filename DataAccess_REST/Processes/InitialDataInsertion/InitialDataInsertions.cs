@@ -86,8 +86,8 @@ namespace CoVid.Processes.InitialDataInsertion
             CoVid.Models.InputModels.CovidData oCovidData = new CoVid.Models.InputModels.CovidData();
             oCovidData.oDates = new Models.InputModels.Dates();
             //Sample Dates
-            oCovidData.oDates.startDate = "10/05/2020";
-            oCovidData.oDates.endDate = "15/05/2020";
+            oCovidData.oDates.startDate = "10/06/2020";
+            oCovidData.oDates.endDate = "15/06/2020";
             oCovidData.oCountryList = new List<string>(){pTable};
             
             List<GeoZone> oGeoZonesList = new List<GeoZone>();
@@ -107,8 +107,8 @@ namespace CoVid.Processes.InitialDataInsertion
             foreach (var oZoneCodeGeoZoneValue in oGeoZoneDictionary)
             {
                 this.InsertCovidDataList(oZoneCodeGeoZoneValue);
-                //DataBase can fall down and experience has shown 300 ms are a good time.
-                Thread.Sleep(350);
+                //DataBase can fall down and experience has shown 500 ms are a good time.
+                Thread.Sleep(500);
             }
 
             int times = 0;

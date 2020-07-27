@@ -18,7 +18,8 @@ namespace CoVid.Utils
 
         }
 
-        public string ReadStreamFile(string pPath){
+        public string ReadStreamFile(string pPath)
+        {
             string file;
             using (StreamReader jsonStream = File.OpenText(pPath))
             {

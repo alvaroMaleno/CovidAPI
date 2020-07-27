@@ -23,3 +23,10 @@
 /home/alvaro/Documentos/Proyecto/Covid/Covid_REST/obj/Debug/netcoreapp3.1/Covid_REST.csproj.CopyComplete
 /home/alvaro/Documentos/Proyecto/Covid/Covid_REST/obj/Debug/netcoreapp3.1/Covid_REST.dll
 /home/alvaro/Documentos/Proyecto/Covid/Covid_REST/obj/Debug/netcoreapp3.1/Covid_REST.pdb
+/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll

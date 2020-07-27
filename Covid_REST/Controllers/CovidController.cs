@@ -1,11 +1,16 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using CoVid.Cache;
 using CoVid.Models.InputModels;
 using CoVid.Models.OutputModels;
 using CoVid.Utils;
 using Covid_REST.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CoVid.Controllers
 {
@@ -15,19 +20,23 @@ namespace CoVid.Controllers
     {
         private readonly string _HTTP_ERROR = "Http Error: ";
         private readonly string _URL_DATA_REST = "https://localhost:5005/CovidDataBase";
+        private readonly string _URL_SECURITY_REST = "https://localhost:5003/Security";
         private CovidCache _oCovidCache = CovidCache.GetInstance();
 
         [HttpPost]
+        [Authorize]
         public object Post([FromBody]InputPOST pPOST)
         {
             object oToReturn = null;
-            
-            bool isAuthenticated = this.AuthenticateUser(pPOST.oUser);
-            if(!isAuthenticated)
-            {
-                oToReturn = "User/Pass Error";
-                return oToReturn;
-            }
+
+            string token = UtilsJSON.GetInstance().GetFromUrl(_URL_SECURITY_REST);
+            token = Convert.ToBase64String(Encoding.ASCII.GetBytes(token));
+
+            // if(pPOST.token != token)
+            // {
+            //     return "Please, authorize.";
+            // }
+
             if(pPOST.oCovidData is null)
             {
                 oToReturn = String.Concat(
@@ -90,13 +99,10 @@ namespace CoVid.Controllers
             return await UtilsHTTP.GetInstance().POSTJsonAsyncToURL(this._URL_DATA_REST, oDAOModelPOST);
         }
 
-        private bool AuthenticateUser(Models.InputModels.User oUser)
+        private async Task<string> AuthenticateUser(Models.InputModels.User pUser)
         {
-            var pass = oUser?.pass?.ToLower() ?? string.Empty;
-            if(pass.Contains("secret"))
-                return true;
-            
-            return false;
+            return await UtilsHTTP.GetInstance().POSTJsonAsyncToURL(this._URL_SECURITY_REST, pUser);
         }
+
     }
 }

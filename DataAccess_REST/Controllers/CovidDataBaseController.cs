@@ -21,12 +21,6 @@ namespace API_DAO.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public void Get()
-        {
-
-        }
-
         [HttpPost]
         public object Post(InputPOST pInputPOST)
         {

@@ -1,6 +1,3 @@
-using Microsoft.VisualBasic.CompilerServices;
-using System;
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Security_REST.Models.DataModels;

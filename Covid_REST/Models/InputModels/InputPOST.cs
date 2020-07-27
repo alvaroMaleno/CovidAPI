@@ -4,16 +4,16 @@ namespace CoVid.Models.InputModels
 {
     public class InputPOST
     {
-        [JsonPropertyName("user")]
-        public User oUser{get;set;}
+        [JsonPropertyName("token")]
+        public string token{get;set;}
         
         [JsonPropertyName("covid_data")]
         public CovidData oCovidData{get;set;}
 
         public InputPOST(){}
-        public InputPOST(User pUser, CovidData pCovidData)
+        public InputPOST(string pToken, CovidData pCovidData)
         {
-            this.oUser = pUser;
+            this.token = pToken;
             this.oCovidData = pCovidData;
         }
     }

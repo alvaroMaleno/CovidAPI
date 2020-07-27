@@ -36,6 +36,13 @@ namespace CoVid.Utils
             oHttpClient = null;
         }
 
+        public string GetFromUrl(string pUrl){
+            HttpClientHandler oClientHandler = new HttpClientHandler();
+            oClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            HttpClient oHttpClient = new HttpClient(oClientHandler);
+            return oHttpClient.GetStringAsync(pUrl).Result;
+        }
+
         public async Task<R> DeserializeFromPOSTUrl<R, Input>(R pTargetClass, string pUrl, Input pJsonObject){
             
             return System.Text.Json.JsonSerializer.Deserialize<R>(
