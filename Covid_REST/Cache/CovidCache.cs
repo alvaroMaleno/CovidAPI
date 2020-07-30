@@ -1,9 +1,9 @@
-using Microsoft.VisualBasic.CompilerServices;
 using System.Collections.Generic;
 using CoVid.Models;
 using System.Threading;
 using CoVid.Models.OutputModels;
 using CoVid.Utils;
+using Covid_REST.Utils;
 
 namespace CoVid.Cache
 {
@@ -12,7 +12,6 @@ namespace CoVid.Cache
         private List<GeoZone> _oAllGeoZoneList;
         private Dictionary<string, ulong> _oAllDatesDic;
         private static CovidCache _instance = new CovidCache();
-        private readonly string _URL_DATA_REST = "https://localhost:5005/CovidDataBase";
 
         public static CovidCache GetInstance()
         {
@@ -31,49 +30,53 @@ namespace CoVid.Cache
             while(true)
             {
                 this.CompleteDatesDictionary();
-                _oAllGeoZoneList = null;
-                DAOModelPOST oDAOModelPOST = new DAOModelPOST("GetAllGeoZoneDataForAllDates", null);
-                _oAllGeoZoneList = UtilsJSON.GetInstance().DeserializeFromPOSTUrl(
-                    _oAllGeoZoneList, _URL_DATA_REST, oDAOModelPOST).Result;
-                //Miliseconds in a Day
-                Thread.Sleep(60 * 60 * 24 * 1000);
+                this.POSTToDAOGetAllGeoZoneForAllDates(ref _oAllGeoZoneList);
+                Thread.Sleep(UtilsConstants.IntConstants.MS_IN_A_DAY);
             }
         }
 
         private void CompleteDatesDictionary()
         {
-            DAOModelPOST oDAOModelPOST = new DAOModelPOST("GetAllDates", null);
-            this._oAllDatesDic = new Dictionary<string, ulong>();
+            
+            _oAllDatesDic = new Dictionary<string, ulong>();
             List<CovidDate> oCovidDateList = null;
-
-            oCovidDateList = UtilsJSON.GetInstance().DeserializeFromPOSTUrl(oCovidDateList, _URL_DATA_REST, oDAOModelPOST).Result; 
+            
+            this.POSTToDAOGetAllDates(ref oCovidDateList);
 
             foreach (var oCovidDate in oCovidDateList)
             {
-                if(this._oAllDatesDic.ContainsKey(oCovidDate.date))
+                if(_oAllDatesDic.ContainsKey(oCovidDate.date))
                     continue;
                 
-                this._oAllDatesDic.Add(oCovidDate.date, oCovidDate.id);
+                _oAllDatesDic.Add(oCovidDate.date, oCovidDate.id);
             }
         }
 
-        public void GetListFilteredByDate(string pStartDate, string pEndDate, out object objectToReturn)
+        private void POSTToDAOGetAllDates(ref List<CovidDate> oCovidDateList)
         {
-            if(_oAllDatesDic is null || _oAllDatesDic.Count < 1)
+            DAOModelPOST oDAOModelPOST = new DAOModelPOST(UtilsConstants.POSTMethodsConstants.GET_ALL_DATES, null);
+            oCovidDateList = UtilsJSON.GetInstance().DeserializeFromPOSTUrl(
+                oCovidDateList, UtilsConstants.UrlConstants.URL_DATA_REST, oDAOModelPOST).Result; 
+        }
+
+        public void GetListFilteredByDate(string pStartDate, string pEndDate, out object pObjectToReturn)
+        {
+            if(_oAllDatesDic is null || _oAllDatesDic.Count < UtilsConstants.IntConstants.ONE)
                 this.CompleteDatesDictionary();
             
-            ulong startDate = this._oAllDatesDic[pStartDate];
-            ulong endDate = this._oAllDatesDic[pEndDate];
+            if(_oAllGeoZoneList is null || _oAllGeoZoneList.Count < UtilsConstants.IntConstants.ONE)
+                this.POSTToDAOGetAllGeoZoneForAllDates(ref _oAllGeoZoneList);
+
+            this.FillObjectToReturn(pStartDate, pEndDate, out pObjectToReturn);
+        }
+
+        private void FillObjectToReturn(string pStartDate, string pEndDate, out object pObjectToReturn)
+        {
+            ulong startDate = this.GetStartDate(pStartDate);
+            ulong endDate = this.GetEndDate(pEndDate);
+
             GeoZone oGeoZoneToReturn;
             List<GeoZone> oListToFill = new List<GeoZone>();
-
-            if(_oAllGeoZoneList is null || _oAllGeoZoneList.Count < 1)
-            {
-                DAOModelPOST oDAOModelPOST = new DAOModelPOST("GetAllGeoZoneDataForAllDates", null);
-                _oAllGeoZoneList = UtilsJSON.GetInstance().DeserializeFromPOSTUrl(
-                    _oAllGeoZoneList, _URL_DATA_REST, oDAOModelPOST).Result;
-            }
-
             foreach (var oGeoZone in this._oAllGeoZoneList)
             {
                 oGeoZoneToReturn = new GeoZone(oGeoZone, false);
@@ -85,7 +88,33 @@ namespace CoVid.Cache
                 
                 oListToFill.Add(oGeoZoneToReturn);
             }
-            objectToReturn = oListToFill;
+
+            pObjectToReturn = oListToFill;
+        }
+
+        private void POSTToDAOGetAllGeoZoneForAllDates(ref List<GeoZone> pAllGeoZoneList)
+        {
+            DAOModelPOST oDAOModelPOST = new DAOModelPOST(
+                    UtilsConstants.POSTMethodsConstants.GET_ALL_GEO_ZONE_FOR_ALL_DATES, 
+                    null);
+            pAllGeoZoneList = UtilsJSON.GetInstance().DeserializeFromPOSTUrl(
+                pAllGeoZoneList, UtilsConstants.UrlConstants.URL_DATA_REST, oDAOModelPOST).Result;
+        }
+
+        private ulong GetEndDate(string pEndDate)
+        {
+            if(_oAllDatesDic.ContainsKey(pEndDate))
+                return _oAllDatesDic[pEndDate];
+            
+            return ulong.Parse(_oAllDatesDic.Count.ToString());
+        }
+
+        private ulong GetStartDate(string pStartDate)
+        {
+            if(_oAllDatesDic.ContainsKey(pStartDate))
+                return _oAllDatesDic[pStartDate];
+            
+            return UtilsConstants.IntConstants.ONE;
         }
     }
 }

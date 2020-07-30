@@ -31,5 +31,12 @@ namespace Covid_REST.Utils
                 return await response.Content.ReadAsStringAsync();
             }
         } 
+
+        public string GetFromUrl(string pUrl){
+            HttpClientHandler oClientHandler = new HttpClientHandler();
+            oClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            HttpClient oHttpClient = new HttpClient(oClientHandler);
+            return oHttpClient.GetStringAsync(pUrl).Result;
+        }
     }
 }

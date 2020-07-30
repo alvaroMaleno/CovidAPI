@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic.CompilerServices;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,8 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using CoVid.Utils;
 using Microsoft.IdentityModel.Tokens;
+using Covid_REST.Utils;
 
 namespace CoVid
 {
@@ -23,7 +22,7 @@ namespace CoVid
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string toKey = UtilsJSON.GetInstance().GetFromUrl("https://localhost:5003/Security");
+            string toKey = UtilsHTTP.GetInstance().GetFromUrl("https://localhost:5003/Security");
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

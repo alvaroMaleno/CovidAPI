@@ -1,8 +1,6 @@
-using System.IO;
-using System.Net;
+using Microsoft.VisualBasic.CompilerServices;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using Covid_REST.Utils;
 using Newtonsoft.Json.Linq;
@@ -30,17 +28,8 @@ namespace CoVid.Utils
         }
 
         public void DeserializeFromUrl<R>(out R pTargetClass, string pUrl){
-            HttpClient oHttpClient = new HttpClient();
             pTargetClass = System.Text.Json.JsonSerializer.Deserialize<R>(
-                oHttpClient.GetAsync(pUrl).Result.Content.ReadAsStringAsync().Result);
-            oHttpClient = null;
-        }
-
-        public string GetFromUrl(string pUrl){
-            HttpClientHandler oClientHandler = new HttpClientHandler();
-            oClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            HttpClient oHttpClient = new HttpClient(oClientHandler);
-            return oHttpClient.GetStringAsync(pUrl).Result;
+                UtilsHTTP.GetInstance().GetFromUrl(pUrl));
         }
 
         public async Task<R> DeserializeFromPOSTUrl<R, Input>(R pTargetClass, string pUrl, Input pJsonObject){
@@ -51,18 +40,15 @@ namespace CoVid.Utils
 
         public void JsonParseJArrayFromUrl(out JArray pObject, string pUrl)
         {
-            HttpClient oHttpClient = new HttpClient();
-            var json = oHttpClient.GetAsync(pUrl).Result.Content.ReadAsStringAsync().Result;
+            var oJson = UtilsHTTP.GetInstance().GetFromUrl(pUrl);;
             try
             {
-                pObject = JArray.Parse(json);
+                pObject = JArray.Parse(oJson);
             }
             catch (System.Exception)
             {
-                pObject = null;
+                pObject = new JArray();
             }
-              
-            oHttpClient = null;
         }
 
         public string Serialize<R>(R pObjectToSerialize)
