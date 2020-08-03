@@ -1,5 +1,5 @@
 {
-    "create_table_relatives_paths":
+    "relatives_paths":
     [ 
         "./DAOs/InsertTableOperations/InsertTableQueriesJSONs/insertDatesTableQuery.json", 
         "./DAOs/InsertTableOperations/InsertTableQueriesJSONs/insertGeoZone_Name_CovidDataTableQuery.json", 

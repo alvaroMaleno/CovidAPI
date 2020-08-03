@@ -22,7 +22,7 @@ namespace CoVid
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string toKey = UtilsHTTP.GetInstance().GetFromUrl("https://localhost:5003/Security");
+            string toKey = UtilsHTTP.GetInstance().GetFromUrl(UtilsConstants.UrlConstants.URL_SECURITY_REST);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -44,7 +44,6 @@ namespace CoVid
   
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

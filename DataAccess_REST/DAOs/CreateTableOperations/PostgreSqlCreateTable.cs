@@ -3,6 +3,7 @@ using CoVid.Controllers.DAOs.Connection;
 using CoVid.Models.PathModels;
 using CoVid.Models.QueryModels;
 using CoVid.Utils;
+using Covid_REST.Utils;
 
 namespace CoVid.Controllers.DAOs.CreateTableOperations
 {
@@ -58,7 +59,7 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
             {
                 Query oQuery;
                 this.SetQuery(pPath, out oQuery);
-                oSentenceList.Add(oQuery.query.Replace("country_name", tableName));
+                oSentenceList.Add(oQuery.query.Replace(UtilsConstants.QueryConstants.COUNTRY_NAME, tableName));
             }
             return pConnector.ExecuteCommand(oSentenceList.ToArray());
         }
@@ -69,19 +70,19 @@ namespace CoVid.Controllers.DAOs.CreateTableOperations
             switch (pPath.ToLower())
             {   
                 case "countries":
-                    path = _oPathsArray[1];
+                    path = _oPathsArray[UtilsConstants.IntConstants.ONE];
                     break;
                 case "dates":
-                    path = _oPathsArray[2];
+                    path = _oPathsArray[UtilsConstants.IntConstants.TWO];
                     break;
                 case "name":
-                    path = _oPathsArray[3];
+                    path = _oPathsArray[UtilsConstants.IntConstants.THREE];
                     break;
                 case "geozone":
-                    path = _oPathsArray[0];
+                    path = _oPathsArray[UtilsConstants.IntConstants.ZERO];
                     break;
                 case "users":
-                    path = _oPathsArray[4];
+                    path = _oPathsArray[UtilsConstants.IntConstants.FOUR];
                     break;
                 case "keys":
                     path = _oPathsArray[5];

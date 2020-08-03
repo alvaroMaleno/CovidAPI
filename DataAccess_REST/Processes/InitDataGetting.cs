@@ -3,6 +3,7 @@ using CoVid.Models;
 using System.Collections.Concurrent;
 using CoVid.Processes.DataGetters.Interfaces;
 using CoVid.Processes.DataGetters;
+using Covid_REST.Utils;
 
 namespace CoVid.Processes
 {
@@ -34,7 +35,7 @@ namespace CoVid.Processes
             this.url = pUrl;
             this.oGeoZoneDictionary = new ConcurrentDictionary<string, GeoZone>();
             this.SetIDataGetter(pDataGetterType);
-            if(oGeoZoneDictionary.Count == 0)
+            if(oGeoZoneDictionary.Count == UtilsConstants.IntConstants.ZERO)
             {
                 _oIDataGetter.SetOwnDataModel(oGeoZoneDictionary);
             }

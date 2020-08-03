@@ -8,6 +8,9 @@ using CoVid.Models.QueryModels;
 using System.Collections.Concurrent;
 using System;
 using System.Threading.Tasks;
+using CoVid.Utils;
+using CoVid.Models.PathModels;
+using Covid_REST.Utils;
 
 namespace CoVid.DAOs.SelectTableOperations
 {
@@ -15,14 +18,11 @@ namespace CoVid.DAOs.SelectTableOperations
     {
         private ConnectionPostgreSql _oConnection{get;set;}
 
-        private readonly string _ONE_STRING = "{1}";
-        private readonly string _ZERO_STRING = "{0}";
-        private readonly string _TABLE_NAME = "table_name";
-        private string _SELECT_FROM_COUNTRIES_QUERY_PATH = @"./DAOs/SelectTableOperations/selectFromCountries.json";
-        private string _SELECT_FROM_COUNTRIES_ID_QUERY_PATH = @"./DAOs/SelectTableOperations/selectCountry.json";
-        private string _SELECT_FROM_GEONAMEDTABLE_QUERY_PATH = @"./DAOs/SelectTableOperations/selectFromGeoNameTableBetweenDates.json";
-        private string _SELECT_ID_QUERY_PATH = @"./DAOs/SelectTableOperations/selectIDFromDates.json";
-        private string _SELECT_DATES_QUERY_PATH = @"./DAOs/SelectTableOperations/selectAllDates.json";
+        private string _SELECT_FROM_COUNTRIES_QUERY_PATH;
+        private string _SELECT_FROM_COUNTRIES_ID_QUERY_PATH;
+        private string _SELECT_FROM_GEONAMEDTABLE_QUERY_PATH;
+        private string _SELECT_ID_QUERY_PATH;
+        private string _SELECT_DATES_QUERY_PATH;
 
         private static PostgreSqlSelect _instance;
 
@@ -32,6 +32,8 @@ namespace CoVid.DAOs.SelectTableOperations
                 this._oConnection = new ConnectionPostgreSql();
             else
                 this._oConnection = pConnection;
+
+            this.SetPaths();
         }
 
         public static PostgreSqlSelect GetInstance(ConnectionPostgreSql pConnection = null)
@@ -41,6 +43,26 @@ namespace CoVid.DAOs.SelectTableOperations
                 _instance = new PostgreSqlSelect(pConnection);
             }
             return _instance;
+        }
+
+        private void SetPaths()
+        {
+            string createTablePaths = string.Empty;
+            string so = UtilsSO.GetInstance().GetSO();
+
+            if(so.Contains("unix"))
+                createTablePaths = @"./DAOs/SelectTableOperations/selectTables_Unix_Paths.json";
+            else
+                createTablePaths = @".\\DAOs\\SelectTableOperations\\selectTables_Windows_Paths.json";
+            
+            var paths = UtilsStreamReaders.GetInstance().ReadStreamFile(createTablePaths);
+            Paths oPathsArray;
+            UtilsJSON.GetInstance().DeserializeFromString(out oPathsArray, paths);
+            this._SELECT_FROM_COUNTRIES_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.ZERO];
+            this._SELECT_FROM_COUNTRIES_ID_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.ONE];
+            this._SELECT_FROM_GEONAMEDTABLE_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.TWO];
+            this._SELECT_ID_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.THREE];
+            this._SELECT_DATES_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.FOUR];
         }
 
         public void GetGeoZoneData(CovidData pCovidData, List<GeoZone> pListToComplete)
@@ -93,22 +115,21 @@ namespace CoVid.DAOs.SelectTableOperations
             string countryToUpper = country.ToUpper();
 
             this.SetQuery(_SELECT_FROM_COUNTRIES_ID_QUERY_PATH, out oQuery);
-            oQuery.query = oQuery.query.Replace(_ZERO_STRING, countryToUpper);
+            oQuery.query = oQuery.query.Replace(UtilsConstants.QueryConstants.ZERO_STRING, countryToUpper);
             this._oConnection.ExecuteSelectCommand(oQuery.query, oCountryInfoList);
 
-            if(oCountryInfoList.Count == 0)
+            if(oCountryInfoList.Count == UtilsConstants.IntConstants.ZERO)
                 return;
 
             this.SetQuery(_SELECT_FROM_GEONAMEDTABLE_QUERY_PATH, out oQuery);
-            oQuery.query = oQuery.query.Replace(_ZERO_STRING, pStartDate);
-            oQuery.query = oQuery.query.Replace(_ONE_STRING, pEndDate);
-            oQuery.query = oQuery.query.Replace(_TABLE_NAME, countryToUpper);
+            oQuery.query = oQuery.query.Replace(UtilsConstants.QueryConstants.ZERO_STRING, pStartDate);
+            oQuery.query = oQuery.query.Replace(UtilsConstants.QueryConstants.ONE_STRING, pEndDate);
+            oQuery.query = oQuery.query.Replace(UtilsConstants.QueryConstants.TABLE_NAME, countryToUpper);
             this._oConnection.ExecuteSelectCommand(oQuery.query, oResultList);
 
-            if(oResultList.Count == 0)
-            {
+            if(oResultList.Count == UtilsConstants.IntConstants.ZERO)
                 return;
-            }
+            
             this.GenerateGeoZoneData(oResultList, oCountryInfoList, oConcurrentBagToFill);
         }
 
@@ -117,29 +138,26 @@ namespace CoVid.DAOs.SelectTableOperations
             List<object[]> pCountryInfoList, 
             ConcurrentBag<GeoZone> pListToComplete)
         {
-            var oGeoZoneRow = pCountryInfoList[0];
+            var oGeoZoneRow = pCountryInfoList[UtilsConstants.IntConstants.ZERO];
             GeoZone oGeoZone = new GeoZone();
-            oGeoZone.geoID = oGeoZoneRow[0].ToString().TrimEnd();
-            oGeoZone.code = oGeoZoneRow[1].ToString();
-            oGeoZone.name = oGeoZoneRow[2].ToString();
+            oGeoZone.geoID = oGeoZoneRow[UtilsConstants.IntConstants.ZERO].ToString().TrimEnd();
+            oGeoZone.code = oGeoZoneRow[UtilsConstants.IntConstants.ONE].ToString();
+            oGeoZone.name = oGeoZoneRow[UtilsConstants.IntConstants.TWO].ToString();
             oGeoZone.population = int.Parse(oGeoZoneRow[3].ToString());
             oGeoZone.dataList = new ConcurrentBag<CoVidData>();
 
             foreach (var oRowArray in pResultList)
-            {
                 this.DeserializeCovidDataAndAddToConcurrentBag(oRowArray, oGeoZone.dataList);
-            }
+            
             pListToComplete.Add(oGeoZone);
         }
 
         private void DeserializeCovidDataAndAddToConcurrentBag(object[] oRowArray, ConcurrentBag<CoVidData> pDataList)
         {
             CoVidData oCovidData;
-            var stringData = oRowArray[1]?.ToString() ?? string.Empty;
+            var stringData = oRowArray[UtilsConstants.IntConstants.ONE]?.ToString() ?? string.Empty;
             if(stringData == string.Empty)
-            {
                 return;
-            }
             
             Utils.UtilsJSON.GetInstance().DeserializeFromString(out oCovidData, stringData);
             pDataList.Add(oCovidData);
@@ -151,7 +169,7 @@ namespace CoVid.DAOs.SelectTableOperations
             List<object[]> oResultList = new List<object[]>();
 
             this.SetQuery(_SELECT_ID_QUERY_PATH, out oQuery);
-            oQuery.query = oQuery.query.Replace(_ZERO_STRING, pCovidData.oDates.startDate);
+            oQuery.query = oQuery.query.Replace(UtilsConstants.QueryConstants.ZERO_STRING, pCovidData.oDates.startDate);
             
             var isAWellResponse = this._oConnection.ExecuteSelectCommand(oQuery.query, oResultList);
             if(!isAWellResponse)
@@ -161,19 +179,19 @@ namespace CoVid.DAOs.SelectTableOperations
             }
 
             this.SetQuery(_SELECT_ID_QUERY_PATH, out oQuery);
-            oQuery.query = oQuery.query.Replace(_ZERO_STRING, pCovidData.oDates.endDate);
+            oQuery.query = oQuery.query.Replace(UtilsConstants.QueryConstants.ZERO_STRING, pCovidData.oDates.endDate);
             
             isAWellResponse = this._oConnection.ExecuteSelectCommand(oQuery.query, oResultList);
-            if(!isAWellResponse || oResultList.Count < 2)
+            if(!isAWellResponse || oResultList.Count < UtilsConstants.IntConstants.TWO)
             {
                 oStartIDEndID = null;
                 return;
             }
 
-            var oRow = oResultList[0];
-            string start = oRow[0].ToString();
-            oRow = oResultList[1];
-            string end = oRow[0].ToString();
+            var oRow = oResultList[UtilsConstants.IntConstants.ZERO];
+            string start = oRow[UtilsConstants.IntConstants.ZERO].ToString();
+            oRow = oResultList[UtilsConstants.IntConstants.ONE];
+            string end = oRow[UtilsConstants.IntConstants.ZERO].ToString();
 
             oStartIDEndID = new Tuple<string, string>(start, end);
         }
@@ -182,13 +200,13 @@ namespace CoVid.DAOs.SelectTableOperations
         {
             List<GeoZone>oGeoZoneCompleteList = new List<GeoZone>();
             this.GetAllCountries(oGeoZoneCompleteList);
-            if(oGeoZoneCompleteList.Count == 0){return;}
+
+            if(oGeoZoneCompleteList.Count == UtilsConstants.IntConstants.ZERO){return;}
 
             pCovidData.oCountryList = new List<string>();
             foreach (var oGeoZone in oGeoZoneCompleteList)
-            {
                 pCovidData.oCountryList.Add(oGeoZone.geoID);
-            }
+            
             this.GetGeoZoneData(pCovidData, pListToComplete);
         }
 
@@ -197,18 +215,19 @@ namespace CoVid.DAOs.SelectTableOperations
             List<GeoZone>oGeoZoneCompleteList = new List<GeoZone>();
             this.GetAllCountries(oGeoZoneCompleteList);
             
-            if(oGeoZoneCompleteList.Count == 0){return;}
+            if(oGeoZoneCompleteList.Count == UtilsConstants.IntConstants.ZERO){return;}
 
             List<CovidDate> oCovidDateCompleteList = new List<CovidDate>();
             this.GetAllDates(oCovidDateCompleteList);
             
-            if(oCovidDateCompleteList.Count == 0){return;}
+            if(oCovidDateCompleteList.Count == UtilsConstants.IntConstants.ZERO){return;}
 
             CovidData oCovidData = new CovidData();
             oCovidData.oDates = new Dates();
 
-            oCovidData.oDates.startDate = oCovidDateCompleteList[0].date;
-            oCovidData.oDates.endDate = oCovidDateCompleteList[oCovidDateCompleteList.Count - 1].date;
+            oCovidData.oDates.startDate = oCovidDateCompleteList[UtilsConstants.IntConstants.ZERO].date;
+            oCovidData.oDates.endDate = 
+                oCovidDateCompleteList[oCovidDateCompleteList.Count - UtilsConstants.IntConstants.ONE].date;
 
             oCovidData.oCountryList = new List<string>();
             foreach (var oGeoZone in oGeoZoneCompleteList)
@@ -225,26 +244,21 @@ namespace CoVid.DAOs.SelectTableOperations
             this.SetQuery(_SELECT_DATES_QUERY_PATH, out oQuery);
             
             var isAWellResponse = this._oConnection.ExecuteSelectCommand(oQuery.query, oResultList);
-            if(!isAWellResponse || oResultList.Count == 0)
-            {
+            if(!isAWellResponse || oResultList.Count == UtilsConstants.IntConstants.ZERO)
                 return;
-            }
             
             CovidDate oCovidDate;
-            int numberOfColumns = 2;
-            string dateFormat = "dd/MM/yyyy";
-            string dateSeparator = "/";
+            int numberOfColumns = UtilsConstants.IntConstants.TWO;
             foreach (var oDateRow in oResultList)
             {
                 if(oDateRow.Length != numberOfColumns)
-                {
                     continue;
-                }
+                
                 oCovidDate = new CovidDate();
-                oCovidDate.id = ulong.Parse(oDateRow[0].ToString());
-                oCovidDate.date = oDateRow[1].ToString();
-                oCovidDate.dateFormat = dateFormat;
-                oCovidDate.dateSeparator = dateSeparator;
+                oCovidDate.id = ulong.Parse(oDateRow[UtilsConstants.IntConstants.ZERO].ToString());
+                oCovidDate.date = oDateRow[UtilsConstants.IntConstants.ONE].ToString();
+                oCovidDate.dateFormat = UtilsConstants.DateConstants.API_DATE_FORMAT;
+                oCovidDate.dateSeparator = UtilsConstants.StringConstants.RIGHT_BAR;
                 pCovidDateList.Add(oCovidDate);
             }
         }
@@ -253,27 +267,24 @@ namespace CoVid.DAOs.SelectTableOperations
         {
             Query oQuery;
             List<object[]> oResultList = new List<object[]>();
-
             this.SetQuery(_SELECT_FROM_COUNTRIES_QUERY_PATH, out oQuery);
             
             var isAWellResponse = this._oConnection.ExecuteSelectCommand(oQuery.query, oResultList);
-            if(!isAWellResponse || oResultList.Count == 0)
-            {
+            if(!isAWellResponse || oResultList.Count == UtilsConstants.IntConstants.ZERO)
                 return;
-            }
             
             GeoZone oGeoZone;
-            int numberOfColumns = 4;
+            int numberOfColumns = UtilsConstants.IntConstants.FOUR;
             foreach (var oDateRow in oResultList)
             {
                 if(oDateRow.Length != numberOfColumns)
                     continue;
                 
                 oGeoZone = new GeoZone();
-                oGeoZone.geoID = oDateRow[0].ToString().TrimEnd();
-                oGeoZone.code = oDateRow[1].ToString();
-                oGeoZone.name = oDateRow[2].ToString();
-                oGeoZone.population = int.Parse(oDateRow[3].ToString());
+                oGeoZone.geoID = oDateRow[UtilsConstants.IntConstants.ZERO].ToString().TrimEnd();
+                oGeoZone.code = oDateRow[UtilsConstants.IntConstants.ONE].ToString();
+                oGeoZone.name = oDateRow[UtilsConstants.IntConstants.TWO].ToString();
+                oGeoZone.population = int.Parse(oDateRow[UtilsConstants.IntConstants.THREE].ToString());
                 pCovidCountryList.Add(oGeoZone);
             }
         }

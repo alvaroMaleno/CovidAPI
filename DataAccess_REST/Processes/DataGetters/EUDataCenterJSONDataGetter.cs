@@ -8,14 +8,12 @@ using CoVid.Models;
 using CoVid.Processes.DataGetters.Interfaces;
 using CoVid.Utils;
 using Newtonsoft.Json.Linq;
+using Covid_REST.Utils;
 
 namespace CoVid.Processes.DataGetters
 {
     public class EUDataCenterJSONDataGetter : IDataGetter
     {
-        private readonly string _RIGHT_BAR = "/";
-        private readonly string _DATE_FORMAT = "dd/MM/yyyy";
-        private readonly string _URL_TO_COMPLETE_DATA = "https://api.covid19api.com/country/";
         private Records _oRecords;
         private string _url;
         
@@ -31,12 +29,11 @@ namespace CoVid.Processes.DataGetters
 
         public async void SetOwnDataModel(ConcurrentDictionary<string, GeoZone> pDicToComplete)
         {
-
             this.GetData(this._url);
             List<Task> oTaskList = new List<Task>();
-            int dataId = 0;
+            int dataId = UtilsConstants.IntConstants.ZERO;
             foreach (var oItem in _oRecords._oRecordList){
-                oTaskList.Add(this.addItem(oItem, pDicToComplete, dataId++));
+                oTaskList.Add(this.AddItem(oItem, pDicToComplete, dataId++));
             }
             
             this._oRecords = null;
@@ -45,7 +42,12 @@ namespace CoVid.Processes.DataGetters
                 await oTask;
             
             var oDateList = await this.GetCovidDateList(this.GetGeoZones(pDicToComplete));
+            this.CompleteDicData(oDateList, pDicToComplete);
+            await this.CompleteEUData(pDicToComplete);
+        }
 
+        private void CompleteDicData(List<CovidDate> oDateList, ConcurrentDictionary<string, GeoZone> pDicToComplete)
+        {
             foreach (var oGeoIdKeyGeoZoneValue in pDicToComplete)
             {
                 foreach (var oData in oGeoIdKeyGeoZoneValue.Value.dataList)
@@ -55,16 +57,13 @@ namespace CoVid.Processes.DataGetters
                     oData.date.id = oDateToSetID.id;
                 }
             }
-
-            await this.CompleteEUData(pDicToComplete);
-        
         }
 
         private async Task CompleteEUData(ConcurrentDictionary<string, GeoZone> pDicToComplete)
         {
-            Task[] oTaskArray = new Task[100];
+            Task[] oTaskArray = new Task[UtilsConstants.PararellConstants.MAX_NUMBER_OF_TASKS];
             bool hasBeenCompletedOneTime = false;
-            int index = oTaskArray.Length - 1;
+            int index = oTaskArray.Length - UtilsConstants.IntConstants.ONE;
 
             foreach (var oGeoIdKeyGeoZoneValue in pDicToComplete)
             {
@@ -77,10 +76,10 @@ namespace CoVid.Processes.DataGetters
                 {
                     oTaskArray[index--] = this.CompleteEUDataByCountry(oGeoIdKeyGeoZoneValue.Value);
                 }
-                if(index < 0)
+                if(index < UtilsConstants.IntConstants.ZERO)
                 {
                     hasBeenCompletedOneTime = true;
-                    index = oTaskArray.Length -1;
+                    index = oTaskArray.Length - UtilsConstants.IntConstants.ONE;
                 }
             }
         }
@@ -89,7 +88,7 @@ namespace CoVid.Processes.DataGetters
         {
             try
             {
-                string url = string.Join(string.Empty, this._URL_TO_COMPLETE_DATA, pGeoZone.geoID);
+                string url = string.Join(string.Empty, UtilsConstants.UrlConstants.URL_TO_COMPLETE_DATA, pGeoZone.geoID);
                 JArray oJArrayCountry;
                 UtilsJSON.GetInstance().JsonParseJArrayFromUrl(out oJArrayCountry, url);
 
@@ -98,74 +97,84 @@ namespace CoVid.Processes.DataGetters
 
                 Country oCountry = new Country();
                 oCountry.oCountryList = new List<CountryData>();
-
-                CountryData oCountryData;
-                foreach (var oItem in oJArrayCountry)
-                {
-                    oCountryData = new CountryData();
-                    
-                    oCountryData.Country = oItem?.Value<string>("Country");
-                    oCountryData.CountryCode = oItem?.Value<string>("CountryCode");
-                    oCountryData.province = oItem?.Value<string>("Province");
-                    oCountryData.City = oItem?.Value<string>("City");
-                    oCountryData.CityCode = oItem?.Value<string>("CityCode");
-                    oCountryData.Lat = oItem?.Value<string>("Lat");
-                    oCountryData.Lon = oItem?.Value<string>("Lon");
-                    oCountryData.Confirmed = oItem?.Value<string>("Confirmed");
-                    oCountryData.Deaths = oItem?.Value<string>("Deaths");
-                    oCountryData.Recovered = oItem?.Value<string>("Recovered");
-                    oCountryData.Active = oItem?.Value<string>("Active");
-                    oCountryData.Date = oItem?.Value<string>("Date");
-
-                    oCountry.oCountryList.Add(oCountryData);
-                }
+                this.AddCountryDataToCountryList(oCountry.oCountryList, oJArrayCountry);
 
                 Dictionary<string, CountryData> oDateCountryDataDictionary = new Dictionary<string, CountryData>();
-
-                foreach (var oCountryDataValuePair in oCountry.oCountryList)
-                {
-                    var oDateTime = DateTime.ParseExact(
-                        oCountryDataValuePair.Date.Split(" ")[0], 
-                        "MM/dd/yyyy", CultureInfo.CurrentCulture);
-                    if(oDateCountryDataDictionary.ContainsKey(oDateTime.ToString(_DATE_FORMAT)))
-                    {
-                        continue;
-                    }
-                    oDateCountryDataDictionary.Add(oDateTime.ToString(_DATE_FORMAT), oCountryDataValuePair);
-                }
-
-                string yesterdayDate = null;
-                foreach (var oData in pGeoZone.dataList)
-                {
-                    if(!oDateCountryDataDictionary.ContainsKey(oData.date.date))
-                    {
-                        continue;
-                    }
-                    
-                    var f_oCountryData = oDateCountryDataDictionary[oData.date.date];
-                    int cured;
-                    int.TryParse(f_oCountryData.Recovered, out cured);
-
-                    if(yesterdayDate != null && 
-                    oDateCountryDataDictionary.ContainsKey(oData.date.date))
-                    {
-                        var f_oCountryDataYesterday = oDateCountryDataDictionary[yesterdayDate];
-                        int curedYesterday;
-                        int.TryParse(f_oCountryDataYesterday.Recovered, out curedYesterday);
-                        oData.cured = cured - curedYesterday;
-                    }
-                    else
-                    {
-                        oData.cured = cured;
-                    }
-                    
-                    yesterdayDate = oData.date.date;
-                }
+                this.FillDateCountryDataDictionary(oCountry.oCountryList, oDateCountryDataDictionary);
+                
+                this.CalculateDiaryDeaths(pGeoZone.dataList, oDateCountryDataDictionary);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ex = null;
                 return;
+            }
+        }
+
+        private void CalculateDiaryDeaths(ConcurrentBag<CoVidData> pDataList, Dictionary<string, CountryData> pDateCountryDataDictionary)
+        {
+            string yesterdayDate = null;
+            foreach (var oData in pDataList)
+            {
+                if(!pDateCountryDataDictionary.ContainsKey(oData.date.date))
+                    continue;
+                
+                var f_oCountryData = pDateCountryDataDictionary[oData.date.date];
+                int cured;
+                int.TryParse(f_oCountryData.Recovered, out cured);
+
+                if(yesterdayDate != null && 
+                pDateCountryDataDictionary.ContainsKey(oData.date.date))
+                {
+                    var f_oCountryDataYesterday = pDateCountryDataDictionary[yesterdayDate];
+                    int curedYesterday;
+                    int.TryParse(f_oCountryDataYesterday.Recovered, out curedYesterday);
+                    oData.cured = cured - curedYesterday;
+                }
+                else
+                {
+                    oData.cured = cured;
+                }
+                
+                yesterdayDate = oData.date.date;
+            }
+        }
+
+        private void FillDateCountryDataDictionary(List<CountryData> pCountryList, Dictionary<string, CountryData> pDateCountryDataDictionary)
+        {
+            foreach (var oCountryDataValuePair in pCountryList)
+            {
+                var oDateTime = DateTime.ParseExact(
+                    oCountryDataValuePair.Date.Split(" ")[UtilsConstants.IntConstants.ZERO], 
+                    "MM/dd/yyyy", CultureInfo.CurrentCulture);
+                
+                if(pDateCountryDataDictionary.ContainsKey(oDateTime.ToString(UtilsConstants.DateConstants.API_DATE_FORMAT)))
+                    continue;
+                
+                pDateCountryDataDictionary.Add(oDateTime.ToString(UtilsConstants.DateConstants.API_DATE_FORMAT), oCountryDataValuePair);
+            }
+        }
+
+        private void AddCountryDataToCountryList(List<CountryData> pCountryList, JArray pJArrayCountry)
+        {
+            CountryData oCountryData;
+            foreach (var oItem in pJArrayCountry)
+            {
+                oCountryData = new CountryData();
+                
+                oCountryData.Country = oItem?.Value<string>("Country");
+                oCountryData.CountryCode = oItem?.Value<string>("CountryCode");
+                oCountryData.province = oItem?.Value<string>("Province");
+                oCountryData.City = oItem?.Value<string>("City");
+                oCountryData.CityCode = oItem?.Value<string>("CityCode");
+                oCountryData.Lat = oItem?.Value<string>("Lat");
+                oCountryData.Lon = oItem?.Value<string>("Lon");
+                oCountryData.Confirmed = oItem?.Value<string>("Confirmed");
+                oCountryData.Deaths = oItem?.Value<string>("Deaths");
+                oCountryData.Recovered = oItem?.Value<string>("Recovered");
+                oCountryData.Active = oItem?.Value<string>("Active");
+                oCountryData.Date = oItem?.Value<string>("Date");
+
+                pCountryList.Add(oCountryData);
             }
         }
 
@@ -200,7 +209,7 @@ namespace CoVid.Processes.DataGetters
             return oCovidDateList;
         }
 
-        private async Task addItem(Record pItem, ConcurrentDictionary<string, GeoZone> pDicToComplete, int pDataId){
+        private async Task AddItem(Record pItem, ConcurrentDictionary<string, GeoZone> pDicToComplete, int pDataId){
 
             GeoZone oGeoZone;
             CoVidData oCoviData;
@@ -219,7 +228,10 @@ namespace CoVid.Processes.DataGetters
             oCoviData = new CoVidData();
             
             oCoviData.cases = pItem.cases;
-            oCoviData.date = new CovidDate(ulong.Parse(pDataId.ToString()), pItem.dateRep, _RIGHT_BAR, _DATE_FORMAT);
+            oCoviData.date = new CovidDate(
+                ulong.Parse(pDataId.ToString()), 
+                pItem.dateRep, 
+                UtilsConstants.StringConstants.RIGHT_BAR, UtilsConstants.DateConstants.API_DATE_FORMAT);
             oCoviData.deaths = pItem.deaths;
             pDicToComplete[pItem.geoId].dataList.Add(oCoviData);
         }

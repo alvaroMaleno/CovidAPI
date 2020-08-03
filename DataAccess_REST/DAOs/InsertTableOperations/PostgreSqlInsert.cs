@@ -7,20 +7,12 @@ using CoVid.Models;
 using CoVid.Models.QueryModels;
 using CoVid.Models.PathModels;
 using CoVid.Utils;
+using Covid_REST.Utils;
 
 namespace CoVid.DAOs.InsertTableOperations
 {
     public class PostgreSqlInsert : ICovidDataBaseInsert
     {
-        private readonly int _ONE = 1;
-        private readonly string _REPLACE_QUERY_CONSTANT = "?";
-        private readonly string _REPLACE_SINGLEQUOTE_CONSTANT = "'";
-        private readonly string _THREE_STRING = "{3}";
-        private readonly string _TWO_STRING = "{2}";
-        private readonly string _ONE_STRING = "{1}";
-        private readonly string _ZERO_STRING = "{0}";
-        private readonly string _COME = ",";
-        private readonly string _NULL = "null";
         private string _INSERT_DATES_QUERY_PATH;
         private string _INSERT_GEOZONE_NAME_QUERY_PATH;
         private string _INSERT_GEOZONE_QUERY_PATH;
@@ -57,10 +49,10 @@ namespace CoVid.DAOs.InsertTableOperations
             var paths = UtilsStreamReaders.GetInstance().ReadStreamFile(createTablePaths);
             Paths oPathsArray;
             UtilsJSON.GetInstance().DeserializeFromString(out oPathsArray, paths);
-            this._INSERT_DATES_QUERY_PATH = oPathsArray.oPaths[0];
-            this._INSERT_GEOZONE_COUNTRIES_QUERY_PATH = oPathsArray.oPaths[3];
-            this._INSERT_GEOZONE_NAME_QUERY_PATH = oPathsArray.oPaths[1];
-            this._INSERT_GEOZONE_QUERY_PATH = oPathsArray.oPaths[2];
+            this._INSERT_DATES_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.ZERO];
+            this._INSERT_GEOZONE_COUNTRIES_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.THREE];
+            this._INSERT_GEOZONE_NAME_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.ONE];
+            this._INSERT_GEOZONE_QUERY_PATH = oPathsArray.oPaths[UtilsConstants.IntConstants.TWO];
         }
 
 
@@ -68,7 +60,7 @@ namespace CoVid.DAOs.InsertTableOperations
         {
             Query oQuery;
             this.SetQuery(_INSERT_DATES_QUERY_PATH, out oQuery);
-            oQuery.query = oQuery.query.Replace("country_name", pGeoZone.name);
+            oQuery.query = oQuery.query.Replace(UtilsConstants.QueryConstants.COUNTRY_NAME, pGeoZone.name);
             this.SetCovidDataQuery(pCovidData, pGeoZone, oQuery);
 
             return oConnectionPostgreSql.ExecuteCommand(oQuery.query);
@@ -78,7 +70,7 @@ namespace CoVid.DAOs.InsertTableOperations
         {
             Query oQuery;
             this.SetQuery(_INSERT_GEOZONE_NAME_QUERY_PATH, out oQuery);
-            oQuery.query = oQuery.query.Replace("country_name", pGeoZone.geoID);
+            oQuery.query = oQuery.query.Replace(UtilsConstants.QueryConstants.COUNTRY_NAME, pGeoZone.geoID);
             this.SetCovidDataListQuery(pCovidData, pGeoZone, oQuery);
 
             return oConnectionPostgreSql.ExecuteCommand(oQuery.query);
@@ -89,7 +81,7 @@ namespace CoVid.DAOs.InsertTableOperations
             StringBuilder oStringBuilder = new StringBuilder();
             this.AddCovidDataInsertStatementToStringBuilder(oStringBuilder, pCovidData, pGeoZone, oQuery);
             oQuery.query = oQuery.query.Replace(
-                _REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
         }
 
         private void SetCovidDataListQuery(List<CoVidData> pCovidData, GeoZone pGeoZone, Query oQuery)
@@ -98,11 +90,11 @@ namespace CoVid.DAOs.InsertTableOperations
             foreach (var oCovidData in pCovidData)
             {
                 this.AddCovidDataInsertStatementToStringBuilder(oStringBuilder, oCovidData, pGeoZone, oQuery);
-                oStringBuilder.Append(_COME);
+                oStringBuilder.Append(UtilsConstants.StringConstants.COME);
             }
-            oStringBuilder.Remove(oStringBuilder.Length - _ONE, _ONE);
+            oStringBuilder.Remove(oStringBuilder.Length - UtilsConstants.IntConstants.ONE, UtilsConstants.IntConstants.ONE);
             oQuery.query = oQuery.query.Replace(
-                _REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
         }
 
         private void AddCovidDataInsertStatementToStringBuilder(
@@ -113,19 +105,19 @@ namespace CoVid.DAOs.InsertTableOperations
         {
             oStringBuilder.Append(
                     oQuery.valuesFormat.Replace(
-                                _ZERO_STRING,
+                                UtilsConstants.QueryConstants.ZERO_STRING,
                                 string.Join(
                                     string.Empty,
-                                    _REPLACE_SINGLEQUOTE_CONSTANT,
+                                    UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                                     oCovidData.id.ToString(),
-                                    _REPLACE_SINGLEQUOTE_CONSTANT)));
+                                    UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT)));
             oStringBuilder.Replace(
-                    _ONE_STRING,
+                    UtilsConstants.QueryConstants.ONE_STRING,
                     string.Join(
                         string.Empty,
-                        _REPLACE_SINGLEQUOTE_CONSTANT,
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                         Utils.UtilsJSON.GetInstance().Serialize(oCovidData),
-                        _REPLACE_SINGLEQUOTE_CONSTANT));
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT));
         }
 
         public bool InsertDate(CovidDate pCovidDate)
@@ -153,33 +145,33 @@ namespace CoVid.DAOs.InsertTableOperations
             {
                 oStringBuilder.Append(
                     oQuery.valuesFormat.Replace(
-                        _ZERO_STRING, oCovidDate.id.ToString()).Replace(
-                            _ONE_STRING,
+                        UtilsConstants.QueryConstants.ZERO_STRING, oCovidDate.id.ToString()).Replace(
+                            UtilsConstants.QueryConstants.ONE_STRING,
                             string.Join(
                                 string.Empty,
-                                _REPLACE_SINGLEQUOTE_CONSTANT,
+                                UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                                 oCovidDate.date,
-                                _REPLACE_SINGLEQUOTE_CONSTANT)));
-                oStringBuilder.Append(_COME);
+                                UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT)));
+                oStringBuilder.Append(UtilsConstants.StringConstants.COME);
             }
-            oStringBuilder.Remove(oStringBuilder.Length - _ONE, _ONE);
+            oStringBuilder.Remove(oStringBuilder.Length - UtilsConstants.IntConstants.ONE, UtilsConstants.IntConstants.ONE);
             oQuery.query = oQuery.query.Replace(
-                _REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
         }
 
         private void SetDateQuery(CovidDate pCovidDate, Query oQuery)
         {
             oQuery.valuesFormat = oQuery.valuesFormat.Replace(
-                                    _ZERO_STRING, pCovidDate.id.ToString()).Replace(
-                                                _ONE_STRING,
+                                    UtilsConstants.QueryConstants.ZERO_STRING, pCovidDate.id.ToString()).Replace(
+                                                UtilsConstants.QueryConstants.ONE_STRING,
                                                 string.Join(
                                                     string.Empty,
-                                                    _REPLACE_SINGLEQUOTE_CONSTANT,
+                                                    UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                                                     pCovidDate.date,
-                                                    _REPLACE_SINGLEQUOTE_CONSTANT));
+                                                    UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT));
 
             oQuery.query = oQuery.query.Replace(
-                _REPLACE_QUERY_CONSTANT, oQuery.valuesFormat);
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oQuery.valuesFormat);
         }
 
         public bool InsertGeoZone(GeoZone pGeoZone)
@@ -223,38 +215,35 @@ namespace CoVid.DAOs.InsertTableOperations
             StringBuilder oStringBuilder = new StringBuilder();
             oStringBuilder.Append(
                 oQuery.valuesFormat.Replace(
-                    _ZERO_STRING,
+                    UtilsConstants.QueryConstants.ZERO_STRING,
                     string.Join(
                         string.Empty,
-                        _REPLACE_SINGLEQUOTE_CONSTANT,
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                         pGeoZone.geoID,
-                        _REPLACE_SINGLEQUOTE_CONSTANT)));
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT)));
 
             if (pGeoZone?.father?.geoID != null)
             {
                 oStringBuilder.Replace(
-                    _ONE_STRING,
+                    UtilsConstants.QueryConstants.ONE_STRING,
                     string.Join(
                         string.Empty,
-                        _REPLACE_SINGLEQUOTE_CONSTANT,
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                         pGeoZone.father.geoID,
-                        _REPLACE_SINGLEQUOTE_CONSTANT));
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT));
             }
             else
             {
-                oStringBuilder.Replace(_ONE_STRING, _NULL);
-            }
-            if (pGeoZone?.sonList.Count >= _ONE)
-            {
-                oStringBuilder.Replace(_ONE_STRING, "true");
-            }
-            else
-            {
-                oStringBuilder.Replace(_ONE_STRING, _NULL);
+                oStringBuilder.Replace(UtilsConstants.QueryConstants.ONE_STRING, UtilsConstants.StringConstants.NULL);
             }
 
+            if (pGeoZone?.sonList.Count >= UtilsConstants.IntConstants.ONE)
+                oStringBuilder.Replace(UtilsConstants.QueryConstants.ONE_STRING, UtilsConstants.StringConstants.TRUE);
+            else
+                oStringBuilder.Replace(UtilsConstants.QueryConstants.ONE_STRING, UtilsConstants.StringConstants.NULL);
+
             oQuery.query = oQuery.query.Replace(
-                _REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
         }
 
         private void SetGeoZoneListQuery(List<GeoZone> pGeoZone, Query oQuery)
@@ -265,12 +254,12 @@ namespace CoVid.DAOs.InsertTableOperations
             {
                 this.AddGeoZoneInsertStatementToStringBuilder(oStringBuilder, oGeoZone, oQuery);
 
-                oStringBuilder.Append(_COME);
+                oStringBuilder.Append(UtilsConstants.StringConstants.COME);
             }
 
-            oStringBuilder.Remove(oStringBuilder.Length - _ONE, _ONE);
+            oStringBuilder.Remove(oStringBuilder.Length - UtilsConstants.IntConstants.ONE, UtilsConstants.IntConstants.ONE);
             oQuery.query = oQuery.query.Replace(
-                _REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
         }
 
         private void AddGeoZoneInsertStatementToStringBuilder(StringBuilder pStringBuilder, GeoZone pGeoZone, Query oQuery)
@@ -278,36 +267,34 @@ namespace CoVid.DAOs.InsertTableOperations
             StringBuilder oStringBuilder = new StringBuilder();
             oStringBuilder.Append(
                 oQuery.valuesFormat.Replace(
-                        _ZERO_STRING,
+                        UtilsConstants.QueryConstants.ZERO_STRING,
                         string.Join(
                             string.Empty,
-                            _REPLACE_SINGLEQUOTE_CONSTANT,
+                            UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                             pGeoZone.geoID,
-                             _REPLACE_SINGLEQUOTE_CONSTANT)));
+                             UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT)));
             if (pGeoZone?.father?.geoID != null)
             {
-                oStringBuilder.Replace(_ONE_STRING,
+                oStringBuilder.Replace(UtilsConstants.QueryConstants.ONE_STRING,
                     string.Join(
                             string.Empty,
-                            _REPLACE_SINGLEQUOTE_CONSTANT,
+                            UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                             pGeoZone.geoID,
-                             _REPLACE_SINGLEQUOTE_CONSTANT));
+                             UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT));
             }
             else
             {
                 oStringBuilder.Replace(
-                    _ONE_STRING, _NULL);
+                    UtilsConstants.QueryConstants.ONE_STRING, UtilsConstants.StringConstants.NULL);
 
             }
-            if (pGeoZone?.sonList?.Count >= _ONE)
-            {
-                oStringBuilder.Replace(_TWO_STRING, "true");
-            }
+            
+            if (pGeoZone?.sonList?.Count >= UtilsConstants.IntConstants.ONE)
+                oStringBuilder.Replace(UtilsConstants.QueryConstants.TWO_STRING, UtilsConstants.StringConstants.TRUE);
             else
-            {
                 oStringBuilder.Replace(
-                    _TWO_STRING, "false");
-            }
+                    UtilsConstants.QueryConstants.TWO_STRING, UtilsConstants.StringConstants.FALSE);
+            
             pStringBuilder.Append(oStringBuilder.ToString());
         }
 
@@ -318,7 +305,7 @@ namespace CoVid.DAOs.InsertTableOperations
             this.AddGeoZoneCountryInsertStatementToStringBuilder(oStringBuilder, pGeoZone, oQuery);
 
             oQuery.query = oQuery.query.Replace(
-                _REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
         }
 
         private void AddGeoZoneCountryInsertStatementToStringBuilder(StringBuilder pStringBuilder, GeoZone pGeoZone, Query oQuery)
@@ -326,28 +313,28 @@ namespace CoVid.DAOs.InsertTableOperations
             StringBuilder oStringBuilder = new StringBuilder();
             oStringBuilder.Append(oQuery.valuesFormat);
             oStringBuilder.Replace(
-                _ZERO_STRING,
+                UtilsConstants.QueryConstants.ZERO_STRING,
                 string.Join(
                         string.Empty,
-                        _REPLACE_SINGLEQUOTE_CONSTANT,
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                         pGeoZone.geoID,
-                        _REPLACE_SINGLEQUOTE_CONSTANT));
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT));
             oStringBuilder.Replace(
-                _ONE_STRING,
+                UtilsConstants.QueryConstants.ONE_STRING,
                 string.Join(
                         string.Empty,
-                        _REPLACE_SINGLEQUOTE_CONSTANT,
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                         pGeoZone.code,
-                        _REPLACE_SINGLEQUOTE_CONSTANT));
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT));
             oStringBuilder.Replace(
-                _TWO_STRING,
+                UtilsConstants.QueryConstants.TWO_STRING,
                 string.Join(
                         string.Empty,
-                        _REPLACE_SINGLEQUOTE_CONSTANT,
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT,
                         pGeoZone.name,
-                        _REPLACE_SINGLEQUOTE_CONSTANT));
+                        UtilsConstants.StringConstants.REPLACE_SINGLEQUOTE_CONSTANT));
             oStringBuilder.Replace(
-                _THREE_STRING,
+                UtilsConstants.QueryConstants.THREE_STRING,
                 pGeoZone.population.ToString());
             pStringBuilder.Append(oStringBuilder.ToString());
         }
@@ -359,12 +346,12 @@ namespace CoVid.DAOs.InsertTableOperations
             foreach (var oGeoZone in pGeoZone)
             {
                 this.AddGeoZoneCountryInsertStatementToStringBuilder(oStringBuilder, oGeoZone, oQuery);
-                oStringBuilder.Append(_COME);
+                oStringBuilder.Append(UtilsConstants.StringConstants.COME);
             }
 
-            oStringBuilder.Remove(oStringBuilder.Length - _ONE, _ONE);
+            oStringBuilder.Remove(oStringBuilder.Length - UtilsConstants.IntConstants.ONE, UtilsConstants.IntConstants.ONE);
             oQuery.query = oQuery.query.Replace(
-                _REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
         }
 
         public void SetQuery(string pPath, out Query pQuery)

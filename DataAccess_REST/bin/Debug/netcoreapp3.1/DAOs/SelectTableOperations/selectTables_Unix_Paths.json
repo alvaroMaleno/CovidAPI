@@ -1,0 +1,10 @@
+{
+    "relatives_paths":
+    [ 
+        "./DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectFromCountries.json", 
+        "./DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectCountry.json", 
+        "./DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectFromGeoNameTableBetweenDates.json",
+        "./DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectIDFromDates.json",
+        "./DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectAllDates.json"
+    ]
+}

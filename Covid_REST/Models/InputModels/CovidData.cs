@@ -14,16 +14,12 @@ namespace CoVid.Models.InputModels
         [JsonPropertyName("dataType")]
         public string dataType{get;set;}
         
-        [JsonPropertyName("statisticalMethod")]
-        public string statisticalMethod{get;set;}
-
         public CovidData(){}
-        public CovidData(List<string> pCountryList, Dates pDates, string pDataType, string pStatisticalMethod)
+        public CovidData(List<string> pCountryList, Dates pDates, string pDataType)
         {
             this.oCountryList = pCountryList;
             this.oDates = pDates;
             this.dataType = pDataType;
-            this.statisticalMethod = pStatisticalMethod;
         }
     }
 }

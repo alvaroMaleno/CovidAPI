@@ -1,5 +1,5 @@
 {
-    "create_table_relatives_paths":
+    "relatives_paths":
     [ 
         ".\\DAOs\\CreateTableOperations\\CreateTableQueriesJSONs\\createGeoZoneTableQuery.json", 
         ".\\DAOs\\CreateTableOperations\\CreateTableQueriesJSONs\\createCountriesTableQuery.json", 

@@ -43,7 +43,7 @@ namespace CoVid.Controllers.DAOs.Connection
                 _oNpgsqlConnection.Close();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -61,7 +61,7 @@ namespace CoVid.Controllers.DAOs.Connection
                 _oNpgsqlConnection = new NpgsqlConnection(conectString);
                 _oNpgsqlConnection.Open();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if(_oNpgsqlConnection != null)
                     this.CloseConnection();
@@ -86,7 +86,7 @@ namespace CoVid.Controllers.DAOs.Connection
                     oCommand.ExecuteNonQueryAsync();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -120,7 +120,7 @@ namespace CoVid.Controllers.DAOs.Connection
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -152,7 +152,7 @@ namespace CoVid.Controllers.DAOs.Connection
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

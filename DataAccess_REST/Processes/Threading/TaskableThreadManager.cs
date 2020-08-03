@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using CoVid.Processes.Interfaces;
 
 namespace CoVid.Processes.Threading
@@ -20,9 +19,7 @@ namespace CoVid.Processes.Threading
             {
                 var oTask = oTaskable.Taskable();
                 if(_awaitEachOne && oTask != null && oTask.Exception == null)
-                {
                     await oTask;
-                }
             }
         }
     }

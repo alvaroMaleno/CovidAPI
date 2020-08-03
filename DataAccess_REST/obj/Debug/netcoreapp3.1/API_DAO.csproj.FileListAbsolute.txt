@@ -137,11 +137,6 @@
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/InsertTableOperations/InsertTableQueriesJSONs/insertDatesTableQuery.json
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/InsertTableOperations/InsertTableQueriesJSONs/insertGeoZoneTableQuery.json
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/InsertTableOperations/InsertTableQueriesJSONs/insertGeoZone_Name_CovidDataTableQuery.json
-/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectAllDates.json
-/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectCountry.json
-/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectFromCountries.json
-/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectFromGeoNameTableBetweenDates.json
-/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectIDFromDates.json
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/Processes/InitialCreateTables/createTables_Unix_Paths.json
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/Processes/InitialCreateTables/createTables_Windows_Paths.json
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/Processes/InitialDataInsertion/insertData_Unix_Paths.json
@@ -166,3 +161,10 @@
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/obj/Debug/netcoreapp3.1/API_DAO.csproj.CopyComplete
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/obj/Debug/netcoreapp3.1/API_DAO.dll
 /home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/obj/Debug/netcoreapp3.1/API_DAO.pdb
+/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectAllDates.json
+/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectCountry.json
+/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectFromCountries.json
+/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectFromGeoNameTableBetweenDates.json
+/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/SelectTableQueriesJSONs/selectIDFromDates.json
+/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectTables_Unix_Paths.json
+/home/alvaro/Documentos/Proyecto/Covid/DataAccess_REST/bin/Debug/netcoreapp3.1/DAOs/SelectTableOperations/selectTables_Windows_Paths.json

@@ -25,7 +25,8 @@ namespace CoVid.Utils
             ConcurrentDictionary<string, CovidDate> oDateKeyCovidDateValue, 
             List<GeoZone> oGeoZonesList)
         {
-            Task[] oTaskArray = new Task[200];
+            int MAX_NUMBER_OF_TASK = 300;
+            Task[] oTaskArray = new Task[MAX_NUMBER_OF_TASK];
             int taskCounter = oTaskArray.Length - 1;
             bool hasBeenCompletedOneTime = false;
 
