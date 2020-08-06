@@ -152,17 +152,6 @@ namespace Security_REST.DAOs
             _oPostgreSqlSelect.SelectUser(pUser, pTableLine, out pSelectedUser);
         }
 
-        public override void SelectAllUsers(List<User> pUserList, string pTableName)
-        {
-            ConnectionPostgreSql oConnection;
-            this.SetConnection(out oConnection);
-
-            if(_oPostgreSqlSelect is null)
-                _oPostgreSqlSelect = PostgreSqlSelect.GetInstance(oConnection);
-
-            _oPostgreSqlSelect.SelectAllUsers(pUserList, pTableName);
-        }
-
         public override void GetCreateQuery(out Query pQuery)
         {
             if(this._oPostgreSqlCreateTable is null)

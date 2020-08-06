@@ -84,9 +84,8 @@ namespace Security_REST.Controllers.DAOs.Connection
                     oCommand.ExecuteNonQueryAsync();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ex = null;
                 return false;
             }
             finally
@@ -119,7 +118,7 @@ namespace Security_REST.Controllers.DAOs.Connection
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -152,7 +151,7 @@ namespace Security_REST.Controllers.DAOs.Connection
                 }
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

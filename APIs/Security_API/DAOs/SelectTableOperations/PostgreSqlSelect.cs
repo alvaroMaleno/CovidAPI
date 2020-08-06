@@ -165,10 +165,5 @@ namespace Security_REST.DAOs.SelectTableOperations
                 pTableLine[UtilsConstants._ONE].Trim());
             pQuery.query = pQuery.query.Replace(UtilsConstants._ZERO_QUERY_STRING, pUser.email);
         }
-
-        public void SelectAllUsers(List<User> pUserList, string pTableName)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

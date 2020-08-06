@@ -11,10 +11,10 @@ namespace API_Security.Controllers
     public class SecurityController : ControllerBase
     {
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<SecurityController> _logger;
         private SecurityManager _oSecurityManager = SecurityManager.GetInstance();
 
-        public SecurityController(ILogger<WeatherForecastController> logger)
+        public SecurityController(ILogger<SecurityController> logger)
         {
             _logger = logger;
         }

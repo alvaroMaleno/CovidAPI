@@ -13,10 +13,10 @@ namespace API_Security.Controllers
     public class EncryptationServiceController : ControllerBase
     {
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<EncryptationServiceController> _logger;
         private SecurityManager _oSecurityManager = SecurityManager.GetInstance();
 
-        public EncryptationServiceController(ILogger<WeatherForecastController> logger)
+        public EncryptationServiceController(ILogger<EncryptationServiceController> logger)
         {
             _logger = logger;
         }

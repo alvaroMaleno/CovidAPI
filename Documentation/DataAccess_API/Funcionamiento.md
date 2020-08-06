@@ -44,8 +44,23 @@ La creación, acceso, respaldo y actualización de los datos ha quedado dentro d
 
 Dentro de la carpeta situada en DataAccess_API/Properties se encuentra el archivo launchProperties.json . En su interior se puede modificar la dirección y el puerto de acceso.
 
+# Métodos admitidos en la petición
+
+- **GetGeoZoneData**: Se emplea para obtener información sobre la evolución histórica de la pandemia de Covid - 19 relativa a uno o varios países dentro de un rango de fechas.
+
+- **GetAllGeoZoneData**: Se emplea para obtener información sobre la evolución histórica de la pandemia de Covid - 19 relativa todos los países disponibles dentro de un rango de fechas.
+
+- **GetAllGeoZoneDataForAllDates**: Se emplea para obtener información sobre la evolución histórica de la pandemia de Covid - 19 relativa todos los países disponibles para cada una de las fechas disponibles.
+
+- **GetAllCountries**: Se emplea para obtener una lista completa de todos los países disponibles para consulta.
+
+- **GetAllDates**: Se emplea para obtener una lista completa de todas las fechas disponibles para consulta.
+
+
 # Petición de entrada
 
+<pre>
+    <code>
 {
     "method": "GetGeoZoneData",
     "covid_data": {
@@ -60,9 +75,11 @@ Dentro de la carpeta situada en DataAccess_API/Properties se encuentra el archiv
         }
     }
 }
-
+    </code>
+</pre>
 # Ejemplo de respuesta
-
+<pre>
+    <code>
 [
     {
         "father": null,
@@ -99,3 +116,5 @@ Dentro de la carpeta situada en DataAccess_API/Properties se encuentra el archiv
         ]
     }
 ]
+    </code>
+</pre>

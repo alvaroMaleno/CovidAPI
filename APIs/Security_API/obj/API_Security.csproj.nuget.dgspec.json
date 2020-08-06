@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/alvaro/Documentos/Proyecto/Covid/Security_REST/API_Security.csproj": {}
+    "/home/alvaro/Documentos/Proyecto/Covid/APIs/Security_API/API_Security.csproj": {}
   },
   "projects": {
-    "/home/alvaro/Documentos/Proyecto/Covid/Security_REST/API_Security.csproj": {
+    "/home/alvaro/Documentos/Proyecto/Covid/APIs/Security_API/API_Security.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/alvaro/Documentos/Proyecto/Covid/Security_REST/API_Security.csproj",
+        "projectUniqueName": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Security_API/API_Security.csproj",
         "projectName": "API_Security",
-        "projectPath": "/home/alvaro/Documentos/Proyecto/Covid/Security_REST/API_Security.csproj",
+        "projectPath": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Security_API/API_Security.csproj",
         "packagesPath": "/home/alvaro/.nuget/packages/",
-        "outputPath": "/home/alvaro/Documentos/Proyecto/Covid/Security_REST/obj/",
+        "outputPath": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Security_API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/alvaro/.nuget/NuGet/NuGet.Config"

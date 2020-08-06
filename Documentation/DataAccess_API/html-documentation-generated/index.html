@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+  <head>
+    <title>DataAccess_API</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>DataAccess_API</h1>
+    <div class="app-desc">Aplicación que gestiona el acceso a datos sobre la evolución del Covid - 19 sirviéndolos a cualquier programa que necesite usarlos.</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="alvaromaleno@paucasesnovescif.cat">alvaromaleno@paucasesnovescif.cat</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/CovidDataBase</div>
+    <div class="license-info">Creative Commons 3.0 ES</div>
+    <div class="license-url">https://creativecommons.org/licenses/by/3.0/es/deed.en</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Admins">Admins</a></h4>
+  <ul>
+  <li><a href="#post"><code><span class="http-method">post</span> /CovidDataBase</code></a></li>
+  </ul>
+
+  <h1><a name="Admins">Admins</a></h1>
+  <div class="method"><a name="post"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /CovidDataBase</code></pre></div>
+    <div class="method-summary">Solicita una búsqueda determinada en base de datos. (<span class="nickname">post</span>)</div>
+    <div class="method-notes"><p>Obtiene información relativa a la evolución de la pandemia dependiendo del elemento method requerido. Las posibilidades son:</p>
+<ul>
+<li><strong>GetGeoZoneData.</strong> Obtiene los datos para una o varias zonas geográficas dentro de un rango de fechas.</li>
+<li><strong>GetAllGeoZoneData</strong>. Obtiene los datos para todas las zonas geográficas disponibles dentro de un rango de fechas.</li>
+<li><strong>GetAllGeoZoneForAllDates</strong>. Obtiene todos los datos disponibles en base de datos.</li>
+<li><strong>GetAllCountries</strong>. Obtiene una lista de paises disponibles para consulta.</li>
+<li><strong>GetAllDates</strong>. Obtiene una lista con todas las fechas disponibles para consulta.</li>
+</ul>
+</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">InputPOST <a href="#InputPOST">InputPOST</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Método invocado y descriptivo con zona o zonas geográficas solicitadas más rango de fecha. </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Consulta exitosa. Ver Models/GeoZone.
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Solicitud no válida.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#GeoZone"><code>GeoZone</code> - </a></li>
+    <li><a href="#InputPOST"><code>InputPOST</code> - </a></li>
+    <li><a href="#countries"><code>countries</code> - </a></li>
+    <li><a href="#covid_data"><code>covid_data</code> - </a></li>
+    <li><a href="#data"><code>data</code> - </a></li>
+    <li><a href="#dates"><code>dates</code> - </a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="GeoZone"><code>GeoZone</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">geoID </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: ISO2</div>
+          <div class="param-desc"><span class="param-type">example: ES</span></div>
+<div class="param">code </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: ISO3</div>
+          <div class="param-desc"><span class="param-type">example: ESP</span></div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: nombre completo</div>
+          <div class="param-desc"><span class="param-type">example: Spain</span></div>
+<div class="param">population </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 48000000</span></div>
+<div class="param">dataList </div><div class="param-desc"><span class="param-type"><a href="#data">array[data]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="InputPOST"><code>InputPOST</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">method </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: methodName</div>
+          <div class="param-desc"><span class="param-type">example: GetAllGeoZoneData</span></div>
+<div class="param">covid_data </div><div class="param-desc"><span class="param-type"><a href="#covid_data">covid_data</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="countries"><code>countries</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="covid_data"><code>covid_data</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">countries </div><div class="param-desc"><span class="param-type"><a href="#countries">countries</a></span>  </div>
+<div class="param">dates </div><div class="param-desc"><span class="param-type"><a href="#dates">dates</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="data"><code>data</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">cases </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">cured </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">deaths </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">date (optional)</div><div class="param-desc"><span class="param-type"><a href="#dates">dates</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="dates"><code>dates</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">startDate </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: dd/MM/yyyy</div>
+          <div class="param-desc"><span class="param-type">example: 12/10/1998</span></div>
+<div class="param">endDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: dd/MM/yyyy</div>
+          <div class="param-desc"><span class="param-type">example: 12/10/1998</span></div>
+<div class="param">separator </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: chararcter</div>
+          <div class="param-desc"><span class="param-type">example: /</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
