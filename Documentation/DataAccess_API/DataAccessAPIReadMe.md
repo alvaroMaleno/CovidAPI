@@ -23,10 +23,24 @@ La creación, acceso, respaldo y actualización de los datos ha quedado dentro d
     - .Net Core 3.1
     - PostgreSQL 11.8
     - JSON
+    - NewtonSoft
+    - Draw.io
+    - Swagger OpenAPI
+
+## Documentación Oficial
+
+- **.Net Core**: https://docs.microsoft.com/es-es/dotnet/core/
+- **PostgreSql**: https://www.postgresql.org/docs/
+- **JSON**: https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/JSON
+- **Newtonsoft**: https://www.newtonsoft.com/json/help/html/Introduction.htm
+- **Draw.io**: http://draw.io
+- **Swagger OpenAPI**: https://swagger.io/
+
+
 
 # Puesta en Marcha
 
-1. Instalar todas dependencias citadas en el apartado anterior excepto la última.
+1. Instalar las cuatro primeras dependencias citadas en el apartado anterior.
 
 2. Configurar base de datos Postgresql; generación de usuario con permisos para la creación de tablas, inserción y consulta y creación de base de datos.
 

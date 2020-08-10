@@ -1,4 +1,3 @@
-using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace Security_REST.Utils

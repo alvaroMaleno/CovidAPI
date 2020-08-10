@@ -1,183 +1,61 @@
 # Covid
-Proyecto Fin de FP
 
-En construcción: PUEDE HABER ERRORES
-
-Under construction: CAN BE ERRORS
+Proyecto Fin de FP Desarrollo de Aplicaciones Multiplataforma
 
 Licencia CC BY-SA 
 
+# Introducción
 
-# Puesta en Marcha
+Siguiendo con la tendencia actual, especialmente dentro del marco de trabajo de .NET, de fraccionar las aplicaciones en diversos microservicios capaces de funcionar de manera independiente y de ser gestionados por una persona que será la responsable de uno o varios de los mismos, el conjunto total de esta aplicación ha sido dividido en tres aplicaciones. Dos de ellas tienen una funcionalidad independiente de las demás y atienden a la responsabilidad procedural de la aplicación, y una tercera que se emplea como marco de interacción con el usuario.
 
-Para iniciar la aplicación en modo test no es necesaria ninguna configuración,
-basta con dirigir las consultas a https://localhost:5001/api/covidTest modificando
-la url dependiendo del ordenador que la hospede y su configuración personal. 
+# Idea General
 
-Para iniciar la aplicación completa, es necesario, como requisito previo, tener
-instalado el servidor Postgresql con un usuario y una base de datos activa.
+Tras la estructuración de la aplicación en múltiples microservicios subyace la idea de la rehutilización del software. De lo que se trata es de generar componentes independientes entre sí que, por encargarse de una única responsabilidad dentro de un sistema mayor sean capaces de servir como bloques de construcción para aplicaciones de mayor envergadura.
 
--  Modificar el archivo connectionProperties.json que se encuentra en la ruta
-DAOs/Connection/connectionProperties.json introduciendo la configuración de la
-base de datos propia.
+![Flujo General](./Diagrams/DiseñoGeneral.png)
 
-- Iniciar la aplicación y esperar entre media hora y una hora y media, dependiendo
-del ordenador empleado y la velocidad de la base de datos propia. 
-Tras la espera, comprobar que han generado correctamente todas las tablas y que se han 
-insertado datos en ellas.
+## Acceso a Datos
 
-¡Advertencia!
+Así, el acceso a datos es gestionado por un API con capacidad para generar sus propias tablas y modelos de datos con la ayuda, únicamente de una conexión a base de datos establecida por el programador desde un archivo de configuración. Es posible que ni el modelo de datos ni los procesos particulares que requiere sean empleados por otras aplicaciones jamás, sin embargo, éste componente puede emplearse como esqueleto para generar aplicaciones diferentes cuya responsabilidad constista en gestionar el acceso a los datos almacenados en una base de datos.
 
-El programa está configurado para detectar el sitema operativo que lo ejecuta
-y variar las rutas en función del mismo. Sin embargo, esta funcionalidad no ha
-sido probada aún en Windows, por lo que, si tras arrancar la aplicación, pasados
-unos minutos, no se ha generado ninguna tabla en su base de datos, lo mejor será
-comprobar que las rutas estén adecuadamente configuradas. Debería verse alguna 
-excepción en la consola. 
+Además, si se plantease la necesidad de migrar el almacenaje de los datos hacia un proveedor de base de datos distinto los cambios a realizar dentro de la aplicación se encontrarían completamente aislados y, junto con un diseño abstracto de componentes, resultarían muy sencillos de llevar a buen término.
 
-Esta es una lista de las clases que dependen de una ruta a archivo:
+## Gestión de la seguridad
 
-- CoVid/DAOs/Connection/ConnectionPostgreSql.cs
-- CoVid/DAOs/CreateTableOperations/PostgreSqlCreateTable.cs
-- CoVid/Processes/InitialCreateTables/createTables_Unix_Paths.json
-- CoVid\Processes\InitialCreateTables\createTables_Unix_Paths.json
-- CoVid/DAOs/InsertTableOperations/PostgreSqlInsert.cs
-- CoVid/Processes/InitialDataInsertion/insertData_Unix_Paths.json
-- CoVid\Processes\InitialDataInsertion\insertData_Windows_Paths.json
+Pero por otro lado se encuntra la gestión de información sensible y los procesos de autentificación de usuario. Son comunes a miles de aplicaciones y páginas web y bastaría el empleo de un único microservicio para todas ellas. Éste podría ser el mismo para un conjunto o funcionar por duplicado para cada una de las aplicaiones o páginas web que lo requiriesen pero, no sería necesario programarlo más de una vez. 
 
-Por ahora únicamente genera las tablas e inserta una parte de los datos,
-aquella que proviene del centro de datos de la Unión Europea.
-A medida que se vayan incorporando más funcionalidades se irán
-añadiendo en este archivo.
+Igualmente debe de ser capaz de ponerse en marcha por sí mismo con la menor necesidad de manipulación por parte del programador por lo que todos los procesos de creación de tablas, generación de contraseñas y claves propias se han automatizado y simplemente resulta imprescindible añadir una conexión a base de datos dentro del archivo de configuración correspondiente.
 
-# Funcionalidades activas
+Se recomienda siempre el uso de una base de datos específica para almacenar la información sensible. Siguiendo el diseño del bloque anterior la forma en la que está programada la aplicación facilita la sustitución de unas clases por otras como medio de cambiar de proveedor de base de datos.
 
-Ya es posible realizar consultas aunque no existe un control de errores
-completo. Una vez el programa ha generado la base de datos, será posible
-acceder a los datos de la misma realizando una llamada POST a https://localhost:5001/api/covid .
+## El conjunto
 
-La contraseña pedida por defecto para realizar pruebas es "secret". La estructura de la petición será la siguiente:
+Finalmente es necesario un servicio que se encargue de interactuar con el usuario sin  que éste tenga que acceder directamente a cada uno de sus componentes. Además, este servicio, o microservicio,  debería de poner en común todas las funcionalidades de la aplicación siendo fácilmente reemplazable por otro u otros. Es también el encargado de tokenizar el acceso a la misma, de manera que únicamente sea necesaria una autentificación cada cierto tiempo, limitando así el acceso a la información sensible que queda doblemente oculta dentro de este sistema multicomponental.
 
+# Objetivos
 
-	{
-    	"user": 
-    
-	        {
-	            "id": "mail@example.net",
-	            "pass": "secret"
-	        }
-	    ,
+- Adaptabilidad
+- Rehutilización
+- Sofware OpenSource
+- Seguridad en el tratamiento de la información sensible.
 
-	    "covid_data":
-	    {
-	        "countries":
-	        [
-	            
-	            "ao",
-	            "sp",
-	            "du"
-	            
-	        ],
-	        "dates":
-	        {
-	            
-	            "startDate": "31/12/2019",
-	            "endDate": "22/05/2020"
-	        
-	        },
+# Tecnologías
 
-	        "dataType": "methodName",
-	        "statisticalMethod" : "anyAvailable"
-	    }
-    
-	}
+- SDK de .Net Core 3.1
+- ASP .Net Core 3.1
+- .Net Core 3.1
+- PostgreSQL 11.8
+- JSON
+- NewtonSoft
+- Draw.io
+- Swagger OpenAPI
 
-Se pueden incluir tantos países como se desee dentro de la lista "countries". Si 
-se quieren solicitar los datos relativos a la pandemia de todos los paises que hay
-almacenados en la base de datos basta con inlcuir * dentro de la lista de países solicitados.
+# ReadMe particular para cada componente
 
-Hay, además, dos operaciones de consulta más: 
+- [Covid_API](./Documentation/Covid_API/CovidAPIReadMe.md)
+- [DataAccess_API](./Documentation/DataAccess_API/DataAccessAPIReadMe.md)
+- [Security_API](./Documentation/Security_API/SecurityAPIReadMe.md)
 
-	- Es posible obtener una lista completa de las fechas permitidas estableciendo
-	el elemento "dataType" como "getdates".
+# Manual simple de usuario
 
-	- Para obtener la lista de paises disponibles basta con establecer el elemento
-	"dataType" como "getcountries".
-
-#Próxima funcionalidad a desarrollar
-
-Lo próximo a desarrollar será el sistema de autentificación de usuarios. Para
-garantizar la seguridad se ha establecido el siguiente procedimiento:
-
-	1. El registro se realizará mediante el empleo de encriptación en Base64 únicamente
-	para el primer envío de información.
-
-	2. Una vez recibida la información por vez primera el programa se encargará de
-	generar unas claves pública y privada RSA mediante y, enviar en la respuesta
-	la clave pública única para el nuevo usuario generado.
-
-	3. Con esa clave pública se encriptará el nombre de usuario y su contraseña almacenando
-	en la base de datos relativa a los usuarios nombre de usuario encriptado, contraseña encriptada 
-	y clave pública.
-
-	4. Para garantizar la seguridad de las claves privadas se desarrollará el siguiente
-	procedimiento:
-
-		1. Encriptar la clave privada generada mediante algoritmo RSA nuevamente.
-		
-		2. Almacenar en una base de datos dispuesta para ello las claves pública y privada
-		generadas encriptadas mediante SHA 256 junto con la fecha y hora de su generación.
-
-		3. Crear un proceso independiente y automático que se encargue de comprobar si
-		han pasado más de 12 horas desde la creación de la clave de desencriptación de claves 
-		privada y pública y, en caso afirmativo, recuperarlas, generar unas claves maestras nuevas, 
-		recorrer toda la base de datos de claves públicas y privadas almacenadas desencriptándolas
-		y sustituyéndolas por una encriptación con las nuevas claves maestras, eliminar las claves
-		internas antiguas y almacenar las generadas recientemente.
-
-		Para asegurar que el proceso no altere la base de datos irremediablemente por un 
-		error se recomienda generar unas tablas de inserción y unas permanentes, de modo
-		que únicamente sean modificadas las permanentes en caso de inserción exitosa realizando
-		un volcado de las mismas tras haber efectuado todas las operaciones.
-
-Se trata de un proceso algo complejo y vulnerable únicamente durante el momento de
-recibir el primer alta del usuario, ya que posteriormente, la obtención de las claves
-privadas con las que desencriptar la información sensible se complicará y además correrá
-contra reloj pues, un supuesto atacante, dispondría de 12 horas para eliminar la seguridad
-del servidor en el que se hospeda la base de datos, romper la seguridad de la propia base
-de datos, obtener la clave privada maestra con la que desencriptar todas las claves privadas
-asignadas, cada una de ellas a un usuario y, emplear cada una de esas claves privadas para
-desencriptar la información del usuario. Sin olvidar, que se debe de desencriptar la clave
-maestra SHA256 mediante.
-
-Como ventaja, puede modificarse la regularidad en la variación de claves pasando de 12
-horas a 20 minutos, por ejemplo, o, llegado el caso, incluso a uno o dos minutos.
-
-# Emplear una base de datos distinta
-
-Para emplear una base de datos diferente a la escogida, será necesario generar
-ciertas clases específicas para la misma:
-
-- Crear una clase que implemente la interfaz IDataBaseConnector.
-- Crear una clase que implemente la interfaz ICreate.
-- Crear una clase que implemente la interfaz IDataBaseInsert.
-- Crear una clase que implemente la interfaz IDatabaseAccess.
-
-Una vez generadas las clases precedentes, crear una implementación
-de la clase abstracta CovidDAO. Dicha clase estará compuesta por
-cada uno de los objetos que implementan las anteriores interfaces
-y los empleará para construir sus métodos. 
-
-Por último, ir a la clase Program.cs y sustituir en la construcción
-de la clase InitialDataInsertions el parámetro correspondiente a la
-inyección de la clase CovidDAO.
-
-Las pruebas indican una velocidad de acceso a datos elevada - en torno
-a respuestas dadas entre 17 y 80 ms en transacciones que incluyen los
-datos relativos a varios países y, de entre 800 y 1600 ms en obtener
-el conjunto de datos de la base de datos, en un ordenador sencillo con
-un procesador AMD de gama media - no obstante,
-un almacén de datos en memoria RAM sería aún más veloz.
-
-
-
+# Documentación completa

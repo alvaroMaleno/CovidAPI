@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/Covid_REST.csproj": {}
+    "/home/alvaro/Documentos/Proyecto/Covid/APIs/Covid_API/Covid_REST.csproj": {}
   },
   "projects": {
-    "/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/Covid_REST.csproj": {
+    "/home/alvaro/Documentos/Proyecto/Covid/APIs/Covid_API/Covid_REST.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/Covid_REST.csproj",
+        "projectUniqueName": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Covid_API/Covid_REST.csproj",
         "projectName": "Covid_REST",
-        "projectPath": "/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/Covid_REST.csproj",
+        "projectPath": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Covid_API/Covid_REST.csproj",
         "packagesPath": "/home/alvaro/.nuget/packages/",
-        "outputPath": "/home/alvaro/Documentos/Proyecto/Covid/Covid_REST/obj/",
+        "outputPath": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Covid_API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/alvaro/.nuget/NuGet/NuGet.Config"

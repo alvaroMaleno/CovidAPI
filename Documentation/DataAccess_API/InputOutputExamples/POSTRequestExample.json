@@ -1,0 +1,14 @@
+{
+    "method": "GetGeoZoneData",
+    "covid_data": {
+        "countries": [
+            "ES",
+            "AN"
+        ],
+        "dates": {
+            "startDate": "31/12/2019",
+            "endDate": "01/01/2020",
+            "separator": "/"
+        }
+    }
+}

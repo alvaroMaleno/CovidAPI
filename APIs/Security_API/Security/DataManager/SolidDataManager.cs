@@ -70,13 +70,13 @@ namespace Security_REST.Security.DataManager
             }
         }
 
-        public void DesencryptEachPersistentFile(KeyPair pKeyPair, Paths pPaths)
+        public void DescryptEachPersistentFile(KeyPair pKeyPair, Paths pPaths)
         {
             string dataToWritte;
             foreach (var path in pPaths.oPaths)
             {
                 dataToWritte = _oRSAManager.
-                                DesencryptWithPrivateKeyString(
+                                DecryptWithPrivateKeyString(
                                     UtilsStreamReaders.GetInstance().ReadStreamFile(path),
                                     pKeyPair);
                 
@@ -84,10 +84,10 @@ namespace Security_REST.Security.DataManager
             }
         }
 
-        public string DesencryptFile(KeyPair pKeyPair, string pPath)
+        public string DecryptFile(KeyPair pKeyPair, string pPath)
         {
             return _oRSAManager.
-                    DesencryptWithPrivateKeyString(
+                    DecryptWithPrivateKeyString(
                         UtilsStreamReaders.GetInstance().ReadStreamFile(pPath),
                         pKeyPair);
         }

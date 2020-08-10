@@ -56,8 +56,8 @@ namespace Security_REST.Security.SecurityManager
 
             try
             {
-                pUser.email = _oRSAManager.DesencryptWithPrivateKeyString(pUser.email, oKeyPair);
-                pUser.pass = _oRSAManager.DesencryptWithPrivateKeyString(pUser.pass, oKeyPair);
+                pUser.email = _oRSAManager.DecryptWithPrivateKeyString(pUser.email, oKeyPair);
+                pUser.pass = _oRSAManager.DecryptWithPrivateKeyString(pUser.pass, oKeyPair);
             }
             catch (System.Exception)
             {
@@ -105,7 +105,7 @@ namespace Security_REST.Security.SecurityManager
             var oPrivateArray = pToDecrypt.Split(UtilsConstants._COME);
 
             for (int i = UtilsConstants._ZERO; i < oPrivateArray.Length; i++)
-                oPrivateArray[i] = _oRSAManager.DesencryptWithPrivateKeyString(
+                oPrivateArray[i] = _oRSAManager.DecryptWithPrivateKeyString(
                                         oPrivateArray[i], pKeyPair);
 
             return String.Join(UtilsConstants._ENCRYPT_SPLIT, oPrivateArray);
@@ -162,8 +162,8 @@ namespace Security_REST.Security.SecurityManager
                 this.GetAPIKeyPair(out oKeyPair);
 
                 oUserKeyPair.private_string = this.DecryptByChunk(oUserKeyPair.private_string, oKeyPair);
-                pUser.email = _oRSAManager.DesencryptWithPrivateKeyString(pUser.email, oUserKeyPair);
-                pUser.pass = _oRSAManager.DesencryptWithPrivateKeyString(pUser.pass, oUserKeyPair);
+                pUser.email = _oRSAManager.DecryptWithPrivateKeyString(pUser.email, oUserKeyPair);
+                pUser.pass = _oRSAManager.DecryptWithPrivateKeyString(pUser.pass, oUserKeyPair);
 
                 User oSelectedUser;
                 _oDAO.SelectUser(
@@ -171,7 +171,7 @@ namespace Security_REST.Security.SecurityManager
                     oLinesArray[UtilsConstants._ONE].Split(UtilsConstants._COME),
                     out oSelectedUser);
 
-                oSelectedUser.pass = _oRSAManager.DesencryptWithPrivateKeyString(oSelectedUser.pass, oUserKeyPair);
+                oSelectedUser.pass = _oRSAManager.DecryptWithPrivateKeyString(oSelectedUser.pass, oUserKeyPair);
                 this.SetNumberOfUsersAddedWithActualKey(_numberOfUsesOfActualKey + UtilsConstants._ONE);
                 
                 if(string.IsNullOrEmpty(oSelectedUser.pass) || oSelectedUser.pass != pUser.pass)

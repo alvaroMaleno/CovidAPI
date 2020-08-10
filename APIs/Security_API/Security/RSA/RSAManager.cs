@@ -40,13 +40,13 @@ namespace Security_REST.Security
             pRSACryptoServiceProvider = new RSACryptoServiceProvider(3072);
         }
 
-        public string DesencryptWithPrivateKeyString(string pToDesencrypt, KeyPair pKeyPair)
+        public string DecryptWithPrivateKeyString(string pToDecrypt, KeyPair pKeyPair)
         {
             RSACryptoServiceProvider oRSACryptoServiceProvider;
             this.CreateRSACryptoServiceProvider(out oRSACryptoServiceProvider);
 
             oRSACryptoServiceProvider.FromXmlString(pKeyPair.private_string);
-            var ToDecrypt = Convert.FromBase64String(pToDesencrypt);
+            var ToDecrypt = Convert.FromBase64String(pToDecrypt);
             return 
                 Encoding.ASCII.GetString(
                     oRSACryptoServiceProvider.Decrypt(ToDecrypt, false));
