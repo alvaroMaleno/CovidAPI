@@ -60,23 +60,23 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 
 ## DataAccess_API
 
-- [MarkDown](./SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.md)
+- [MarkDown](./Documentation/DataAccess_API/SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.md)
 
-- [PDF](./SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.pdf)
+- [PDF](./Documentation/DataAccess_API/SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.pdf)
 
-- [DOC](./SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.doc)
+- [DOC](./Documentation/DataAccess_API/SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.doc)
 
-- [DOCX](./SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.docx)
+- [DOCX](./Documentation/DataAccess_API/SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.docx)
 
 ## Security_API
 
-- [MarkDown](./SimpleUserGuide/ManualSimpleUsuario_Security_API.md)
+- [MarkDown](./Documentation/Security_API/SimpleUserGuide/ManualSimpleUsuario_Security_API.md)
 
-- [PDF](./SimpleUserGuide/ManualSimpleUsuario_Security_API.pdf)
+- [PDF](./Documentation/Security_API/SimpleUserGuide/ManualSimpleUsuario_Security_API.pdf)
 
-- [DOC](./SimpleUserGuide/ManualSimpleUsuario_Security_API.doc)
+- [DOC](./Documentation/Security_API/SimpleUserGuide/ManualSimpleUsuario_Security_API.doc)
 
-- [DOCX](./SimpleUserGuide/ManualSimpleUsuario_Security_API.docx)
+- [DOCX](./Documentation/Security_API/SimpleUserGuide/ManualSimpleUsuario_Security_API.docx)
 
 ## Covid_API
 
