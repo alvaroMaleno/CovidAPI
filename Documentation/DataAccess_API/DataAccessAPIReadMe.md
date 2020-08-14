@@ -1,7 +1,5 @@
 # Introducción
 
-Siguiendo con la tendencia actual, especialmente dentro del marco de trabajo de .NET, de fraccionar las aplicaciones en diversos microservicios capaces de funcionar de manera independiente y de ser gestionados por una persona que será la responsable de uno o varios de los mismos, el conjunto total de esta aplicación ha sido dividido en tres aplicaciones. Dos de ellas tienen una funcionalidad independiente de las demás y atienden a la responsabilidad procedural de la aplicación, y una tercera que se emplea como marco de interacción con el usuario. 
-
 La creación, acceso, respaldo y actualización de los datos ha quedado dentro de la responsabilidad particular de esta API. Así, todo lo que implique interacción con proveedores externos de datos y con base de datos propia es tratado dentro de este programa. 
 
 # Responabilidades
@@ -132,3 +130,10 @@ Dentro de la carpeta situada en DataAccess_API/Properties se encuentra el archiv
 ]
     </code>
 </pre>
+
+# Manual Simple de Usuario
+
+- [MarkDown](./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.md)
+- [PDF] (./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.pdf)
+- [.DOC] (./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.doc)
+- [.DOCx] (./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.docx)

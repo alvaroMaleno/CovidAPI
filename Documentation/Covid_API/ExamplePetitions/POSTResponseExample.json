@@ -1,0 +1,36 @@
+[
+    {
+        "father": null,
+        "sonList": null,
+        "geoID": "ES",
+        "code": "ESP",
+        "name": "Spain",
+        "population": 46723749,
+        "dataList": [
+            {
+                "id": 2,
+                "cases": 0,
+                "deaths": 0,
+                "cured": 0,
+                "date": {
+                    "id": 2,
+                    "date": "01/01/2020",
+                    "dateSeparator": "/",
+                    "dateFormat": "dd/MM/yyyy"
+                }
+            },
+            {
+                "id": 1,
+                "cases": 0,
+                "deaths": 0,
+                "cured": 0,
+                "date": {
+                    "id": 1,
+                    "date": "31/12/2019",
+                    "dateSeparator": "/",
+                    "dateFormat": "dd/MM/yyyy"
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,32 @@
+{
+    "covid_data":
+    {
+        "countries":
+        [
+            
+            "ES",
+            "AD",
+            "AE",
+            "AU",
+            "NO",
+            "PA",
+            "SS",
+            "TG",
+            "TL"
+
+            
+            
+        ],
+        "dates":
+        {
+            
+            "startDate": "31/12/2019",
+            "endDate": "28/07/2020",
+            "separator": "/"
+        
+        },
+
+        "dataType": "any"
+    }
+    
+}
