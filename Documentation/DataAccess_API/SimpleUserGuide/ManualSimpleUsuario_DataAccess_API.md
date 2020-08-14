@@ -56,6 +56,7 @@ La ruta al archivo es **/APIs/DataAccess_API/DAOs/Connection/connectionPropertie
 
 5. Esperar varias horas. La aplicación generará todas las bases de datos necesarias para su empleo e insertará todos los datos necesarios previa consulta de los mismos a organismos externos a la misma. Si tras varios minutos no se observase la creación de ninguna tabla en base de datos se recomienda detener la aplicación y comprobar la conexión al servidor de base de datos.
 
+![](../Diagrams/InitialDataInsertionsSecuenceFlow.jpeg)
 
 # 2. Usando la aplicación. Los métodos.
 
@@ -292,12 +293,20 @@ Y un ejemplo de respuesta acortada es el que sigue:
 Puede consultarse la respuesta completa en [**/Documentation/DataAccess_API/InputOutputExamples/AllDates.json**](../InputOutputExamples/AllDates.json) .
 
 
+## 2.6 El proceso de consulta
 
+![](../Diagrams/DataAccessFlow.png)
 
 
 # 3. El modelo de datos
 
 ## 3.1 El modelo de datos propio
+
+### 3.1.1 Entidad Relacional
+
+![](../Diagrams/DataEntityDiagram.png)
+
+### 3.1.2 Diagrama de clases
 
 ![](../Diagrams/OwnDataModelClassDiagram.jpeg)
 
