@@ -22,7 +22,7 @@ Pueden seguirse los siguientes tutoriales:
 
 - https://www.postgresql.org/docs/11/installation.html
 
-# 1.2 Arrancando la API
+# 1.2 Arrancando la Aplicación
 
 1. El primer paso será la configuración de una base de datos sobre la cual realizar la persistencia y consulta de la información referente a los nuevos usuarios. Desde la página oficial de PostgreSQL puede consultarse una guía completa: https://www.postgresql.org/docs/11 .
 
@@ -42,7 +42,7 @@ Pueden seguirse los siguientes tutoriales:
 </code>
 </pre>
 
-# 1.3 Levantando la aplicación
+# 1.3 Levantando la Aplicación
 
 1. Navegar hasta la ruta **APIs/Security_API**.
 
@@ -55,7 +55,7 @@ Pueden seguirse los siguientes tutoriales:
 5. Esperar varios minutos. La aplicación generará todas las bases de datos necesarias para su empleo e insertará todos los datos necesarios. Si tras varios minutos no se observase la creación de ninguna tabla en base de datos se recomienda detener la aplicación y comprobar la conexión al servidor de base de datos.
 
 
-# 2. Usando la aplicación. Los métodos.
+# 2. Usando la Aplicación. Los métodos.
 
 La aplicación se encuentra configurada para atender peticiones **GET** y **POST** enviadas a la url https://localhost:5003/Security . Si desea cambiarse el puerto de acceso es posible modificando el archivo  **APIs/Seurity_API/Properties/launchProperties.json**.
 
@@ -90,6 +90,8 @@ Una respuesta con la clave pública única de usuario, que éste deberá de alma
 
 **&lt;RSAKeyValue>&lt;Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF&lt;/Modulus>&lt;Exponent>AQAB&lt;/Exponent>&lt;/RSAKeyValue>**
 
+![](../Diagrams/CreatingUser.png)
+
 # 2.3 Autentificar
 
 Con éste método se comprueba si el usuario ha sido registrado previamente en base de datos y si los datos transmitidos son correctos. Como la petición anterior, se compone de los elementos **“email”** y **“pass”**, pero en esta ocasión deben de haber sido encriptados con la clave pública única para el usuario que será remitida dentro del elemento **“public_key”**.
@@ -107,6 +109,8 @@ Una petición de ejemplo es la que sigue:
 }
 </code>
 </pre>
+
+![](../Diagrams/AuthenticatingUser.png)
 
 
 # 2.4 Método Adicional. Encriptar texto.
@@ -135,5 +139,12 @@ La respuesta sería la siguiente:
 
 ![](../Diagrams/Models/DataModels.png)
 
-           
+# 4. Procesos
 
+## 4.1 Creación inicial de tablas
+
+![](../Diagrams/ItialTableCreationProcess.png)
+
+## 4.2 Cambio de claves de aplicación
+
+![](../Diagrams/EncriptationChangeProcess.png)
