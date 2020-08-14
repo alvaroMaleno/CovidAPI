@@ -299,8 +299,8 @@ Puede consultarse la respuesta completa en [**/Documentation/DataAccess_API/Inpu
 
 ## 3.1 El modelo de datos propio
 
-[](../Diagrams/OwnDataModelClassDiagram.jpeg)
+![](../Diagrams/OwnDataModelClassDiagram.jpeg)
 
 ## 3.2 El modelo de datos de la petición de entrada
 
-[](../Diagrams/InputPostClassDiagram.jpeg)
+![](../Diagrams/InputPostClassDiagram.jpeg)
