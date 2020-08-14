@@ -135,7 +135,7 @@ Una respuesta de ejemplo sería la que sigue:
     </code>
 </pre>
 
-En el título siguiente – [**3. El modelo de datos**](#3.-El-modelo-de-datos) -  puede consultarse el modelo de datos empleado.
+En el título siguiente – [**3. El modelo de datos**](#-3.-El-modelo-de-datos) -  puede consultarse el modelo de datos empleado.
 
 
 ## 2.2 GetAllGeoZoneData
@@ -299,8 +299,8 @@ Puede consultarse la respuesta completa en [**/Documentation/DataAccess_API/Inpu
 
 ## 3.1 El modelo de datos propio
 
-![](../Diagrams/OwnDataModelClassDiagram.jpeg)
+![](../Diagrams/OwnDataModelClassDiagram.jpeg =300x500)
 
 ## 3.2 El modelo de datos de la petición de entrada
 
-![](../Diagrams/InputPostClassDiagram.jpeg)
+![](../Diagrams/InputPostClassDiagram.jpeg =300x500)
