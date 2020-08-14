@@ -58,4 +58,19 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 
 # Manual simple de usuario
 
-# Documentación completa
+## DataAccess_API
+
+- [MarkDown](./SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.md)
+
+- [PDF](./SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.pdf)
+
+- [DOC](./SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.doc)
+
+- [DOCX](./SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.docx)
+
+## Security_API
+
+## Covid_API
+
+
+# Documentación completa de conjunto
