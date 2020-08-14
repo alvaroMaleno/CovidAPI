@@ -24,6 +24,7 @@ La interacción con el usuario así como la coordinación de los diferentes proc
     - ASP .Net Core 3.1
     - .Net Core 3.1
     - JSON
+    - JWT
     - NewtonSoft
     - Draw.io
 
