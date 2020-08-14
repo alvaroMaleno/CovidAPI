@@ -134,6 +134,6 @@ Dentro de la carpeta situada en DataAccess_API/Properties se encuentra el archiv
 # Manual Simple de Usuario
 
 - [MarkDown](./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.md)
-- [PDF] (./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.pdf)
-- [.DOC] (./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.doc)
-- [.DOCx] (./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.docx)
+- [PDF](./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.pdf)
+- [DOC](./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.doc)
+- [DOCx](./SimpleUserGuide/ManualSimpleUsuario DataAccess_API.docx)
