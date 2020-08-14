@@ -59,7 +59,7 @@ La ruta al archivo es **/APIs/DataAccess_API/DAOs/Connection/connectionPropertie
 
 # 2. Usando la aplicación. Los métodos.
 
-La aplicación se encuentra configurada para atender peticiones POST enviadas a la url https://localhost:5005/CovidDataBase . Si desea cambiarse el puerto de acceso es posible modificando el archivo  APIs/DataAccess_API/Properties/launchProperties.json .
+La aplicación se encuentra configurada para atender peticiones POST enviadas a la url https://localhost:5005/CovidDataBase . Si se desea cambiar el puerto de acceso es posible modificando el archivo  APIs/DataAccess_API/Properties/launchProperties.json .
 
 
 ## 2.1 GetGeoZoneData
