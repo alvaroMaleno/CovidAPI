@@ -47,6 +47,7 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 - PostgreSQL 11.8
 - JSON
 - NewtonSoft
+- JWT
 - Draw.io
 - Swagger OpenAPI
 
