@@ -10,9 +10,9 @@ El cuidado y almacenamiento de los datos sensibles de usuario, así como el regi
 
 3. Registro de nuevos usuarios.
 
-4. Almacenamiento encriptado de nuevos usuarios con claves pública y privada propias y únicas para cada usuario.
+4. Almacenamiento encriptado de nuevos usuarios con claves pública y privada propias y únicas para cada usuario. La clave privada del usuario será, a su vez, encriptada empleando una pareja de claves pública y privada propias de la aplicación que variará cada 100 usos.
 
-5. Cambio regular de la encriptación usada por la API.
+5. Cambio regular de la encriptación usada por la API. Con ella será necesario actualizar la base de datos para que las claves privadas de usuario pasen a estar encriptadas con las nuevas claves.
 
 # Tecnologías empleadas
 
@@ -111,3 +111,13 @@ Dentro de la carpeta situada en ./APIs/Security_API/Properties se encuentra el a
 true
     </code>
 </pre>
+
+# Manual Simple de Usuario
+
+- [MarkDown](./SimpleUserGuide/ManualSimpleUsuario_Security_API.md)
+
+- [PDF](./SimpleUserGuide/ManualSimpleUsuario_Security_API.pdf)
+
+- [DOC](./SimpleUserGuide/ManualSimpleUsuario_Security_API.doc)
+
+- [DOCX](./SimpleUserGuide/ManualSimpleUsuario_Security_API.docx)

@@ -70,7 +70,15 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 
 ## Security_API
 
+- [MarkDown](./SimpleUserGuide/ManualSimpleUsuario_Security_API.md)
+
+- [PDF](./SimpleUserGuide/ManualSimpleUsuario_Security_API.pdf)
+
+- [DOC](./SimpleUserGuide/ManualSimpleUsuario_Security_API.doc)
+
+- [DOCX](./SimpleUserGuide/ManualSimpleUsuario_Security_API.docx)
+
 ## Covid_API
 
 
-# Documentación completa de conjunto
+# Documentación de conjunto completa
