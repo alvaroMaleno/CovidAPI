@@ -121,7 +121,7 @@ Una vez obtenido el token se pueden realizar tantas peticiones de información c
     </code>
 </pre>
 
-![Petición Información](./Process/CachéProcess.png)
+![Petición Información](../Process/CachéProcess.png)
 
 - El elemento **“countries”** puede contener un único código **ISO2** de país o tantos como se desee. Es posible emplear el comodín **“*”** para obtener la información relativa a todos los países disponibles en base de datos.
 
@@ -223,4 +223,4 @@ Una vez obtenido el token se pueden realizar tantas peticiones de información c
 
 # 4. Flujo simple de aplicación
 
-![](../../Diagrams/FlujoDeDatosSimple.png)
+![](../../../Diagrams/FlujoDeDatosSimple.png)
