@@ -81,5 +81,12 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 
 ## Covid_API
 
+- [MarkDown](./Documentation/Covid_API/SimpleUserGuide/ManualSimpleUsuario_Covid_API.md)
+
+- [PDF](./Documentation/Covid_API/SimpleUserGuide/ManualSimpleUsuario_Covid_API.pdf)
+
+- [DOC](./Documentation/Covid_API/SimpleUserGuide/ManualSimpleUsuario_Covid_API.doc)
+
+- [DOCX](./Documentation/Covid_API/SimpleUserGuide/ManualSimpleUsuario_Covid_API.docx)
 
 # Documentación de conjunto completa
