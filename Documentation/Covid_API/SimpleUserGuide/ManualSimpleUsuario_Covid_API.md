@@ -1,6 +1,6 @@
-# DataAccess API
+# Covid API
 
-### Manual simple de usuario
+## Manual simple de usuario
 
 # 1. Puesta en marcha
 
@@ -16,37 +16,21 @@ Para que este API pueda funcionar son necesarias las siguientes dependencias:
 
 - PostgreSQL 11.8
 
-	**Pueden seguirse los siguientes tutoriales:**
+Pueden seguirse los siguientes tutoriales:
 
 - https://docs.microsoft.com/es-es/dotnet/core/install/linux
 
 - https://www.postgresql.org/docs/11/installation.html
 
-## 1.2 Arrancando la Aplicación
+# 1.2 Arrancando la Aplicación
 
-1. El primer paso será la configuración de una base de datos sobre la cual realizar la persistencia y consulta de la información referente a los nuevos usuarios. Desde la página oficial de PostgreSQL puede consultarse una guía completa: https://www.postgresql.org/docs/11 .
+1. Iniciar aplicación DataAccess_API.
 
-2. Una vez generada una base de datos, será necesario configurar el programa para que acceda a la misma. Para ello se ha generado un archivo .json en el cual es posible introducir las credenciales y url de la base de datos. La API se encargará de gestionar esa información tras el primer arranque sin que el usuario tenga que realizar ninguna tarea adicional.
+2. Iniciar aplicación Security_API.
 
-La ruta al archivo es **/APIs/DataAccess_API/DAOs/Connection/connectionProperties.json** . Se trata de sustituir la información de cada campo por la generada en el paso anterior:
+# 1.3 Levantando la aplicación
 
-<pre>
-    <code>
-{
-    "server": "introducir url",
-    "port": "introducir puerto",
-    "userId": "introducir usuario",
-    "pass": "introducir contraseña",
-    "dataBase": "introducir base de datos"
-}
-
-    </code>
-</pre>
-
-
-## 1.3 Levantando la aplicación
-
-1. Navegar hasta la ruta APIs/DataAccess_API.
+1. Navegar hasta la ruta **APIs/Covid_API**.
 
 2. Ejecutar el comando dotnet build desde la consola de comandos. Ref: https://docs.microsoft.com/es-es/dotnet/core/tools/dotnet-build
 
@@ -54,46 +38,100 @@ La ruta al archivo es **/APIs/DataAccess_API/DAOs/Connection/connectionPropertie
 
 4. Es posible sustituir los dos pasos anteriores por al arranque desde un IDE.
 
-5. Esperar varias horas. La aplicación generará todas las bases de datos necesarias para su empleo e insertará todos los datos necesarios previa consulta de los mismos a organismos externos a la misma. Si tras varios minutos no se observase la creación de ninguna tabla en base de datos se recomienda detener la aplicación y comprobar la conexión al servidor de base de datos.
 
-![](../Diagrams/InitialDataInsertionsSecuenceFlow.jpeg)
+# 2. Usando la aplicación. La secuencia a seguir.
 
-# 2. Usando la aplicación. Los métodos.
+Se trata de una aplicación diseñada para actuar como gestora de los servicios que el conjunto de aplicaciones de las que está compuesta puede ofrecer. Además, mejora tanto el rendimiento en materia de acceso a datos al implementar una memoria caché que los sirve con mayor velocidad, como la facilidad de uso de la misma y la seguridad pues posibilita, mediante el empleo de los JWT token, la autentificación única  con una validez de veinticuatro horas.
 
-La aplicación se encuentra configurada para atender peticiones POST enviadas a la url https://localhost:5005/CovidDataBase . Si se desea cambiar el puerto de acceso es posible modificando el archivo  APIs/DataAccess_API/Properties/launchProperties.json .
+Para acceder a la información serán necesarios unos pasos previos.
 
+# 2.1 Registro de usuario
 
-## 2.1 GetGeoZoneData
+![Nuevo Usuario](../Process/GeneralNewUser.png)
 
-Este método está pensado para obtener los datos relativos a la evolución histórica de la pandemia de Covid-19 a nivel mundial desglosados por países.  A través de él se pueden consultar los mismos para una lista de países y dentro de un rango de fechas predeterminado. La petición POST en formato json sería la siguiente:
+1. **Registrar un usuario.** El registro se efectuará realizando, primero, una petición **GET** a la url https://localhost:5001/api/user . Como respuesta se recibirá una clave pública con la que encriptar los datos de usuario.
+
+2. **Enviar una petición  de nuevo usuario.** Con la clave pública recibida se deberán encriptar los campos (ejemplo de petición más abajo) de “email” y “pass”. Además, se deberá establecer el valor true en el campo “new”. La url a la que enviar el POST será la misma del paso anterior.
+
+3. **Recepción y guardado de respuesta.** Como respuesta se recibirá una clave pública que será única para el usuario. Es responsabilidad del mismo su correcto almacenamiento pues, para futuras identificaciones, deberá enviarla en el correspondiente campo **“public_key”** junto con los campos **“email”** y **“pass”** encriptados con esa clave pública particular.
+
+### Ejemplo de petición: 
 
 <pre>
     <code>
 {
-    "method": "GetGeoZoneData",
-
-    "covid_data": {
-
-        "countries": [
-            "ES",
-            "AN"
-        ],
-
-        "dates": {
-            "startDate": "31/12/2019",
-            "endDate": "01/01/2020",
-            "separator": "/"
-        }
-    }
-} 
-
+"email": "xP9BAdai/dJDWZqAKaWjUWiSvK4U1I76xxkYcU2q+dFf2jtY8yN3MUXqGxCdmmyAPtw2lVnWQTPLlp8EbTunvRfgarWv3ZN5ztzWqH/jauEntwfiJNi5WLowkWsk2nfC/M6+7Pc5cJjcP7xOFUmKDojWaMNo2mZns/WeCjzUCbl3VrXZoWC5tguP+nG+/FuZu/1JapVcRapXA8Y6Fv3BhDk8MFg2ieSGShBbloantcXleOqxsLCVxr09elHjvvbCz6keGWBYdmmUVViSZvBgs8nzIwrUCa9prcyCp/MVLPCKd4/J0yj8rOFSP8b89wyo0oGwAObrZfy3Dj89Gh+E4IFnEF8A52GkSAM7qY6LISKkDyvN/vwI/S+N7EYPQx92s9eqB0uHYY9hA3Ut+pXx8ByaM5rcPlF284HvnApsHoymdIAry60BdD711L2ejv1cp/GnPoG3gpaeup8zmo60qPMTGXoYnLrUW9vweyiHqCJ01G5cFYxti+KMhIxfml9V",
+"pass": "WqMti7Du5JldRjaP0rDTFA/GmzYrneQg6QUrmLoMtvB6/3U/Ego3qW/IIcKQ7CEmRwyTuirElwd1WIGqNojZ7bgcyZVy8mQciMEmSSF6l8IrYny4OXWSfcHpG6G+2FP/zQZrglckTc2Hx56dJc2IY6yJJDGduMakesBHqP/UDkpVZGBUwfOx13NTIXRTQgmCGb+Se3tyK7aI+0eIxDIyFZ+SCK8TJZXykSaVbPltoJ4R/9z4/LG8VhYIkmIb5FQfu9lgSwJd+NUca+7vr8eSuobsbG4rx0YJs0CF78TRFU8ZshNbMXgVfl2EiTQfCR3Gk5UBKKhdi551rPe2cL8JwX2jtJMc6ApD7Rh/xV/rWyPbplSRikI7gO4Y2zbSkUu6rsc1UHEc/MGHT65wUerzDtvocQaRii2LGrLNOFB1Li1YJLi3eD9jImqgNaCjJHtK6jntF3VVn2CwwU6ROSkEkm8wChuiARjxq3yAPLU+wS+riLoinNf7TlbqahTpsanF",
+"new": true
+}
     </code>
 </pre>
 
+## 2.2 Autentificar un usuario
 
-El elemento **“method”** indica a qué método del API se está dirigiendo la consulta. **“covid_data”** posee dos componentes. Por un lado una lista **“countries”**. Ésta es ampliable tanto como se necesite y consta de los códigos ISO2 de todos los países de los que se desea obtener información. Por otro lado el elemento **“dates”** indica desde qué fecha hasta qué día se desea obtener datos. El formato ha de ser siempre el mismo: dd/MM/yyyy y el separador **“/”**. En este punto el elemento “separator” no es obligatorio pero está presente pensando en un posible futuro desarrollo de nuevas funcionalidades como la admisión de varios formatos de consulta.
 
-Una respuesta de ejemplo sería la que sigue:
+![Autentificar Usuario](../Process/Authenticate.png)
+
+1. Enviar petición **POST**. La url a la que realizar la petición es https://localhost:5001/api/authorize . En ella se han de incluir los campos **“email”** y **“pass”** encriptados con la clave pública única de usuario, dada como respuesta al registro de usuario. Además, se ha de incluir un campo con esta clave pública (**“public_key”**).
+
+2. **Almacenar token de respuesta.**  Como respuesta, en caso de autentificación exitosa, se recibirá un **token** que deberá adjuntarse en la cabecera como autentificación para futuras peticiones de información. Dicho token poseerá una validez de **24 horas**, tras las cuales se deberá realizar el proceso de autentificación de nuevo.
+
+### Ejemplo de petición:
+
+<pre>
+<code>
+{
+"email": "xP9BAdai/dJDWZqAKaWjUWiSvK4U1I76xxkYcU2q+dFf2jtY8yN3MUXqGxCdmmyAPtw2lVnWQTPLlp8EbTunvRfgarWv3ZN5ztzWqH/jauEntwfiJNi5WLowkWsk2nfC/M6+7Pc5cJjcP7xOFUmKDojWaMNo2mZns/WeCjzUCbl3VrXZoWC5tguP+nG+/FuZu/1JapVcRapXA8Y6Fv3BhDk8MFg2ieSGShBbloantcXleOqxsLCVxr09elHjvvbCz6keGWBYdmmUVViSZvBgs8nzIwrUCa9prcyCp/MVLPCKd4/J0yj8rOFSP8b89wyo0oGwAObrZfy3Dj89Gh+E4IFnEF8A52GkSAM7qY6LISKkDyvN/vwI/S+N7EYPQx92s9eqB0uHYY9hA3Ut+pXx8ByaM5rcPlF284HvnApsHoymdIAry60BdD711L2ejv1cp/GnPoG3gpaeup8zmo60qPMTGXoYnLrUW9vweyiHqCJ01G5cFYxti+KMhIxfml9V",
+"pass": "WqMti7Du5JldRjaP0rDTFA/GmzYrneQg6QUrmLoMtvB6/3U/Ego3qW/IIcKQ7CEmRwyTuirElwd1WIGqNojZ7bgcyZVy8mQciMEmSSF6l8IrYny4OXWSfcHpG6G+2FP/zQZrglckTc2Hx56dJc2IY6yJJDGduMakesBHqP/UDkpVZGBUwfOx13NTIXRTQgmCGb+Se3tyK7aI+0eIxDIyFZ+SCK8TJZXykSaVbPltoJ4R/9z4/LG8VhYIkmIb5FQfu9lgSwJd+NUca+7vr8eSuobsbG4rx0YJs0CF78TRFU8ZshNbMXgVfl2EiTQfCR3Gk5UBKKhdi551rPe2cL8JwX2jtJMc6ApD7Rh/xV/rWyPbplSRikI7gO4Y2zbSkUu6rsc1UHEc/MGHT65wUerzDtvocQaRii2LGrLNOFB1Li1YJLi3eD9jImqgNaCjJHtK6jntF3VVn2CwwU6ROSkEkm8wChuiARjxq3yAPLU+wS+riLoinNf7TlbqahTpsanF",
+"new": false,
+
+"public_key" : "<RSAKeyValue><Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>"
+}
+    </code>
+</pre>
+
+## 2.3 Petición de datos
+
+![Petición Información](../Process/OneOrMoreCountries.png)
+
+Una vez obtenido el token se pueden realizar tantas peticiones de información como se desee. La petición **POST** a efectuar puede sufrir diferentes modificaciones con el objetivo de obtener distintas respuestas. Además, posee dos métodos adicionales que generarán un conjunto de datos de respuesta diferente. La petición sería la siguiente:
+
+<pre>
+    <code>
+{
+	"covid_data":
+	{
+	"countries":
+	[
+	"ES",
+	"AD",
+	"AE"
+
+	],
+	"dates":
+	{
+		"startDate": "31/12/2019",
+		"endDate": "28/07/2020",
+		"separator": "/"
+	},
+
+		"dataType": "any"
+	}
+}
+    </code>
+</pre>
+
+![Petición Información](./Process/CachéProcess.png)
+
+- El elemento **“countries”** puede contener un único código **ISO2** de país o tantos como se desee. Es posible emplear el comodín **“*”** para obtener la información relativa a todos los países disponibles en base de datos.
+
+- El elemento **“separator”** de **“dates”** es modificable y se puede usar el que se desee. Sin embargo, el formato de fecha deberá ser siempre el mismo.
+
+- Como extra, **“dataType”** se puede emplear para obtener una lista con todos los países disponibles (**getcountries**) o, una con todas la fechas válidas para consulta (**getdates**). Éste método invalidará todos los demás.
+
+# 3. Respuestas
+
+## 3.1 Datos
 
 <pre>
     <code>
@@ -136,86 +174,7 @@ Una respuesta de ejemplo sería la que sigue:
     </code>
 </pre>
 
-En el título siguiente – [**3. El modelo de datos**](#3.-El-modelo-de-datos) -  puede consultarse el modelo de datos empleado.
-
-
-## 2.2 GetAllGeoZoneData
-
-En esta ocasión el método está pensado para obtener la información de todos los países cuyos datos hayan sido registrados filtrando únicamente por rango de fechas. La petición a emplear sería la siguiente:
-
-<pre>
-    <code>
-{
-"method": "GetAllGeoZoneData",
-    "covid_data": {
-        "countries": [],
-        "dates": {
-            "startDate": "31/12/2019",
-            "endDate": "01/01/2020",
-            "separator": "/"
-        }
-    }
-} 
-    </code>
-</pre>
-
-En este caso el elemento “countries” se ignorará completamente siendo únicamente necesario haber establecido un rango de fechas consistente. La respuesta seguirá el mismo modelo que la del método anterior pero su volumen será mucho mayor. Puede encontrarse un ejemplo completo en el archivo [**/Documentation/DataAccess_API/InputOutputExamples/POSTCompleteResponseExample.json**](../InputOutputExamples/POSTCompleteResponseExample.json) .
-
-
-## 2.3 GetAllGeoZoneDataForAllDates
-
-Ha sido diseñado como medio para obtener absolutamente todos los datos de los que se dispone. La respuesta contendrá un listado de países que incluirán los datos diarios desde que se comenzó su recogida hasta el día en el que se realice la petición.
-
-Un ejemplo sería el siguiente:
-
-<pre>
-    <code>
-
-{
-    "method": "GetAllGeoZoneData",
-
-    "covid_data": {
-
-        "countries": [],
-
-        "dates": {
-            "startDate": "",
-            "endDate": "",
-            "separator": ""
-        }
-    }
-}
-    </code> 
-</pre>
-
-Como ejemplo de respuesta puede tomarse nuevamente el archivo [**/Documentation/DataAccess_API/InputOutputExamples/POSTCompleteResponseExample.json**](../InputOutputExamples/POSTCompleteResponseExample.json) .
-
-
-## 2.4 GetAllCountries
-
-A través de él es posible conseguir una lista completa de países disponibles para consulta con su correspondiente código ISO2. Resulta útil si se necesita obtener los códigos ISO2 en tiempo de ejecución de una aplicación desde la cual se consultarán los datos de ésta.
-
-
-<pre>
-    <code>
-{
-    "method": "GetAllCountries",
-
-    "covid_data": {
-
-        "countries": [],
-
-        "dates": {
-            "startDate": "",
-            "endDate": "",
-            "separator": ""
-        }
-    }
-} 
-    </code>
-</pre>
-
-Un ejemplo de respuesta acortada es:
+## 3.2 Países
 
 <pre>
     <code>
@@ -237,42 +196,14 @@ Un ejemplo de respuesta acortada es:
         "name": "United_Arab_Emirates",
         "population": 9630959,
         "dataList": null
-    }, ….
-
+    },..
 ]
     </code>
 </pre>
 
-Puede consultarse la respuesta completa en [**/Documentation/DataAccess_API/InputOutputExamples/AllCountries.json**](../InputOutputExamples/AllCountries.json) .
-
-
-# 2.5 GetAllDates
-
-Se trata de un método pensado para conocer de antemano las fechas disponibles para consulta. Simplemente devolvería una lista de todas ellas. La petición a emplear sería la siguiente:
-
+## 3.3 Fechas
 <pre>
-<code>
-{
-    "method": "GetAllDates",
-
-    "covid_data": {
-
-        "countries": [],
-
-        "dates": {
-            "startDate": "",
-            "endDate": "",
-            "separator": ""
-        }
-    }
-} 
-</code>
-</pre>
-
-Y un ejemplo de respuesta acortada es el que sigue:
-
-<pre>
-<code>
+    <code>
 [
     {
         "id": 1,
@@ -285,31 +216,11 @@ Y un ejemplo de respuesta acortada es el que sigue:
         "date": "01/01/2020",
         "dateSeparator": "/",
         "dateFormat": "dd/MM/yyyy"
-    }, …
+    },..
 ]
     </code>
 </pre>
 
-Puede consultarse la respuesta completa en [**/Documentation/DataAccess_API/InputOutputExamples/AllDates.json**](../InputOutputExamples/AllDates.json) .
+# 4. Flujo simple de aplicación
 
-
-## 2.6 El proceso de consulta
-
-![](../Diagrams/DataAccessFlow.png)
-
-
-# 3. El modelo de datos
-
-## 3.1 El modelo de datos propio
-
-### 3.1.1 Entidad Relacional
-
-![](../Diagrams/DataEntityDiagram.png)
-
-### 3.1.2 Diagrama de clases
-
-![](../Diagrams/OwnDataModelClassDiagram.jpeg)
-
-## 3.2 El modelo de datos de la petición de entrada
-
-![](../Diagrams/InputPostClassDiagram.jpeg)
+![](../../Diagrams/FlujoDeDatosSimple.png)
