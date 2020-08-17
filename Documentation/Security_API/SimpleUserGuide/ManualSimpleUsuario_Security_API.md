@@ -1,6 +1,6 @@
-# Security API
+# Covid API
 
-# Manual simple de usuario
+## Manual simple de usuario
 
 # 1. Puesta en marcha
 
@@ -24,27 +24,13 @@ Pueden seguirse los siguientes tutoriales:
 
 # 1.2 Arrancando la Aplicación
 
-1. El primer paso será la configuración de una base de datos sobre la cual realizar la persistencia y consulta de la información referente a los nuevos usuarios. Desde la página oficial de PostgreSQL puede consultarse una guía completa: https://www.postgresql.org/docs/11 .
+1. Iniciar aplicación DataAccess_API.
 
-2. Una vez generada una base de datos, será necesario configurar el programa para que acceda a la misma. Para ello se ha generado un archivo .json en el cual es posible introducir las credenciales y url de la base de datos. La API se encargará de gestionar esa información tras el primer arranque sin que el usuario tenga que realizar ninguna tarea adicional.
+2. Iniciar aplicación Security_API.
 
-    La ruta al archivo es **/APIs/Secutiry_API/DAOs/Connection/connectionProperties.json**. Se trata de sustituir la información de cada campo por la generada en el paso anterior:
+# 1.3 Levantando la aplicación
 
-<pre>
-<code>
-{
-    "server": "introducir url",
-    "port": "introducir puerto",
-    "userId": "introducir usuario",
-    "pass": "introducir contraseña",
-    "dataBase": "introducir base de datos"
-}
-</code>
-</pre>
-
-# 1.3 Levantando la Aplicación
-
-1. Navegar hasta la ruta **APIs/Security_API**.
+1. Navegar hasta la ruta **APIs/Covid_API**.
 
 2. Ejecutar el comando dotnet build desde la consola de comandos. Ref: https://docs.microsoft.com/es-es/dotnet/core/tools/dotnet-build
 
@@ -52,99 +38,189 @@ Pueden seguirse los siguientes tutoriales:
 
 4. Es posible sustituir los dos pasos anteriores por al arranque desde un IDE.
 
-5. Esperar varios minutos. La aplicación generará todas las bases de datos necesarias para su empleo e insertará todos los datos necesarios. Si tras varios minutos no se observase la creación de ninguna tabla en base de datos se recomienda detener la aplicación y comprobar la conexión al servidor de base de datos.
 
+# 2. Usando la aplicación. La secuencia a seguir.
 
-# 2. Usando la Aplicación. Los métodos.
+Se trata de una aplicación diseñada para actuar como gestora de los servicios que el conjunto de aplicaciones de las que está compuesta puede ofrecer. Además, mejora tanto el rendimiento en materia de acceso a datos al implementar una memoria caché que los sirve con mayor velocidad, como la facilidad de uso de la misma y la seguridad pues posibilita, mediante el empleo de los JWT token, la autentificación única  con una validez de veinticuatro horas.
 
-La aplicación se encuentra configurada para atender peticiones **GET** y **POST** enviadas a la url https://localhost:5003/Security . Si desea cambiarse el puerto de acceso es posible modificando el archivo  **APIs/Seurity_API/Properties/launchProperties.json**.
+Para acceder a la información serán necesarios unos pasos previos.
 
-**Nota:** Todas las encriptaciones serán sometidas a una conversión posterior a **Base64**. Desde la misma se volverá a generar el código binario que será desencriptado posteriormente.
+# 2.1 Registro de usuario
 
-# 2.1 Get
+![Nuevo Usuario](../Process/GeneralNewUser.png)
 
-Está pensado para eliminar la necesidad de exponer los datos sensibles del usuario. Antes de dar de alta un nuevo usuario se solicitará, mediante éste método una clave pública con la que encriptar los datos. Una respuesta de ejemplo será, simplemente, la que sigue:
+1. **Registrar un usuario.** El registro se efectuará realizando, primero, una petición **GET** a la url https://localhost:5001/api/user . Como respuesta se recibirá una clave pública con la que encriptar los datos de usuario.
 
+2. **Enviar una petición  de nuevo usuario.** Con la clave pública recibida se deberán encriptar los campos (ejemplo de petición más abajo) de “email” y “pass”. Además, se deberá establecer el valor true en el campo “new”. La url a la que enviar el POST será la misma del paso anterior.
 
-**&lt;RSAKeyValue>&lt;Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF&lt;/Modulus>&lt;Exponent>AQAB&lt;/Exponent>&lt;/RSAKeyValue>**
+3. **Recepción y guardado de respuesta.** Como respuesta se recibirá una clave pública que será única para el usuario. Es responsabilidad del mismo su correcto almacenamiento pues, para futuras identificaciones, deberá enviarla en el correspondiente campo **“public_key”** junto con los campos **“email”** y **“pass”** encriptados con esa clave pública particular.
 
-
-# 2.2 Nuevo Usuario
-
-Se efectúa una única vez y sirve para dar de alta a un nuevo usuario en el sistema. Éste usuario recibirá una **pareja de clave pública y privada únicas** e intrasferibles para él. Su contraseña será almacenada en base de datos **encriptada** con su propia **clave privada** y, a su vez, su clave privada se almacenará, junto a la pública, encriptada mediante una **clave pública propia** de la aplicación que se irá **modificando cada 100 usos** de la misma. Esto quiere decir que una buena parte de la base de datos será actualizada cada cierto tiempo para salvaguardar la información crítica del usuario.
-
-Un ejemplo de petición sería la siguiente:
+### Ejemplo de petición: 
 
 <pre>
-<code>
+    <code>
 {
-"email": "PIwpNi5y3S3g37JXpBfWUF9mhKo2mQHWOmy79HFnLb6BvGSy8S1ayXQaKctaQsBXvDBYJzUizhBQKcHQJGyx+X6rQrzTBlvTAFIlOPznAlPqL3xGayFdJ1mBsNg2clpXFhZs5D9iuKWhJcej+aYbDPYR3hyEmrRchfXALrHxKGsIhlhyWOQpIMqjx9DeOydmXzNiuGJMn1mZahOQkEmZcBuv3Rra0r2aY2nWH2KxiFZoOSu+ZJiRh++QqfjVG5IIrGX9r5V7asB9BWF8U862tqP4UUhYzuvEEM13WaqHMB8H6a3cKqlzoUL+jIfnf5vYI7Mdr+MwiboXsK4PGD4Qd61NMQWPv9ZVeMtopjpUzDWDBx6n1cF2vv0BngMoU1o8yOG/2m1Oug8SqfqsiDasY0h9vWp+bmsH3zrFjDcmg3X8sIA+o45PhnaVBjUqmlVid04j5t+QbXUru8B57ZBGkoU94dWXzeTSEZ6Qrr1aPNFfEfpiwhL9OVIe5aF1k0cg",
-"pass": "iLqLoAOSx2oecCirygpc9UcCrJCdWTlnHc2+piYLxY/YnfmU5hTOrpai9A/8aoFR2WUbaBv+cUpJmLKfLy6/UBnuuusLtm+BMKP1dkZwxLaxFe1Dyj7NGd/yCYiKM/8Wp4GYe6zShc5s0WBOuT6Hn7dJtrRyU8igRNfWENJkdig67KiUvIvnSAzb6CWbwu4l13B66zStAsJU47FM4yWbUcFQmQ8ffS5tBtN62qQdHFzX+AAefFk+ObEJMHyc1ajeSHzCJSkwOvyF0rWH1WbkfSF9eXjuzcRTs95mKHOfFJPrMnF/+pTjzyNHD9tZJQkCKydXYLU8Z/qytJ3USev73KvBO/9L9he1tA8Re3gABqkQ7lKB2UZKOgHh5UNT9IsBgVHxe2GM0rb124DiOGY8IyeMD2L/1UDVvm86l+rAkPX3hWtWd5ePqEG1mRY0Hiuf3nv9h98gTd+reYg1EGy4S9qjKVCZVAur/e7af9pdgNWGxa/jVoc2gv+5RsvnL6uk",
-"new": true,
+"email": "xP9BAdai/dJDWZqAKaWjUWiSvK4U1I76xxkYcU2q+dFf2jtY8yN3MUXqGxCdmmyAPtw2lVnWQTPLlp8EbTunvRfgarWv3ZN5ztzWqH/jauEntwfiJNi5WLowkWsk2nfC/M6+7Pc5cJjcP7xOFUmKDojWaMNo2mZns/WeCjzUCbl3VrXZoWC5tguP+nG+/FuZu/1JapVcRapXA8Y6Fv3BhDk8MFg2ieSGShBbloantcXleOqxsLCVxr09elHjvvbCz6keGWBYdmmUVViSZvBgs8nzIwrUCa9prcyCp/MVLPCKd4/J0yj8rOFSP8b89wyo0oGwAObrZfy3Dj89Gh+E4IFnEF8A52GkSAM7qY6LISKkDyvN/vwI/S+N7EYPQx92s9eqB0uHYY9hA3Ut+pXx8ByaM5rcPlF284HvnApsHoymdIAry60BdD711L2ejv1cp/GnPoG3gpaeup8zmo60qPMTGXoYnLrUW9vweyiHqCJ01G5cFYxti+KMhIxfml9V",
+"pass": "WqMti7Du5JldRjaP0rDTFA/GmzYrneQg6QUrmLoMtvB6/3U/Ego3qW/IIcKQ7CEmRwyTuirElwd1WIGqNojZ7bgcyZVy8mQciMEmSSF6l8IrYny4OXWSfcHpG6G+2FP/zQZrglckTc2Hx56dJc2IY6yJJDGduMakesBHqP/UDkpVZGBUwfOx13NTIXRTQgmCGb+Se3tyK7aI+0eIxDIyFZ+SCK8TJZXykSaVbPltoJ4R/9z4/LG8VhYIkmIb5FQfu9lgSwJd+NUca+7vr8eSuobsbG4rx0YJs0CF78TRFU8ZshNbMXgVfl2EiTQfCR3Gk5UBKKhdi551rPe2cL8JwX2jtJMc6ApD7Rh/xV/rWyPbplSRikI7gO4Y2zbSkUu6rsc1UHEc/MGHT65wUerzDtvocQaRii2LGrLNOFB1Li1YJLi3eD9jImqgNaCjJHtK6jntF3VVn2CwwU6ROSkEkm8wChuiARjxq3yAPLU+wS+riLoinNf7TlbqahTpsanF",
+"new": true
 }
-</code>
+    </code>
 </pre>
 
-Con el elemento **“new”**  se indica que se pretende dar de alta a un usuario nuevo.
-Una respuesta con la clave pública única de usuario, que éste deberá de almacenar es generada:
+## 2.2 Autentificar un usuario
 
-**&lt;RSAKeyValue>&lt;Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF&lt;/Modulus>&lt;Exponent>AQAB&lt;/Exponent>&lt;/RSAKeyValue>**
 
-![](../Diagrams/CreatingUser.png)
+![Autentificar Usuario](../Process/Authenticate.png)
 
-# 2.3 Autentificar
+1. Enviar petición **POST**. La url a la que realizar la petición es https://localhost:5001/api/authorize . En ella se han de incluir los campos **“email”** y **“pass”** encriptados con la clave pública única de usuario, dada como respuesta al registro de usuario. Además, se ha de incluir un campo con esta clave pública (**“public_key”**).
 
-Con éste método se comprueba si el usuario ha sido registrado previamente en base de datos y si los datos transmitidos son correctos. Como la petición anterior, se compone de los elementos **“email”** y **“pass”**, pero en esta ocasión deben de haber sido encriptados con la clave pública única para el usuario que será remitida dentro del elemento **“public_key”**.
+2. **Almacenar token de respuesta.**  Como respuesta, en caso de autentificación exitosa, se recibirá un **token** que deberá adjuntarse en la cabecera como autentificación para futuras peticiones de información. Dicho token poseerá una validez de **24 horas**, tras las cuales se deberá realizar el proceso de autentificación de nuevo.
 
-Una petición de ejemplo es la que sigue:
+### Ejemplo de petición:
 
 <pre>
 <code>
 {
-"email": "PIwpNi5y3S3g37JXpBfWUF9mhKo2mQHWOmy79HFnLb6BvGSy8S1ayXQaKctaQsBXvDBYJzUizhBQKcHQJGyx+X6rQrzTBlvTAFIlOPznAlPqL3xGayFdJ1mBsNg2clpXFhZs5D9iuKWhJcej+aYbDPYR3hyEmrRchfXALrHxKGsIhlhyWOQpIMqjx9DeOydmXzNiuGJMn1mZahOQkEmZcBuv3Rra0r2aY2nWH2KxiFZoOSu+ZJiRh++QqfjVG5IIrGX9r5V7asB9BWF8U862tqP4UUhYzuvEEM13WaqHMB8H6a3cKqlzoUL+jIfnf5vYI7Mdr+MwiboXsK4PGD4Qd61NMQWPv9ZVeMtopjpUzDWDBx6n1cF2vv0BngMoU1o8yOG/2m1Oug8SqfqsiDasY0h9vWp+bmsH3zrFjDcmg3X8sIA+o45PhnaVBjUqmlVid04j5t+QbXUru8B57ZBGkoU94dWXzeTSEZ6Qrr1aPNFfEfpiwhL9OVIe5aF1k0cg",
-"pass": "iLqLoAOSx2oecCirygpc9UcCrJCdWTlnHc2+piYLxY/YnfmU5hTOrpai9A/8aoFR2WUbaBv+cUpJmLKfLy6/UBnuuusLtm+BMKP1dkZwxLaxFe1Dyj7NGd/yCYiKM/8Wp4GYe6zShc5s0WBOuT6Hn7dJtrRyU8igRNfWENJkdig67KiUvIvnSAzb6CWbwu4l13B66zStAsJU47FM4yWbUcFQmQ8ffS5tBtN62qQdHFzX+AAefFk+ObEJMHyc1ajeSHzCJSkwOvyF0rWH1WbkfSF9eXjuzcRTs95mKHOfFJPrMnF/+pTjzyNHD9tZJQkCKydXYLU8Z/qytJ3USev73KvBO/9L9he1tA8Re3gABqkQ7lKB2UZKOgHh5UNT9IsBgVHxe2GM0rb124DiOGY8IyeMD2L/1UDVvm86l+rAkPX3hWtWd5ePqEG1mRY0Hiuf3nv9h98gTd+reYg1EGy4S9qjKVCZVAur/e7af9pdgNWGxa/jVoc2gv+5RsvnL6uk",
+"email": "xP9BAdai/dJDWZqAKaWjUWiSvK4U1I76xxkYcU2q+dFf2jtY8yN3MUXqGxCdmmyAPtw2lVnWQTPLlp8EbTunvRfgarWv3ZN5ztzWqH/jauEntwfiJNi5WLowkWsk2nfC/M6+7Pc5cJjcP7xOFUmKDojWaMNo2mZns/WeCjzUCbl3VrXZoWC5tguP+nG+/FuZu/1JapVcRapXA8Y6Fv3BhDk8MFg2ieSGShBbloantcXleOqxsLCVxr09elHjvvbCz6keGWBYdmmUVViSZvBgs8nzIwrUCa9prcyCp/MVLPCKd4/J0yj8rOFSP8b89wyo0oGwAObrZfy3Dj89Gh+E4IFnEF8A52GkSAM7qY6LISKkDyvN/vwI/S+N7EYPQx92s9eqB0uHYY9hA3Ut+pXx8ByaM5rcPlF284HvnApsHoymdIAry60BdD711L2ejv1cp/GnPoG3gpaeup8zmo60qPMTGXoYnLrUW9vweyiHqCJ01G5cFYxti+KMhIxfml9V",
+"pass": "WqMti7Du5JldRjaP0rDTFA/GmzYrneQg6QUrmLoMtvB6/3U/Ego3qW/IIcKQ7CEmRwyTuirElwd1WIGqNojZ7bgcyZVy8mQciMEmSSF6l8IrYny4OXWSfcHpG6G+2FP/zQZrglckTc2Hx56dJc2IY6yJJDGduMakesBHqP/UDkpVZGBUwfOx13NTIXRTQgmCGb+Se3tyK7aI+0eIxDIyFZ+SCK8TJZXykSaVbPltoJ4R/9z4/LG8VhYIkmIb5FQfu9lgSwJd+NUca+7vr8eSuobsbG4rx0YJs0CF78TRFU8ZshNbMXgVfl2EiTQfCR3Gk5UBKKhdi551rPe2cL8JwX2jtJMc6ApD7Rh/xV/rWyPbplSRikI7gO4Y2zbSkUu6rsc1UHEc/MGHT65wUerzDtvocQaRii2LGrLNOFB1Li1YJLi3eD9jImqgNaCjJHtK6jntF3VVn2CwwU6ROSkEkm8wChuiARjxq3yAPLU+wS+riLoinNf7TlbqahTpsanF",
 "new": false,
 
-"public_key" : "&lt;RSAKeyValue>&lt;Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF&lt;/Modulus>&lt;Exponent>AQAB&lt;/Exponent>&lt;/RSAKeyValue>"
+"public_key" : "<RSAKeyValue><Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>"
 }
-</code>
+    </code>
 </pre>
 
-![](../Diagrams/AuthenticatingUser.png)
+## 2.3 Petición de datos
 
+![Petición Información](../Process/OneOrMoreCountries.png)
 
-# 2.4 Método Adicional. Encriptar texto.
-
-Para facilitarle las cosas tanto al desarrollador como al posible usuario se ha habilitado un servicio extra que permite la recepción de un texto a encriptar y una clave pública a emplear y devuelve el texto encriptado y posteriormente trasladado a **Base64**. Está disponible desde la url https://localhost:5003/EncryptationService/ y permite la recepción de peticiones como la siguiente:
+Una vez obtenido el token se pueden realizar tantas peticiones de información como se desee. La petición **POST** a efectuar puede sufrir diferentes modificaciones con el objetivo de obtener distintas respuestas. Además, posee dos métodos adicionales que generarán un conjunto de datos de respuesta diferente. La petición sería la siguiente:
 
 <pre>
-<code>
+    <code>
 {
-"key":
- "&lt;RSAKeyValue>&lt;Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF&lt;/Modulus>&lt;Exponent>AQAB&lt;/Exponent>&lt;/RSAKeyValue>",
+	"covid_data":
+	{
+	"countries":
+	[
+	"ES",
+	"AD",
+	"AE"
 
-"text": "miuser"
+	],
+	"dates":
+	{
+		"startDate": "31/12/2019",
+		"endDate": "28/07/2020",
+		"separator": "/"
+	},
+
+		"dataType": "any"
+	}
 }
-
-</code>
+    </code>
 </pre>
-	
-La respuesta sería la siguiente:
 
-**xP9BAdai/dJDWZqAKaWjUWiSvK4U1I76xxkYcU2q+dFf2jtY8yN3MUXqGxCdmmyAPtw2lVnWQTPLlp8EbTunvRfgarWv3ZN5ztzWqH/jauEntwfiJNi5WLowkWsk2nfC/M6+7Pc5cJjcP7xOFUmKDojWaMNo2mZns/WeCjzUCbl3VrXZoWC5tguP+nG+/FuZu/1JapVcRapXA8Y6Fv3BhDk8MFg2ieSGShBbloantcXleOqxsLCVxr09elHjvvbCz6keGWBYdmmUVViSZvBgs8nzIwrUCa9prcyCp/MVLPCKd4/J0yj8rOFSP8b89wyo0oGwAObrZfy3Dj89Gh+E4IFnEF8A52GkSAM7qY6LISKkDyvN/vwI/S+N7EYPQx92s9eqB0uHYY9hA3Ut+pXx8ByaM5rcPlF284HvnApsHoymdIAry60BdD711L2ejv1cp/GnPoG3gpaeup8zmo60qPMTGXoYnLrUW9vweyiHqCJ01G5cFYxti+KMhIxfml9V**
-	
+![Petición Información](./Process/CachéProcess.png)
 
-           
-# 3. El modelo de datos
+- El elemento **“countries”** puede contener un único código **ISO2** de país o tantos como se desee. Es posible emplear el comodín **“*”** para obtener la información relativa a todos los países disponibles en base de datos.
 
-![](../Diagrams/Models/DataModels.png)
+- El elemento **“separator”** de **“dates”** es modificable y se puede usar el que se desee. Sin embargo, el formato de fecha deberá ser siempre el mismo.
 
-# 4. Procesos
+- Como extra, **“dataType”** se puede emplear para obtener una lista con todos los países disponibles (**getcountries**) o, una con todas la fechas válidas para consulta (**getdates**). Éste método invalidará todos los demás.
 
-## 4.1 Creación inicial de tablas
+# 3. Respuestas
 
-![](../Diagrams/ItialTableCreationProcess.png)
+## 3.1 Datos
 
-## 4.2 Cambio de claves de aplicación
+<pre>
+    <code>
+[
+    {
+        "father": null,
+        "sonList": null,
+        "geoID": "ES",
+        "code": "ESP",
+        "name": "Spain",
+        "population": 46723749,
+        "dataList": [
+            {
+                "id": 2,
+                "cases": 0,
+                "deaths": 0,
+                "cured": 0,
+                "date": {
+                    "id": 2,
+                    "date": "01/01/2020",
+                    "dateSeparator": "/",
+                    "dateFormat": "dd/MM/yyyy"
+                }
+            },
+            {
+                "id": 1,
+                "cases": 0,
+                "deaths": 0,
+                "cured": 0,
+                "date": {
+                    "id": 1,
+                    "date": "31/12/2019",
+                    "dateSeparator": "/",
+                    "dateFormat": "dd/MM/yyyy"
+                }
+            }
+        ]
+    }
+]
+    </code>
+</pre>
 
-![](../Diagrams/EncriptationChangeProcess.png)
+## 3.2 Países
+
+<pre>
+    <code>
+[
+    {
+        "father": null,
+        "sonList": null,
+        "geoID": "AD",
+        "code": "AND",
+        "name": "Andorra",
+        "population": 77006,
+        "dataList": null
+    },
+    {
+        "father": null,
+        "sonList": null,
+        "geoID": "AE",
+        "code": "ARE",
+        "name": "United_Arab_Emirates",
+        "population": 9630959,
+        "dataList": null
+    },..
+]
+    </code>
+</pre>
+
+## 3.3 Fechas
+<pre>
+    <code>
+[
+    {
+        "id": 1,
+        "date": "31/12/2019",
+        "dateSeparator": "/",
+        "dateFormat": "dd/MM/yyyy"
+    },
+    {
+        "id": 2,
+        "date": "01/01/2020",
+        "dateSeparator": "/",
+        "dateFormat": "dd/MM/yyyy"
+    },..
+]
+    </code>
+</pre>
+
+# 4. Flujo simple de aplicación
+
+![](../../Diagrams/FlujoDeDatosSimple.png)
