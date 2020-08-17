@@ -223,4 +223,4 @@ Una vez obtenido el token se pueden realizar tantas peticiones de información c
 
 # 4. Flujo simple de aplicación
 
-![](../../Diagrams/FlujoDeDatosSimple.png)
+![](../../../Diagrams/FlujoDeDatosSimple.png)
