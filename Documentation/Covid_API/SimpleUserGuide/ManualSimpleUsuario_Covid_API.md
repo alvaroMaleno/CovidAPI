@@ -24,9 +24,9 @@ Pueden seguirse los siguientes tutoriales:
 
 # 1.2 Arrancando la Aplicación
 
-1. Iniciar aplicación [DataAccess_API](../../DataAccess_API/Documentation/ManualSimpleUsuario_DataAccess_API.md).
+1. Iniciar aplicación [DataAccess_API](../../DataAccess_API/SimpleUserGuide/ManualSimpleUsuario_DataAccess_API.md).
 
-2. Iniciar aplicación [Security_API](../../Security_API/Documentation/ManualSimpleUsuario_Security_API.md).
+2. Iniciar aplicación [Security_API](../../Security_API/SimpleUserGuide/ManualSimpleUsuario_Security_API.md).
 
 # 1.3 Levantando la aplicación
 
