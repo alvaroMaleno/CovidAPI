@@ -1,7 +1,5 @@
 # Covid
 
-Proyecto Fin de FP Desarrollo de Aplicaciones Multiplataforma
-
 Licencia CC BY-SA 
 
 # Introducción
