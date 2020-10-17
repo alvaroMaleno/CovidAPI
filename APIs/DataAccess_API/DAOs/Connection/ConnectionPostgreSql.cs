@@ -52,7 +52,7 @@ namespace CoVid.Controllers.DAOs.Connection
         public void Connect()
         {
             string conectString = string.Format(
-                "Server={0};Port={1};User Id={2};Password={3};Database={4};Timeout=20;",
+                "Server={0};Port={1};User Id={2};Password={3};Database={4};",
                 this._oProperties.server, this._oProperties.port, 
                 this._oProperties.userId, this._oProperties.pass, this._oProperties.dataBase);
 

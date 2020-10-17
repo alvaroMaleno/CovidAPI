@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "Jta+ELcm2/4lsXBqoA+XgzCciBO7K0SydfcsTXpV64/JQ0Qhpk1P7WrWF+bLpDnZDtAPuYhk8PsSyK5sZ6xx8g==",
+  "success": true,
+  "projectFilePath": "/home/alvaro/Documentos/Proyeto/CovidAPI/APIs/Security_API/API_Security.csproj",
+  "expectedPackageFiles": [
+    "/home/alvaro/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512",
+    "/home/alvaro/.nuget/packages/npgsql/4.1.3.1/npgsql.4.1.3.1.nupkg.sha512",
+    "/home/alvaro/.nuget/packages/system.runtime.compilerservices.unsafe/4.6.0/system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}

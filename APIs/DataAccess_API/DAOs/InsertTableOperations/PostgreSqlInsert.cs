@@ -310,6 +310,9 @@ namespace CoVid.DAOs.InsertTableOperations
 
         private void AddGeoZoneCountryInsertStatementToStringBuilder(StringBuilder pStringBuilder, GeoZone pGeoZone, Query oQuery)
         {
+            if(pGeoZone.geoID.Length > 2){
+                return;
+            }
             StringBuilder oStringBuilder = new StringBuilder();
             oStringBuilder.Append(oQuery.valuesFormat);
             oStringBuilder.Replace(

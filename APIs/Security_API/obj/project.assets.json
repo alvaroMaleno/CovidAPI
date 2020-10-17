@@ -128,11 +128,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Security_API/API_Security.csproj",
+      "projectUniqueName": "/home/alvaro/Documentos/Proyeto/CovidAPI/APIs/Security_API/API_Security.csproj",
       "projectName": "API_Security",
-      "projectPath": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Security_API/API_Security.csproj",
+      "projectPath": "/home/alvaro/Documentos/Proyeto/CovidAPI/APIs/Security_API/API_Security.csproj",
       "packagesPath": "/home/alvaro/.nuget/packages/",
-      "outputPath": "/home/alvaro/Documentos/Proyecto/Covid/APIs/Security_API/obj/",
+      "outputPath": "/home/alvaro/Documentos/Proyeto/CovidAPI/APIs/Security_API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/alvaro/.nuget/NuGet/NuGet.Config"
@@ -184,7 +184,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.403/RuntimeIdentifierGraph.json"
       }
     }
   }

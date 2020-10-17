@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "Dcu1vGHys22eBBEpbXgCcfd0ee/fCi7CVU0OyIUXorsyf/uRxB7TizqUdtQ7W7onVHel+370+yvulsTpYW1qwQ==",
+  "success": true,
+  "projectFilePath": "/home/alvaro/Documentos/Proyeto/CovidAPI/APIs/DataAccess_API/API_DAO.csproj",
+  "expectedPackageFiles": [
+    "/home/alvaro/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512",
+    "/home/alvaro/.nuget/packages/npgsql/4.1.3.1/npgsql.4.1.3.1.nupkg.sha512",
+    "/home/alvaro/.nuget/packages/system.runtime.compilerservices.unsafe/4.6.0/system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}

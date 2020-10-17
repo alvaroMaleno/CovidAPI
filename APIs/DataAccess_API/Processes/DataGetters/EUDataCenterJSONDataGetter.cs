@@ -195,7 +195,7 @@ namespace CoVid.Processes.DataGetters
             
             await UtilsCovidDateManagement.GetInstance().CompleteCovidDatesDictionary(oDateKeyCovidDateValue, oGeoZonesList);
 
-            var oOrderedDateList = oDateKeyCovidDateValue.Keys.ToList().OrderBy(date => DateTime.Parse(date)).ToList();
+            var oOrderedDateList = oDateKeyCovidDateValue.Keys.ToList().OrderBy(date => DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
             List<CovidDate> oCovidDateList = new List<CovidDate>();
 
             ulong dateId = 1;
