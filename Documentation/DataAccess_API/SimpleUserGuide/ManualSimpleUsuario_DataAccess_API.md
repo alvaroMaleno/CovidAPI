@@ -172,7 +172,7 @@ Un ejemplo sería el siguiente:
     <code>
 
 {
-    "method": "GetAllGeoZoneData",
+    "method": "GetAllGeoZoneDataForAllDates",
 
     "covid_data": {
 
