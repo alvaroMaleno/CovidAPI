@@ -84,7 +84,7 @@ Actualmente puede probarse enviando la petición a la url https://security-api.a
 
 Para poder probar la aplicación sin necesidad de desarrollar un conector para la misma ésta tiene incluido un servicio extra que permite encriptar cualquier texto mediante una clave pública. Para ello será necesario enviar una petición POST como la que sigue a la url https://{$endpoint:default:localhost:5003}/EncryptationService/ .
 
-# Petición de entrada
+### Petición de entrada
 
 <pre>
 <code>
@@ -96,7 +96,7 @@ Para poder probar la aplicación sin necesidad de desarrollar un conector para l
 </code>
 </pre>
 
-# Ejemplo de respuesta
+### Ejemplo de respuesta
 
 <pre>
 <code>
