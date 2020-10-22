@@ -50,11 +50,11 @@ La interacción con el usuario así como la coordinación de los diferentes proc
 3. Inicializar.
 
 4. Una vez inicializada, estará disponible desde:
-    -  https://localhost:5001/api/covid para consultas.
+    -  https://{$endpoint:default:localhost:5001}/api/covid para consultas.
 
-    - https://localhost:5001/api/authorize para autentificaciones.
+    - https://{$endpoint:default:localhost:5001}/api/authorize para autentificaciones.
 
-    - https://localhost:5001/api/user para nuevos usuarios.
+    - https://{endpoint:default:localhost:5001}/api/user para nuevos usuarios.
 
 5. Ver manual completo de usuario para conocer el proceso en profundidad.
 
