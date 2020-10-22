@@ -84,6 +84,30 @@ Tras obtener la clave pública con la que encriptar la información realizando u
 
     <RSAKeyValue><Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>
 
+## Servicio Extra
+
+Para poder probar la aplicación sin necesidad de desarrollar un conector para la misma ésta tiene incluido un servicio extra que permite encriptar cualquier texto mediante una clave pública. Para ello será necesario enviar una petición POST como la que sigue a la url https://{$endpoint:default:localhost:5001}/EncryptationService/ .
+
+### Petición de entrada
+
+<pre>
+<code>
+{
+    "key": "<RSAKeyValue><Modulus>4dK0GrJTtF/1N9EEDIhZPtwpPV7nOhZPV8QjT8f3BUZ1TIwyy0YmxqYurWwvwv1xip5x5wFJ5DUyYRtB1zjiB47GOjxIlsrGIjRJYQm9Sf/7hbJdb6/8sPZN6hNUcPleFc/kCVpch2OwxcV2fimrNB1NSKvAWXj+bnPdQ4wjK4kVFWIuUZBeReDVHreoR4/sQhpMI9CUp6hY8J6vqOyp//CJV6ay41PVvfBPqSl1i0j1Si1BKZ6jDfcKuM+CasMGLb45meNgr4Np/zAjfk6j7/KpscGtbimt5tv86ezrerSW6T7bmsQY34Ybtte84lhxXHhWp/9w5d2NvLue5PWiRL3moA63gJT+xLbtjkBx7+juAb/t0X1JtNRrTAznMhpqSlwWp76VbytthyeQxNWr+NNrGJQE64L2RpMzZYdioYtJ8ZDBdUVtFzHGcEVvBcja/fN/fd6Dm2th8urZ30h7No7+3ObPQjXTqG/3sq1lUmDYu6DJvJbP00+IJrVcvwbH</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>",
+
+    "text":"ejemplo@ejemplo.com"
+}
+</code>
+</pre>
+
+### Ejemplo de respuesta
+
+<pre>
+<code>
+or+dtsOSdKzXyZJdBNqHGRQQvFa4HXC4AvjsvOHEXqwbvtEkwv5Unx6etYqcCxIH5RCVjNuNO8E3z0A4cQBrXx9yzF428kTqBGxoRXx7OQYd42yFksaOoO4uV22+ozquhI671WoWK74OWC6eQYOhHaWYgvWFSRm29VUbdY2JGWNht9XlRt3prJ3sotsr2OF5BfvAvKsZBTclogchyv8KOYAnx93AXciAzOx6u8rOzrVXRTo0LuvYOAan7wS5RFtbOBBbzK2rx7JI30W7k5QE4IsMSUxBhcK0tyvK5bsb+yYcDYjQPfyLHf1T941LvaDqG4MUgE8QePQdU7tTOfwVpdPAAwK5HNJ3XGMBS0oFAk5PeKu0hYm7cU77tSiSXLMwbbgaPV+df3z1/+JResx2Sr6O1qezHF6GXow+awgKykxgNw3gj4TzMKsZPFaQ0kmiKbQIs4C9IZ0KlRaPdylaK/llvMzq07REycqvrcDRa7a3aCYGE0Fwy4sRo+NX2jle
+</code>
+</pre>
+
 # Autentificar Usuario
 
 ![Autentificar Usuario](./Process/Authenticate.png)
