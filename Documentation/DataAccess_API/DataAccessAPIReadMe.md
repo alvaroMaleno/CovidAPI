@@ -24,6 +24,7 @@ La creación, acceso, respaldo y actualización de los datos ha quedado dentro d
     - NewtonSoft
     - Draw.io
     - Swagger OpenAPI
+    - Docker
 
 ## Documentación Oficial
 
@@ -33,6 +34,7 @@ La creación, acceso, respaldo y actualización de los datos ha quedado dentro d
 - **Newtonsoft**: https://www.newtonsoft.com/json/help/html/Introduction.htm
 - **Draw.io**: http://draw.io
 - **Swagger OpenAPI**: https://swagger.io/
+- **Docker**: https://www.docker.com/
 
 
 
@@ -50,11 +52,15 @@ La creación, acceso, respaldo y actualización de los datos ha quedado dentro d
 
 6. Es posible sustituir los dos pasos anteriores al abrir el proyecto desde un IDE con opción de arrancado automático.
 
-7. Una vez inicializada, estará disponible desde https://localhost:5005/CovidDataBase .
+7. Una vez inicializada, estará disponible desde https://{$endpoint:default:localhost:5005}/CovidDataBase .
 
 # Modificar url
 
 Dentro de la carpeta situada en DataAccess_API/Properties se encuentra el archivo launchProperties.json . En su interior se puede modificar la dirección y el puerto de acceso.
+
+# Url para pruebas
+
+Actualmente puede probarse enviando la petición a la url https://covidpaucasesnoves.azurewebsites.net/CovidDataBase . El servicio es gratuito por lo que pueden producirse fallos debido a la falta de disponibilidad del servidor. Se recomienda repetir cada petición varias veces. En ocasiones la base de datos puede encontrarse saturada, por lo que será necesario esperar unos minutos antes de que vuelva a estar disponible.
 
 # Métodos admitidos en la petición
 
