@@ -24,6 +24,7 @@ El cuidado y almacenamiento de los datos sensibles de usuario, así como el regi
     - NewtonSoft
     - Draw.io
     - RSA
+    - Docker
 
 ## Documentación Oficial
 
@@ -33,6 +34,7 @@ El cuidado y almacenamiento de los datos sensibles de usuario, así como el regi
 - **Newtonsoft**: https://www.newtonsoft.com/json/help/html/Introduction.htm
 - **Draw.io**: http://draw.io
 - **RSA**: https://es.wikipedia.org/wiki/RSA
+- **Docker**: https://www.docker.com
 
 
 
@@ -50,13 +52,17 @@ El cuidado y almacenamiento de los datos sensibles de usuario, así como el regi
 
 6. Es posible sustituir los dos pasos anteriores al abrir el proyecto desde un IDE con opción de arrancado automático.
 
-7. Una vez inicializada, estará disponible desde https://localhost:5003/Security/.
+7. Una vez inicializada, estará disponible desde https://{$endpoint:default:localhost:5003}/Security/.
 
-8. Un servicio adicional que encripta el texto solicitado estará disponible desde https://localhost:5003/EncryptationService/.
+8. Un servicio adicional que encripta el texto solicitado estará disponible desde https://{$endpoint:default:localhost:5003}/EncryptationService/.
 
 # Modificar url
 
 Dentro de la carpeta situada en ./APIs/Security_API/Properties se encuentra el archivo launchProperties.json . En su interior se puede modificar la dirección y el puerto de acceso.
+
+# Url para pruebas
+
+Actualmente puede probarse enviando la petición a la url https://security-api.azurewebsites.net/ . El servicio es gratuito por lo que pueden producirse fallos debido a la falta de disponibilidad del servidor. Se recomienda repetir cada petición varias veces. En ocasiones la base de datos puede encontrarse saturada, por lo que será necesario esperar unos minutos antes de que vuelva a estar disponible.
 
 # Métodos admitidos en la petición
 
@@ -66,13 +72,37 @@ Dentro de la carpeta situada en ./APIs/Security_API/Properties se encuentra el a
 
 ## Dar de alta nuevo usuario
 
-    1. Se realiza una petición get a la url https://localhost:5003/Security/ que devolverá la clave pública con la que encriptar la información esperada.
+    1. Se realiza una petición get a la url https://{$endpoint:default:localhost:5003}/Security/ que devolverá la clave pública con la que encriptar la información esperada.
 
     2. Con la clave pública generada en el paso anterior se encriptan el email de usuario y su contraseña y se establece el parámetro new a true. Puede verse una petición de entrada en el apartado siguiente.
 
-    3. Se realiza una petición POST a la url https://localhost:5003/Security/ . 
+    3. Se realiza una petición POST a la url https://{$endpoint:default:localhost:5003}/Security/ . 
 
     4. La clave pública que es devuelta como respuesta es única para cada usuario y deberá ser almacenada por éste para futuras autentificaciones del mismo.
+
+## Servicio Extra
+
+Para poder probar la aplicación sin necesidad de desarrollar un conector para la misma ésta tiene incluido un servicio extra que permite encriptar cualquier texto mediante una clave pública. Para ello será necesario enviar una petición POST como la que sigue a la url https://{$endpoint:default:localhost:5003}/EncryptationService/ .
+
+# Petición de entrada
+
+<pre>
+<code>
+{
+    "key": "<RSAKeyValue><Modulus>4dK0GrJTtF/1N9EEDIhZPtwpPV7nOhZPV8QjT8f3BUZ1TIwyy0YmxqYurWwvwv1xip5x5wFJ5DUyYRtB1zjiB47GOjxIlsrGIjRJYQm9Sf/7hbJdb6/8sPZN6hNUcPleFc/kCVpch2OwxcV2fimrNB1NSKvAWXj+bnPdQ4wjK4kVFWIuUZBeReDVHreoR4/sQhpMI9CUp6hY8J6vqOyp//CJV6ay41PVvfBPqSl1i0j1Si1BKZ6jDfcKuM+CasMGLb45meNgr4Np/zAjfk6j7/KpscGtbimt5tv86ezrerSW6T7bmsQY34Ybtte84lhxXHhWp/9w5d2NvLue5PWiRL3moA63gJT+xLbtjkBx7+juAb/t0X1JtNRrTAznMhpqSlwWp76VbytthyeQxNWr+NNrGJQE64L2RpMzZYdioYtJ8ZDBdUVtFzHGcEVvBcja/fN/fd6Dm2th8urZ30h7No7+3ObPQjXTqG/3sq1lUmDYu6DJvJbP00+IJrVcvwbH</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>",
+
+    "text":"ejemplo@ejemplo.com"
+}
+</code>
+</pre>
+
+# Ejemplo de respuesta
+
+<pre>
+<code>
+or+dtsOSdKzXyZJdBNqHGRQQvFa4HXC4AvjsvOHEXqwbvtEkwv5Unx6etYqcCxIH5RCVjNuNO8E3z0A4cQBrXx9yzF428kTqBGxoRXx7OQYd42yFksaOoO4uV22+ozquhI671WoWK74OWC6eQYOhHaWYgvWFSRm29VUbdY2JGWNht9XlRt3prJ3sotsr2OF5BfvAvKsZBTclogchyv8KOYAnx93AXciAzOx6u8rOzrVXRTo0LuvYOAan7wS5RFtbOBBbzK2rx7JI30W7k5QE4IsMSUxBhcK0tyvK5bsb+yYcDYjQPfyLHf1T941LvaDqG4MUgE8QePQdU7tTOfwVpdPAAwK5HNJ3XGMBS0oFAk5PeKu0hYm7cU77tSiSXLMwbbgaPV+df3z1/+JResx2Sr6O1qezHF6GXow+awgKykxgNw3gj4TzMKsZPFaQ0kmiKbQIs4C9IZ0KlRaPdylaK/llvMzq07REycqvrcDRa7a3aCYGE0Fwy4sRo+NX2jle
+</code>
+</pre>
 
 ## Autentificar usuario
 
@@ -80,7 +110,7 @@ Dentro de la carpeta situada en ./APIs/Security_API/Properties se encuentra el a
 
     2. Se añade la clave pública como valor del elemento public_key de la petición de entrada. Hay un ejemplo en el apartado siguiente.
 
-    3. Se realiza una petición POST a la url https://localhost:5003/Security/ .
+    3. Se realiza una petición POST a la url https://{$endpoint:default:localhost:5003}/Security/ .
 
     4. La respuesta devolverá true o false dependiendo de si el usuario está registrado y la contraseña es correcta.
 
