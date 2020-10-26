@@ -43,6 +43,7 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 - ASP .Net Core 3.1
 - .Net Core 3.1
 - PostgreSQL 11.8
+- Docker
 - JSON
 - NewtonSoft
 - JWT
