@@ -310,7 +310,7 @@ namespace CoVid.DAOs.InsertTableOperations
 
         private void AddGeoZoneCountryInsertStatementToStringBuilder(StringBuilder pStringBuilder, GeoZone pGeoZone, Query oQuery)
         {
-            if(pGeoZone.geoID.Length > 2){
+            if(pGeoZone.geoID.Length > 2 || pGeoZone?.population == null){
                 return;
             }
             StringBuilder oStringBuilder = new StringBuilder();
@@ -354,7 +354,7 @@ namespace CoVid.DAOs.InsertTableOperations
 
             oStringBuilder.Remove(oStringBuilder.Length - UtilsConstants.IntConstants.ONE, UtilsConstants.IntConstants.ONE);
             oQuery.query = oQuery.query.Replace(
-                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString());
+                UtilsConstants.QueryConstants.REPLACE_QUERY_CONSTANT, oStringBuilder.ToString()).Replace(",,", (","));
         }
 
         public void SetQuery(string pPath, out Query pQuery)

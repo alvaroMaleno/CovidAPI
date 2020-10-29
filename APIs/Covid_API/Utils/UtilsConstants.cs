@@ -5,8 +5,8 @@ namespace Covid_REST.Utils
     {
         public struct UrlConstants
         {
-            public const string URL_DATA_REST = "https://localhost:5005/CovidDataBase";
-            public const string URL_SECURITY_REST = "https://localhost:5003/Security";
+            public const string URL_DATA_REST = "https://covidpaucasesnoves.azurewebsites.net/CovidDataBase";
+            public const string URL_SECURITY_REST = "https://security-api.azurewebsites.net/Security";
         }
 
         public struct POSTMethodsConstants
