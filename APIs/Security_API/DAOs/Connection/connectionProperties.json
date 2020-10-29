@@ -1,7 +1,7 @@
 {
-    "server": "p",
-    "port": "p",
-    "userId": "p",
-    "pass": "p",
-    "dataBase": "p"
+    "server": "covidsecurity.cni7xow5zxg5.us-east-2.rds.amazonaws.com",
+    "port": "5432",
+    "userId": "covid_postgre",
+    "pass": "Paniza25",
+    "dataBase": "postgres"
 }
