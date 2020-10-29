@@ -94,7 +94,7 @@ Para acceder a la información serán necesarios unos pasos previos.
 
 ![Petición Información](../Process/OneOrMoreCountries.png)
 
-Una vez obtenido el token se pueden realizar tantas peticiones de información como se desee. La petición **POST** a efectuar puede sufrir diferentes modificaciones con el objetivo de obtener distintas respuestas. Además, posee dos métodos adicionales que generarán un conjunto de datos de respuesta diferente. La petición sería la siguiente:
+Una vez obtenido el token se pueden realizar tantas peticiones de información como se desee. La petición **POST** (https://{default:localhost:5000}/api/covid}) a efectuar puede sufrir diferentes modificaciones con el objetivo de obtener distintas respuestas. Además, posee dos métodos adicionales que generarán un conjunto de datos de respuesta diferente. La petición sería la siguiente:
 
 <pre>
     <code>
@@ -123,7 +123,6 @@ Una vez obtenido el token se pueden realizar tantas peticiones de información c
 
 ![Petición Información](../Process/CachéProcess.png)
 
-- Url a emplear: https://{default:localhost:5000}/api/covid}
 - El elemento **“countries”** puede contener un único código **ISO2** de país o tantos como se desee. Es posible emplear el comodín **“*”** para obtener la información relativa a todos los países disponibles en base de datos.
 
 - El elemento **“separator”** de **“dates”** es modificable y se puede usar el que se desee. Sin embargo, el formato de fecha deberá ser siempre el mismo.
