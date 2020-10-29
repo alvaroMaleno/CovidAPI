@@ -72,7 +72,7 @@ Para acceder a la información serán necesarios unos pasos previos.
 
 ![Autentificar Usuario](../Process/Authenticate.png)
 
-1. Enviar petición **POST**. La url a la que realizar la petición es https://localhost:5001/api/authorize . En ella se han de incluir los campos **“email”** y **“pass”** encriptados con la clave pública única de usuario, dada como respuesta al registro de usuario. Además, se ha de incluir un campo con esta clave pública (**“public_key”**).
+1. Enviar petición **POST**. La url a la que realizar la petición es https://{default:localhost:5001}/api/authorize . En ella se han de incluir los campos **“email”** y **“pass”** encriptados con la clave pública única de usuario, dada como respuesta al registro de usuario. Además, se ha de incluir un campo con esta clave pública (**“public_key”**).
 
 2. **Almacenar token de respuesta.**  Como respuesta, en caso de autentificación exitosa, se recibirá un **token** que deberá adjuntarse en la cabecera como autentificación para futuras peticiones de información. Dicho token poseerá una validez de **24 horas**, tras las cuales se deberá realizar el proceso de autentificación de nuevo.
 
@@ -123,6 +123,7 @@ Una vez obtenido el token se pueden realizar tantas peticiones de información c
 
 ![Petición Información](../Process/CachéProcess.png)
 
+- Url a emplear: https://{default:localhost:5000}/api/covid}
 - El elemento **“countries”** puede contener un único código **ISO2** de país o tantos como se desee. Es posible emplear el comodín **“*”** para obtener la información relativa a todos los países disponibles en base de datos.
 
 - El elemento **“separator”** de **“dates”** es modificable y se puede usar el que se desee. Sin embargo, el formato de fecha deberá ser siempre el mismo.
