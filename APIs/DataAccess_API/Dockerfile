@@ -17,5 +17,5 @@ RUN dotnet publish "API_DAO.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-#ENTRYPOINT ["dotnet", "API_DAO.dll"]
-CMD ASPNETCORE_URLS=http://*:5005 dotnet API_DAO.dll
+ENTRYPOINT ["dotnet", "API_DAO.dll"]
+#CMD ASPNETCORE_URLS=http://*:5006 dotnet API_DAO.dll

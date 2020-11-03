@@ -49,7 +49,7 @@ Para acceder a la información serán necesarios unos pasos previos.
 
 ![Nuevo Usuario](../Process/GeneralNewUser.png)
 
-1. **Registrar un usuario.** El registro se efectuará realizando, primero, una petición **GET** a la url https://localhost:5001/api/user . Como respuesta se recibirá una clave pública con la que encriptar los datos de usuario.
+1. **Registrar un usuario.** El registro se efectuará realizando, primero, una petición **GET** a la url https://{$endpoint:default:localhost:5001}/api/user . Como respuesta se recibirá una clave pública con la que encriptar los datos de usuario.
 
 2. **Enviar una petición  de nuevo usuario.** Con la clave pública recibida se deberán encriptar los campos (ejemplo de petición más abajo) de “email” y “pass”. Además, se deberá establecer el valor true en el campo “new”. La url a la que enviar el POST será la misma del paso anterior.
 
@@ -67,12 +67,32 @@ Para acceder a la información serán necesarios unos pasos previos.
     </code>
 </pre>
 
-## 2.2 Autentificar un usuario
+# 2.2 Método Adicional. Encriptar texto.
+
+Para facilitarle las cosas tanto al desarrollador como al posible usuario se ha habilitado un servicio extra que permite la recepción de un texto a encriptar y una clave pública a emplear y devuelve el texto encriptado y posteriormente trasladado a **Base64**. Está disponible desde la url https://{$default.localhost:5003}/EncryptationService/ y permite la recepción de peticiones como la siguiente:
+
+<pre>
+<code>
+{
+"key":
+ "&lt;RSAKeyValue>&lt;Modulus>nlFoRNsY4J2Bfvg/5e8NHocLCLkLbrWte/JnBCnbT2hn1Zh3s/mOHv6SCh1UmaXZ9b5Ey0/hKibOU1xwSb6m8l1VSAdaz63tU0ayfrg1mFLwi2vW8MIDpR6yJLO+HHUpyRW7UTJ/WFNmPLckRUTxdekl3XAwqrZ+fMcpNqavD8rKG62x3gUetngrZXSeC5O732d4IoTQb4inTPDoCT+QW2rg1CLlhic+WRPyp/T97CAKeCLnuzLfUKVx574/WQ0BGFxPn4oOdfMmm5EbsJpzcqMge0u6YARasSzjbC2MlErP9VcrhTAlQdyidiSxNuyJxInIyVt15XMDO/D/h7WgfkXh4F6aunRsseXSMRiLSoVn/45/nr5+dxC+V7Eb16ZeL3MYOg2BvetsNMyLEfVGhVU+zhZE76G1yQTkGfGV2gQca/wjJLphCvKE9SewW1GhHFuwrBN6e7SzXV8GSZhCE0VNgpcbe/IoW2LX414Q4xaNFRwyrV6FtXWbbSVkNniF&lt;/Modulus>&lt;Exponent>AQAB&lt;/Exponent>&lt;/RSAKeyValue>",
+
+"text": "miuser"
+}
+
+</code>
+</pre>
+	
+La respuesta sería la siguiente:
+
+**xP9BAdai/dJDWZqAKaWjUWiSvK4U1I76xxkYcU2q+dFf2jtY8yN3MUXqGxCdmmyAPtw2lVnWQTPLlp8EbTunvRfgarWv3ZN5ztzWqH/jauEntwfiJNi5WLowkWsk2nfC/M6+7Pc5cJjcP7xOFUmKDojWaMNo2mZns/WeCjzUCbl3VrXZoWC5tguP+nG+/FuZu/1JapVcRapXA8Y6Fv3BhDk8MFg2ieSGShBbloantcXleOqxsLCVxr09elHjvvbCz6keGWBYdmmUVViSZvBgs8nzIwrUCa9prcyCp/MVLPCKd4/J0yj8rOFSP8b89wyo0oGwAObrZfy3Dj89Gh+E4IFnEF8A52GkSAM7qY6LISKkDyvN/vwI/S+N7EYPQx92s9eqB0uHYY9hA3Ut+pXx8ByaM5rcPlF284HvnApsHoymdIAry60BdD711L2ejv1cp/GnPoG3gpaeup8zmo60qPMTGXoYnLrUW9vweyiHqCJ01G5cFYxti+KMhIxfml9V**
+
+## 2.3 Autentificar un usuario
 
 
 ![Autentificar Usuario](../Process/Authenticate.png)
 
-1. Enviar petición **POST**. La url a la que realizar la petición es https://{default:localhost:5001}/api/authorize . En ella se han de incluir los campos **“email”** y **“pass”** encriptados con la clave pública única de usuario, dada como respuesta al registro de usuario. Además, se ha de incluir un campo con esta clave pública (**“public_key”**).
+1. Enviar petición **POST**. La url a la que realizar la petición es https://{$endpoint:default:localhost:5001}/api/authorize . En ella se han de incluir los campos **“email”** y **“pass”** encriptados con la clave pública única de usuario, dada como respuesta al registro de usuario. Además, se ha de incluir un campo con esta clave pública (**“public_key”**).
 
 2. **Almacenar token de respuesta.**  Como respuesta, en caso de autentificación exitosa, se recibirá un **token** que deberá adjuntarse en la cabecera como autentificación para futuras peticiones de información. Dicho token poseerá una validez de **24 horas**, tras las cuales se deberá realizar el proceso de autentificación de nuevo.
 
@@ -90,11 +110,11 @@ Para acceder a la información serán necesarios unos pasos previos.
     </code>
 </pre>
 
-## 2.3 Petición de datos
+## 2.4 Petición de datos
 
 ![Petición Información](../Process/OneOrMoreCountries.png)
 
-Una vez obtenido el token se pueden realizar tantas peticiones de información como se desee. La petición **POST** (https://{default:localhost:5000}/api/covid}) a efectuar puede sufrir diferentes modificaciones con el objetivo de obtener distintas respuestas. Además, posee dos métodos adicionales que generarán un conjunto de datos de respuesta diferente. La petición sería la siguiente:
+Una vez obtenido el token se pueden realizar tantas peticiones de información como se desee. La petición **POST** (https://{$endpoint:default:localhost:5000}/api/covid}) a efectuar puede sufrir diferentes modificaciones con el objetivo de obtener distintas respuestas. Además, posee dos métodos adicionales que generarán un conjunto de datos de respuesta diferente. La petición sería la siguiente:
 
 <pre>
     <code>

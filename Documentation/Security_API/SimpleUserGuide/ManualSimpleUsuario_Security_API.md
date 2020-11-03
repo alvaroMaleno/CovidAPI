@@ -57,7 +57,7 @@ Pueden seguirse los siguientes tutoriales:
 
 # 2. Usando la Aplicación. Los métodos.
 
-La aplicación se encuentra configurada para atender peticiones **GET** y **POST** enviadas a la url https://localhost:5003/Security . Si desea cambiarse el puerto de acceso es posible modificando el archivo  **APIs/Seurity_API/Properties/launchProperties.json**.
+La aplicación se encuentra configurada para atender peticiones **GET** y **POST** enviadas a la url https://{$default:localhost:5003}/Security . Si desea cambiarse el puerto de acceso es posible modificando el archivo  **APIs/Seurity_API/Properties/launchProperties.json**.
 
 **Nota:** Todas las encriptaciones serán sometidas a una conversión posterior a **Base64**. Desde la misma se volverá a generar el código binario que será desencriptado posteriormente.
 
@@ -71,7 +71,7 @@ Está pensado para eliminar la necesidad de exponer los datos sensibles del usua
 
 # 2.2 Nuevo Usuario
 
-Se efectúa una única vez y sirve para dar de alta a un nuevo usuario en el sistema. Éste usuario recibirá una **pareja de clave pública y privada únicas** e intrasferibles para él. Su contraseña será almacenada en base de datos **encriptada** con su propia **clave privada** y, a su vez, su clave privada se almacenará, junto a la pública, encriptada mediante una **clave pública propia** de la aplicación que se irá **modificando cada 100 usos** de la misma. Esto quiere decir que una buena parte de la base de datos será actualizada cada cierto tiempo para salvaguardar la información crítica del usuario.
+Se efectúa una única vez y sirve para dar de alta a un nuevo usuario en el sistema. Éste usuario recibirá una **pareja de clave pública y privada únicas** e intrasferibles para él. Su contraseña será almacenada en base de datos **encriptada** con su propia **clave privada** y, a su vez, su clave privada se almacenará, junto a la pública, encriptada mediante una **clave pública propia** de la aplicación que se irá **modificando cada 100 usos**. Esto quiere decir que una buena parte de la base de datos será actualizada cada cierto tiempo para salvaguardar la información sensible del usuario.
 
 Un ejemplo de petición sería la siguiente:
 
@@ -115,7 +115,7 @@ Una petición de ejemplo es la que sigue:
 
 # 2.4 Método Adicional. Encriptar texto.
 
-Para facilitarle las cosas tanto al desarrollador como al posible usuario se ha habilitado un servicio extra que permite la recepción de un texto a encriptar y una clave pública a emplear y devuelve el texto encriptado y posteriormente trasladado a **Base64**. Está disponible desde la url https://localhost:5003/EncryptationService/ y permite la recepción de peticiones como la siguiente:
+Para facilitarle las cosas tanto al desarrollador como al posible usuario se ha habilitado un servicio extra que permite la recepción de un texto a encriptar y una clave pública a emplear y devuelve el texto encriptado y posteriormente trasladado a **Base64**. Está disponible desde la url https://{$default.localhost:5003}/EncryptationService/ y permite la recepción de peticiones como la siguiente:
 
 <pre>
 <code>

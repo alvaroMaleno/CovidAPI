@@ -4,7 +4,7 @@ Siguiendo con la tendencia actual, especialmente dentro del marco de trabajo de 
 
 La interacción con el usuario así como la coordinación de los diferentes procesos y funcionalidades que presenta esta aplicación le corresponde a esta API. 
 
-# Responabilidades
+# Responsabilidades
 
 1. Recepción de nuevas peticiones de registro de usuario y transmisión de las mismas a la API de Seguridad Security_API.
 
@@ -37,8 +37,6 @@ La interacción con el usuario así como la coordinación de los diferentes proc
 - **Newtonsoft**: https://www.newtonsoft.com/json/help/html/Introduction.htm
 - **Draw.io**: http://draw.io
 - **Docker**: http://www.docker.com
-
-
 
 
 # Puesta en Marcha
@@ -86,7 +84,7 @@ Tras obtener la clave pública con la que encriptar la información realizando u
 
 ## Servicio Extra
 
-Para poder probar la aplicación sin necesidad de desarrollar un conector para la misma ésta tiene incluido un servicio extra que permite encriptar cualquier texto mediante una clave pública. Para ello será necesario enviar una petición POST como la que sigue a la url https://{$endpoint:default:localhost:5001}/EncryptationService/ .
+Para poder probar la aplicación sin necesidad de desarrollar un conector para la misma ésta tiene incluido un servicio extra que permite encriptar cualquier texto mediante una clave pública. Para ello será necesario enviar una petición POST como la que sigue a la url https://{$endpoint:default:localhost:5001}/api/EncryptationService .
 
 ### Petición de entrada
 
@@ -114,7 +112,7 @@ or+dtsOSdKzXyZJdBNqHGRQQvFa4HXC4AvjsvOHEXqwbvtEkwv5Unx6etYqcCxIH5RCVjNuNO8E3z0A4
 
 ## Petición de ejemplo
 
-- POST a https://{endpoint:default:localhost:5001}/api/authorize:
+- POST a https://{$endpoint:default:localhost:5001}/api/authorize:
 
 <pre>
     <code>
@@ -141,7 +139,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI8UlNBS2V5VmFsdWU-PE1vZHVsdXM-bmx
 
 ## Petición ejemplo
 
-- Tras obtener la clave pública con la que encriptar la información realizando una petición get a https://{endpoint:default:localhost:5001}/api/user: 
+- Tras obtener la clave pública con la que encriptar la información realizando una petición get a https://{$endpoint:default:localhost:5001}/api/user: 
 <pre>
     <code>
 {
@@ -162,7 +160,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI8UlNBS2V5VmFsdWU-PE1vZHVsdXM-bmx
 
 ## Petición de ejemplo
 
-- A https://{endpoint:default:localhost:5001}/api/covid con token como autentificación de cabecera:
+- A https://{$endpoint:default:localhost:5001}/api/covid con token como autentificación de cabecera:
 
 <pre>
     <code>
@@ -251,7 +249,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI8UlNBS2V5VmFsdWU-PE1vZHVsdXM-bmx
 
 ## Petición de ejemplo
 
-- A https://{endpoint:default:localhost:5001}/api/covid con token como autentificación de cabecera:
+- A https://{$endpoint:default:localhost:5001}/api/covid con token como autentificación de cabecera:
 
 <pre>
     <code>
@@ -321,3 +319,13 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI8UlNBS2V5VmFsdWU-PE1vZHVsdXM-bmx
 ]
     </code>
 </pre>
+
+# Manual Simple de Usuario
+
+- [MarkDown](./SimpleUserGuide/ManualSimpleUsuario_Covid_API.md)
+
+- [PDF](./SimpleUserGuide/ManualSimpleUsuario_Covid_API.pdf)
+
+- [DOC](./SimpleUserGuide/ManualSimpleUsuario_Covid_API.doc)
+
+- [DOCX](./SimpleUserGuide/ManualSimpleUsuario_Covid_API.docx)

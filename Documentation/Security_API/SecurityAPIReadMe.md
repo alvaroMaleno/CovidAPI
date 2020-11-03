@@ -2,7 +2,7 @@
 
 El cuidado y almacenamiento de los datos sensibles de usuario, así como el registro, la comprobación y el contraste de los mismos quedan dentro de la responsabilidad de esta API de seguridad. 
 
-# Responabilidades
+# Responsabilidades
 
 1. Creación de tablas necesarias para el funcionamiento.
 

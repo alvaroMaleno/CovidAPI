@@ -29,9 +29,9 @@ namespace Security_REST.Security.DataManager
             string so = UtilsSO.GetInstance().GetSO();
 
             if(so.Contains("unix"))
-                selectPaths = @"./Security/DataManager/EncryptedNames/names.json";
+                selectPaths = @"./Security/DataManager/EncryptedNames/names";
             else
-                selectPaths = @".\Security\DataManager\EncryptedNames\names.json";
+                selectPaths = @".\Security\DataManager\EncryptedNames\names";
 
             return selectPaths;
         }

@@ -20,7 +20,7 @@ namespace API_Security
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-		    webBuilder.UseUrls("http://*:5003");
+
                 });
 
         public static void InizializeInitialProceses()
