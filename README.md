@@ -90,4 +90,8 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 
 # Documentación de conjunto completa
 
-- [MarkDown](./Documentation/DocumentationMD/Documentacion.md)
+- [MarkDown](./Documentation/Documentacion.md)
+
+- [DOCX](./Documentation/Documentacion.docx)
+
+- [pdf](./Documentation/Documentacion.pdf)
