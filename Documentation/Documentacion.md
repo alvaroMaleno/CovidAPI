@@ -46,7 +46,7 @@
 
 1.3.4 Pruebas de software 
 
-2.Arquitectura 29
+2.Arquitectura 
 
 2.1. Diagrama de módulos
 
