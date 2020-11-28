@@ -1,7 +1,6 @@
-Documentación Covid API
+# Documentación Covid API
 
-![](.//media/image1.jpg){width="6.666666666666667in"
-height="4.427083333333333in"}
+![](.//media/image1.jpg)
 
 **Autor:**
 
@@ -9,86 +8,84 @@ height="4.427083333333333in"}
 
 **Sumario**
 
-[​ 1. Definiciones y especificación de requerimientos
-3](#__RefHeading___Toc3383_3628740800)
+1.Definiciones y especificación de requerimientos
 
-[​ 1.1 Definición general del proyecto
-3](#__RefHeading___Toc3385_3628740800)
 
-[​ 1.1.1 Qué aplicación se ha desarrollado
-3](#__RefHeading___Toc3387_3628740800)
+1.1. Definición general del proyecto
 
-[​ 1.1.2 Para qué se ha desarrollado la aplicación
-3](#__RefHeading___Toc3389_3628740800)
 
-[​ 1.1.3 ¿Quién o quiénes son los usuarios?
-3](#__RefHeading___Toc3391_3628740800)
+1.1.1 Qué aplicación se ha desarrollado
 
-[​ 1.2 Especificación de requerimientos
-4](#__RefHeading___Toc3393_3628740800)
 
-[​ 1.2.1 Requisitos generales 4](#__RefHeading___Toc3395_3628740800)
+1.1.2 Para qué se ha desarrollado la aplicación
 
-[​ 1.2.2 Requisitos funcionales 5](#__RefHeading___Toc3397_3628740800)
 
-[​ 5](#__RefHeading___Toc3399_3628740800)
+1.1.3 ¿Quién o quiénes son los usuarios?
 
-[​ 1.2.3 Información general acerca del proyecto.
-7](#__RefHeading___Toc3401_3628740800)
 
-[​ 1.2.4 Alcance y limitaciones de las funcionalidades de este proyecto.
-8](#__RefHeading___Toc3403_3628740800)
+1.2 Especificación de requerimientos
 
-[​ 1.3 Procedimientos de instalación y prueba
-8](#__RefHeading___Toc3405_3628740800)
+1.2.1 Requisitos generales 
 
-[​ 1.3.1 Entorno operativo 8](#__RefHeading___Toc3407_3628740800)
+1.2.2 Requisitos funcionales 
 
-[​ 1.3.2 Metodología de trabajo 11](#__RefHeading___Toc3409_3628740800)
 
-[​ 1.3.2 Requisitos no funcionales
-12](#__RefHeading___Toc3411_3628740800)
+1.2.3 Información general acerca del proyecto.
 
-[​ 1.3.3 Obtención e instalación.
-15](#__RefHeading___Toc3413_3628740800)
+1.2.4 Alcance y limitaciones de las funcionalidades de este proyecto.
 
-[​ Instalando dependencias 15](#__RefHeading___Toc3415_3628740800)
+1.3 Procedimientos de instalación y prueba
 
-[​ Levantando la Aplicación: 18](#__RefHeading___Toc3417_3628740800)
+1.3.1 Entorno operativo 
 
-[​ 1.3.4 Pruebas de software 19](#__RefHeading___Toc3419_3628740800)
+1.3.2 Metodología de trabajo 
 
-[​ 2. Arquitectura 29](#__RefHeading___Toc3421_3628740800)
+1.3.2 Requisitos no funcionales
 
-[​ 2.1. Diagrama de módulos: 30](#__RefHeading___Toc3423_3628740800)
+1.3.3 Obtención e instalación.
 
-[​ 2.2 Descripción jerárquica: 30](#__RefHeading___Toc3425_3628740800)
+1.3.4 Pruebas de software 
 
-[​ 2.3 Diagrama de módulos: 31](#__RefHeading___Toc3427_3628740800)
+2.Arquitectura 29
 
-[​ 2.3.1 DataAccess\_API 31](#__RefHeading___Toc3429_3628740800)
+2.1. Diagrama de módulos
 
-[​ 2.3.2 Security API 42](#__RefHeading___Toc3431_3628740800)
+2.2 Descripción jerárquica
 
-[​ 2.3.3 Covid API 51](#__RefHeading___Toc3433_3628740800)
+2.3 Diagrama de módulos
 
-[​ 2.3.4 Clases comunes 53](#__RefHeading___Toc3435_3628740800)
+2.3.1 DataAccess\_API
 
-[​ 2.3.5 Dependencias Externas 54](#__RefHeading___Toc3437_3628740800)
+2.3.2 Security API 
 
-[​ 3 Modelo Entidad Relacional 55](#__RefHeading___Toc3439_3628740800)
+2.3.3 Covid API 
 
-[​ 3.1 Modelo E/R Datos Covid 55](#__RefHeading___Toc3441_3628740800)
+2.3.4 Clases comunes 
 
-[​ 3.2 Modelo E/R Base de Datos Usuarios
-55](#__RefHeading___Toc3443_3628740800)
+2.3.5 Dependencias Externas 
 
+3.Modelo Entidad Relacional
+
+3.1 Modelo E/R Datos Covid 
+
+3.2 Modelo E/R Base de Datos Usuarios
+
+
+&nbsp;
 # 1. Definiciones y especificación de requerimientos
+
+
+&nbsp;
 
 ## 1.1 Definición general del proyecto
 
+
+&nbsp;
+
 ### 1.1.1 Qué aplicación se ha desarrollado
 
+
+&nbsp;
 
 Las funcionalidades principales de la aplicación son dos: la primera,
 garantizar el seguro almacenamiento de los datos de usuario y la
@@ -98,7 +95,13 @@ usuarios podrán solicitar los datos para el país o los países que deseen
 y dentro de un período que transcurre entre dos fechas elegibles también
 por el usuario.
 
+
+&nbsp;
+
 ### 1.1.2 Para qué se ha desarrollado la aplicación
+
+
+&nbsp;
 
 Lo primero, para ofrecer los datos bajo demanda y solamente aquellos que
 se deseen obtener con la mayor prontitud posible y con el menor número
@@ -109,6 +112,9 @@ aplicaciones así como el acceso a los datos tratados aquí ha supuesto
 una parte importante del esfuerzo generado.
 
 ### 1.1.3 ¿Quién o quiénes son los usuarios?
+
+
+&nbsp;
 
 Existen dos tipos de usuario:
 
@@ -142,9 +148,18 @@ acceder a su uso, aquellos que se encuentren en un nivel algo más
 avanzado encontrarán también ciertas ventajas y posibles aplicaciones
 distintas a las que ya posee.
 
+
+&nbsp;
+
 ## 1.2 Especificación de requerimientos
 
+
+&nbsp;
+
 ### 1.2.1 Requisitos generales
+
+
+&nbsp;
 
 Tras el diseño de la aplicación subyacen varias ideas. La primera, ya
 común, relativa a la reutilización del software. Diseñar y programar
@@ -183,9 +198,18 @@ torno al cual se ha erigido este proyecto. Por ello, un componente de
 seguridad con cifrado variable en el tiempo se ha desarrollado sin
 escatimar esfuerzos.
 
+
+&nbsp;
+
 ### 1.2.2 Requisitos funcionales
 
+
+&nbsp;
+
 #### 1.2.2.1 Seguridad
+
+
+&nbsp;
 
 
 **1. Proceso de alta de usuario cifrado.** Jamás se recibirán o enviarán
@@ -228,7 +252,13 @@ facilitar el acceso a los datos del sistema.
 **12. El proceso de generación de tablas de usuario y de aplicación en
 base de datos deberá estar automatizado.**
 
+
+&nbsp;
+
 #### 1.2.2.2 Organización y obtención de los datos
+
+
+&nbsp;
 
 **1. No se podrá acceder a los mismos sin haber sido dado de alta en el
 sistema y estar autentificado.**
@@ -264,7 +294,12 @@ disponibles para consulta.**
 disponibles para consulta.**
 
 
+&nbsp;
+
 #### 1.2.2.3 De carácter más General
+
+
+&nbsp;
 
 **1. Las peticiones se atenderán en formato JSON.**
 
@@ -275,7 +310,14 @@ acelerar los procesos.**
 almacenamiento de los datos y una tercera para interactuar con el
 usuario.**
 
+
+&nbsp;
+
 ### 1.2.3 Información general acerca del proyecto.
+
+
+&nbsp;
+
 
 Todas las partes componentes de este proyecto, así como el modelo de
 datos y las funcionalidades han sido desarrolladas de manera original.
@@ -289,7 +331,13 @@ ningún cambio con futuras actualizaciones de las tecnologías de las que
 depende. Esto quiere decir que se aboga por la sencillez en la escritura
 de código.
 
+
+&nbsp;
+
 ### 1.2.4 Alcance y limitaciones de las funcionalidades de este proyecto.
+
+
+&nbsp;
 
 Si bien el proyecto resulta ambicioso, fundamentalmente por dos motivos
 -- la necesidad de que todos los procesos se encuentren automatizados y
@@ -305,9 +353,17 @@ un mayor desarrollo, ya que la aplicación se encuentra configurada
 información de usuario. Si bien esta característica resulta fácilmente
 ampliable, su realización ha quedado fuera de este proyecto.
 
+
+&nbsp;
+
+
 ## 1.3 Procedimientos de instalación y prueba
 
+&nbsp;
+
 ### 1.3.1 Entorno operativo
+
+&nbsp;
 
 La aplicación ha sido desarrollada para funcionar sobre dos sistemas
 operativos: Windows y Linux.
@@ -404,7 +460,11 @@ como herramientas empleadas a la hora de elaborar toda la documentación
 generada así como la aplicación web designrr para maquetar resultados en
 formato pdf.
 
+&nbsp;
+
 ### 1.3.2 Metodología de trabajo
+
+&nbsp;
 
 Como metodología de desarrollo se ha escogido Kanban. Su significado es
 el de "letrero" en japonés. Fue desarrollado para hacer llegar la
@@ -429,214 +489,91 @@ Consistiría en realizar una mínima parte funcional del programa -- igual
 que una pequeña bola de nieve -- a la que se le irían sumando cada vez
 más funcionalidades hasta haber completado toda la aplicación.
 
+&nbsp;
+
 ### 1.3.2 Requisitos no funcionales
 
-+-----------------------------------+-----------------------------------+
-| **0001**                          | *Eficiencia en el servicio de los |
-|                                   | datos relativos a la pandemia*    |
-+===================================+===================================+
-| **1.0**                           | *1.0 - Junio 2021*                |
-+-----------------------------------+-----------------------------------+
-| **Dependencias**                  | > *Base de Datos Relacional de la |
-|                                   | > Aplicación*                     |
-|                                   | >                                 |
-|                                   | > *.Net Core 3.0 y lenguaje de    |
-|                                   | > programación C\#*               |
-|                                   | >                                 |
-|                                   | > *PostgreSql*                    |
-|                                   | >                                 |
-|                                   | > *Sistema Operativo*             |
-|                                   | >                                 |
-|                                   | > *Técnica de programación*       |
-+-----------------------------------+-----------------------------------+
-| **Descripción**                   | *El servicio de los datos se ha   |
-|                                   | de realizar con la mayor          |
-|                                   | prontitud posible. Éste debe de   |
-|                                   | responder en un tiempo menor a    |
-|                                   | 400 ms.*                          |
-+-----------------------------------+-----------------------------------+
-| **Importancia**                   | *Alta*                            |
-+-----------------------------------+-----------------------------------+
-| **Prioridad**                     | *Media*                           |
-+-----------------------------------+-----------------------------------+
-| **Estado**                        | *Fase final del desarrollo.*      |
-+-----------------------------------+-----------------------------------+
+&nbsp;
 
-+-----------------------------------+-----------------------------------+
-| **0002**                          | *Capacidad para gestionar         |
-|                                   | peticiones simultáneas*           |
-+===================================+===================================+
-| **1.0**                           | *1.0 - Junio 2021*                |
-+-----------------------------------+-----------------------------------+
-| **Dependencias**                  | > *Base de Datos Relacional de la |
-|                                   | > Aplicación*                     |
-|                                   | >                                 |
-|                                   | > *.Net Core 3.0 y lenguaje de    |
-|                                   | > programación C\#*               |
-|                                   | >                                 |
-|                                   | > *PostgreSql*                    |
-|                                   | >                                 |
-|                                   | > *Sistema Operativo*             |
-|                                   | >                                 |
-|                                   | > *Técnica de programación*       |
-+-----------------------------------+-----------------------------------+
-| **Descripción**                   | *No debe de existir error alguno  |
-|                                   | en caso de que n peticiones se    |
-|                                   | realicen al mismo tiempo. Como    |
-|                                   | mínimo debe de ser capaz de       |
-|                                   | gestionar 50 peticiones           |
-|                                   | simultáneas.*                     |
-+-----------------------------------+-----------------------------------+
-| **Importancia**                   | *Alta*                            |
-+-----------------------------------+-----------------------------------+
-| **Prioridad**                     | *Media*                           |
-+-----------------------------------+-----------------------------------+
-| **Estado**                        | *Fase final del desarrollo.*      |
-+-----------------------------------+-----------------------------------+
+|**0001**|*Eficiencia en el servicio de los datos relativos a la pandemia*|
+| - | - |
+|**1.0**|1.0 *- Junio 2021*|
+|**Dependencias**|<p>*Base de Datos Relacional de la Aplicación .Net Core 3.0 y lenguaje de programación C# PostgreSql*</p><p>*Sistema Operativo*</p><p>*Técnica de programación*</p>|
+|**Descripción**|*El servicio de los datos se ha de realizar con la mayor prontitud posible. Éste debe de responder en un tiempo menor a 400 ms.*|
+|**Importancia**|*Alta*|
+|**Prioridad**|*Media*|
+|**Estado**|*Fase final del desarrollo.*|
 
-+-----------------------------------+-----------------------------------+
-| **0003**                          | *Seguridad en el almacenamiento   |
-|                                   | de los datos*                     |
-+===================================+===================================+
-| **1.0**                           | *1.0 - Junio 2021*                |
-+-----------------------------------+-----------------------------------+
-| **Dependencias**                  | > *Base de Datos Relacional de la |
-|                                   | > Aplicación*                     |
-|                                   | >                                 |
-|                                   | > *.Net Core 3.0 y lenguaje de    |
-|                                   | > programación C\#*               |
-|                                   | >                                 |
-|                                   | > *PostgreSql*                    |
-|                                   | >                                 |
-|                                   | > *Sistema Operativo*             |
-|                                   | >                                 |
-|                                   | > *Técnica de programación*       |
-+-----------------------------------+-----------------------------------+
-| **Descripción**                   | *Los datos sensibles relacionados |
-|                                   | con el almacenaje del usuario y   |
-|                                   | su contraseña, deben de ser       |
-|                                   | seguros y permanecer aislados de  |
-|                                   | la aplicación tanto como sea      |
-|                                   | posible. Para ello serán          |
-|                                   | encriptados con una clave privada |
-|                                   | única para el usuario y ésta      |
-|                                   | clave, a su vez, se encriptará    |
-|                                   | con una clave de aplicación que   |
-|                                   | variará cada determinado número   |
-|                                   | de usos.*                         |
-+-----------------------------------+-----------------------------------+
-| **Importancia**                   | *Máxima*                          |
-+-----------------------------------+-----------------------------------+
-| **Prioridad**                     | *Alta*                            |
-+-----------------------------------+-----------------------------------+
-| **Estado**                        | *Fase final del desarrollo.*      |
-+-----------------------------------+-----------------------------------+
 
-+-----------------------------------+-----------------------------------+
-| **0004**                          | *Facilidad en el uso*             |
-+===================================+===================================+
-| **1.0**                           | *1.0 - Junio 2021*                |
-+-----------------------------------+-----------------------------------+
-| **Dependencias**                  | > *Base de Datos Relacional de la |
-|                                   | > Aplicación*                     |
-|                                   | >                                 |
-|                                   | > *.Net Core 3.0 y lenguaje de    |
-|                                   | > programación C\#*               |
-|                                   | >                                 |
-|                                   | > *PostgreSql*                    |
-|                                   | >                                 |
-|                                   | > *Sistema Operativo*             |
-|                                   | >                                 |
-|                                   | > *Técnica de programación*       |
-+-----------------------------------+-----------------------------------+
-| **Descripción**                   | *La aplicación debe de permitir   |
-|                                   | una facilidad de empleo           |
-|                                   | garantizando que su uso sea lo    |
-|                                   | más sencillo posible. De ahí que  |
-|                                   | únicamente admita un tipo de      |
-|                                   | petición que centralice todas las |
-|                                   | posibilidades de demanda de       |
-|                                   | datos. El modelo de los mismos se |
-|                                   | ha de simplificar hasta el        |
-|                                   | extremo.*                         |
-+-----------------------------------+-----------------------------------+
-| **Importancia**                   | *Máxima*                          |
-+-----------------------------------+-----------------------------------+
-| **Prioridad**                     | *Alta*                            |
-+-----------------------------------+-----------------------------------+
-| **Estado**                        | *Fase final del desarrollo.*      |
-+-----------------------------------+-----------------------------------+
+|**0002**|*Capacidad para gestionar peticiones simultáneas*|
+| - | - |
+|**1.0**|1.0 *- Junio 2021*|
+|**Dependencias**|<p>*Base de Datos Relacional de la Aplicación .Net Core 3.0 y lenguaje de programación C# PostgreSql*</p><p>*Sistema Operativo*</p><p>*Técnica de programación*</p>|
+|**Descripción**|*No debe de existir error alguno en caso de que n peticiones se realicen al mismo tiempo. Como mínimo debe de ser capaz de gestionar 50 peticiones simultáneas.*|
+|**Importancia**|*Alta*|
+|**Prioridad**|*Media*|
+|**Estado**|*Fase final del desarrollo.*|
 
-+-----------------------------------+-----------------------------------+
-| **0005**                          | *Disponible siempre*              |
-+===================================+===================================+
-| **1.0**                           | *1.0 - Junio 2021*                |
-+-----------------------------------+-----------------------------------+
-| **Dependencias**                  | > *Base de Datos Relacional de la |
-|                                   | > Aplicación*                     |
-|                                   | >                                 |
-|                                   | > *.Net Core 3.0 y lenguaje de    |
-|                                   | > programación C\#*               |
-|                                   | >                                 |
-|                                   | > *PostgreSql*                    |
-|                                   | >                                 |
-|                                   | > *Sistema Operativo*             |
-|                                   | >                                 |
-|                                   | > *Técnica de programación*       |
-+-----------------------------------+-----------------------------------+
-| **Descripción**                   | *Debe de ser posible usar la      |
-|                                   | aplicación a cualquier hora del   |
-|                                   | día cualquier día del año. En     |
-|                                   | caso de falla ésta no debe        |
-|                                   | detenerla.*                       |
-+-----------------------------------+-----------------------------------+
-| **Importancia**                   | *Máxima*                          |
-+-----------------------------------+-----------------------------------+
-| **Prioridad**                     | *Alta*                            |
-+-----------------------------------+-----------------------------------+
-| **Estado**                        | *Fase final del desarrollo.*      |
-+-----------------------------------+-----------------------------------+
 
-+-----------------------------------+-----------------------------------+
-| **0006**                          | *Independencia del SO*            |
-+===================================+===================================+
-| **1.0**                           | *1.0 - Junio 2021*                |
-+-----------------------------------+-----------------------------------+
-| **Dependencias**                  | > *Base de Datos Relacional de la |
-|                                   | > Aplicación*                     |
-|                                   | >                                 |
-|                                   | > *.Net Core 3.0 y lenguaje de    |
-|                                   | > programación C\#*               |
-|                                   | >                                 |
-|                                   | > *PostgreSql*                    |
-|                                   | >                                 |
-|                                   | > *Sistema Operativo*             |
-|                                   | >                                 |
-|                                   | > *Técnica de programación*       |
-+-----------------------------------+-----------------------------------+
-| **Descripción**                   | *La aplicación debe funcionar en  |
-|                                   | más de un sistema operativo. En   |
-|                                   | este caso, Windows y Linux.*      |
-+-----------------------------------+-----------------------------------+
-| **Importancia**                   | *Máxima*                          |
-+-----------------------------------+-----------------------------------+
-| **Prioridad**                     | *Alta*                            |
-+-----------------------------------+-----------------------------------+
-| **Estado**                        | *Fase final del desarrollo.*      |
-+-----------------------------------+-----------------------------------+
+|**0003**|*Seguridad en el almacenamiento de los datos*|
+| - | - |
+|**1.0**|1.0 *- Junio 2021*|
+|**Dependencias**|<p>*Base de Datos Relacional de la Aplicación .Net Core 3.0 y lenguaje de programación C# PostgreSql*</p><p>*Sistema Operativo*</p><p>*Técnica de programación*</p>|
+|**Descripción**|*Los datos sensibles relacionados con el almacenaje del usuario y su contraseña, deben de ser seguros y permanecer aislados de la aplicación tanto como sea posible. Para ello serán encriptados con una clave privada única para el usuario y ésta clave, a su vez, se encriptará con una clave de aplicación que variará cada determinado número de usos.*|
+|**Importancia**|*Máxima*|
+|**Prioridad**|*Alta*|
+|**Estado**|*Fase final del desarrollo.*|
 
+
+|**0004**|*Facilidad en el uso*|
+| - | - |
+|**1.0**|1.0 *- Junio 2021*|
+|**Dependencias**|<p>*Base de Datos Relacional de la Aplicación .Net Core 3.0 y lenguaje de programación C# PostgreSql*</p><p>*Sistema Operativo*</p><p>*Técnica de programación*</p>|
+|**Descripción**|*La aplicación debe de permitir una facilidad de empleo garantizando que su uso sea lo más sencillo posible. De ahí que únicamente admita un tipo de petición que centralice todas las posibilidades de demanda de datos. El modelo de los mismos se ha de simplificar hasta el extremo.*|
+|**Importancia**|*Máxima*|
+|**Prioridad**|*Alta*|
+|**Estado**|*Fase final del desarrollo.*|
+
+
+|**0005**|*Disponible siempre*|
+| - | - |
+|**1.0**|1.0 *- Junio 2021*|
+|**Dependencias**|<p>*Base de Datos Relacional de la Aplicación .Net Core 3.0 y lenguaje de programación C# PostgreSql*</p><p>*Sistema Operativo*</p><p>*Técnica de programación*</p>|
+|**Descripción**|*Debe de ser posible usar la aplicación a cualquier hora del día cualquier día del año. En caso de falla ésta no debe detenerla.*|
+|**Importancia**|*Máxima*|
+|**Prioridad**|*Alta*|
+|**Estado**|*Fase final del desarrollo.*|
+
+
+|**0006**|*Independencia del SO*|
+| - | - |
+|**1.0**|1.0 *- Junio 2021*|
+|**Dependencias**|<p>*Base de Datos Relacional de la Aplicación .Net Core 3.0 y lenguaje de programación C# PostgreSql*</p><p>*Sistema Operativo*</p><p>*Técnica de programación*</p>|
+|**Descripción**|*La aplicación debe funcionar en más de un sistema operativo. En este caso, Windows y Linux.*|
+|**Importancia**|*Máxima*|
+|**Prioridad**|*Alta*|
+|**Estado**|*Fase final del desarrollo.*|
+
+
+&nbsp;
 
 ### 1.3.3 **Obtención e instalación.**
 
+&nbsp;
+
 La aplicación puede obtenerse desde el repositorio siguiente:
 
-\- **[https://github.com/alvaroMaleno/CovidAPI]{.underline}**
+\- https://github.com/alvaroMaleno/CovidAPI
 
 Para la instalación pueden seguirse los distintos manuales de usuario
 accesibles desde el archivo README.md del directorio raíz. También puede
 seguirse el descrito a continuación.
 
+&nbsp;
+
 #### 1. Puesta en marcha
+
+&nbsp;
 
 **Instalando dependencias**
 
@@ -653,12 +590,16 @@ dependencias:
 
 Pueden seguirse los siguientes tutoriales:
 
-> [[https://docs.microsoft.com/es-es/dotnet/core/install/linux]{.underline}](https://docs.microsoft.com/es-es/dotnet/core/install/linux)
+> [https://docs.microsoft.com/es-es/dotnet/core/install/linux](https://docs.microsoft.com/es-es/dotnet/core/install/linux)
 >
-> [https://www.postgresql.org/docs/11/installation.html]{.underline}
+> https://www.postgresql.org/docs/11/installation.html
 
+
+&nbsp;
 
 **2. Arrancando la aplicación**
+
+&nbsp;
 
 Primero se ha de inicializar el componente DataAccess\_API. Se encuentra
 en el directorio ***APIs*/DataAccess\_API** .
@@ -669,7 +610,7 @@ El primer paso será la configuración de una base de datos sobre la cual
 realizar la persistencia y consulta de la información referente a los
 nuevos usuarios. Desde la página oficial de PostgreSQL puede consultarse
 una guía completa:
-[[https://www.postgresql.org/docs/11]{.underline}](https://www.postgresql.org/docs/11)
+[https://www.postgresql.org/docs/11](https://www.postgresql.org/docs/11)
 .
 
 Una vez generada una base de datos, será necesario configurar el
@@ -688,15 +629,15 @@ paso anterior:
 <code>
 {
 
-\"server\": \"introducir url\",
+"server": "introducir url",
 
-\"port\": \"introducir puerto\",
+"port": "introducir puerto",
 
-\"userId\": \"introducir usuario\",
+"userId": "introducir usuario",
 
-\"pass\": \"introducir contraseña\",
+"pass": "introducir contraseña",
 
-\"dataBase\": \"introducir base de datos\"
+"dataBase": "introducir base de datos"
 
 }
 </code>
@@ -748,23 +689,28 @@ paso anterior:
 <code>
 {
 
-\"server\": \"introducir url\",
+"server": "introducir url",
 
-\"port\": \"introducir puerto\",
+"port": "introducir puerto",
 
-\"userId\": \"introducir usuario\",
+"userId": "introducir usuario",
 
-\"pass\": \"introducir contraseña\",
+"pass": "introducir contraseña",
 
-\"dataBase\": \"introducir base de datos\"
+"dataBase": "introducir base de datos"
 
 }
 </code>
 </pre>
 
+
+&nbsp;
+
 #### 2. Levantando la Aplicación:
 
-<!-- -->
+
+
+&nbsp;
 
 1.  Navegar hasta la ruta **APIs/Security\_API**.
 
@@ -778,8 +724,13 @@ paso anterior:
 
 5.  Esperar varios minutos. La aplicación generará todas las bases de datos necesarias para su empleo e insertará todos los datos necesarios. Si tras varios minutos no se observase la creación de ninguna tabla en base de datos se recomienda detener la aplicación y comprobar la conexión al servidor de base de datos.
 
-**Por último solamente resta poner en funcionamiento el componente
-unitario Covid\_API:**
+
+&nbsp;
+
+#### 3. Por último solamente resta poner en funcionamiento el componente unitario Covid\_API:
+
+
+&nbsp;
 
 Navegar hasta la ruta **APIs/Covid\_API**.
 
@@ -791,7 +742,12 @@ Navegar hasta la ruta **APIs/Covid\_API**.
 
 3.  Es posible sustituir los dos pasos anteriores por al arranque desde un IDE.
 
+
+&nbsp;
+
 ### 1.3.4 Pruebas de software
+
+&nbsp;
 
 Para esta aplicación se ha realizado un enfoque orientado al
 comportamiento. El planteamiento es muy simple: la única prueba válida
@@ -805,653 +761,182 @@ separadamente facilitando la especificación de las pruebas al realizar
 pues, al centrar el objetivo se previenen desviaciones innecesarias y
 surgen más puntos a comprobar.
 
-2.  **1.3.4.1 Pruebas al componente de Seguridad**
 
-+-----------------------+-----------------------+-----------------------+
-| **El Método Get para  | **001**               |                       |
-| obtener clave pública |                       |                       |
-| previa al registro de |                       |                       |
-| usuario funciona.**   |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se han de realizar    |                       |                       |
-| varias peticiones Get |                       |                       |
-| a la url              |                       |                       |
-| identificativa del    |                       |                       |
-| servicio. Éstas deben |                       |                       |
-| devolver una clave    |                       |                       |
-| pública con la que    |                       |                       |
-| encriptar la          |                       |                       |
-| información de        |                       |                       |
-| usuario antes de      |                       |                       |
-| solicitar un alta. La |                       |                       |
-| clave debe de ser la  |                       |                       |
-| misma para los        |                       |                       |
-| primeros X usos.      |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha el    |                       |                       |
-| componente            |                       |                       |
-| Security\_API de la   |                       |                       |
-| aplicación.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Introducir url        | url                   |                       |
-+-----------------------+-----------------------+-----------------------+
-| Obtener respuesta     | Clave Pública de      |                       |
-|                       | Aplicación            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir Proceso       |                       |                       |
-+-----------------------+-----------------------+-----------------------+
+&nbsp;
 
-+-----------------------+-----------------------+-----------------------+
-| **Registro de usuario | **002**               |                       |
-| satisfactorio**       |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se realizará el       |                       |                       |
-| registro de varios    |                       |                       |
-| usuario, con mismo y  |                       |                       |
-| distinto correo       |                       |                       |
-| electrónico. En caso  |                       |                       |
-| de estar registrado   |                       |                       |
-| se comprobará la      |                       |                       |
-| actualización de los  |                       |                       |
-| datos. En caso de no  |                       |                       |
-| estarlo, se recibirá  |                       |                       |
-| una clave pública     |                       |                       |
-| única para cada       |                       |                       |
-| usuario.              |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha el    |                       |                       |
-| componente            |                       |                       |
-| Security\_API de la   |                       |                       |
-| aplicación. Obtener   |                       |                       |
-| la clave pública de   |                       |                       |
-| encriptado de la      |                       |                       |
-| aplicación mediante   |                       |                       |
-| método Get.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Obtener Clave Pública | Clave Pública         |                       |
-| de Aplicación.        |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Encriptar los datos   | Modelo Usuario        |                       |
-| de usuario con la     |                       |                       |
-| clave pública         |                       |                       |
-| obtenida.             |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Establecer el         | Modelo Usuario        |                       |
-| elemento new del      |                       |                       |
-| modelo de usuario a   |                       |                       |
-| true.                 |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar petición POST  | Modelo Usuario. Url   |                       |
-+-----------------------+-----------------------+-----------------------+
-| Recibir respuesta     | Clave Pública         |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir el proceso.   |                       |                       |
-+-----------------------+-----------------------+-----------------------+
+#### 1.3.4.1 Pruebas al componente de Seguridad
 
-+-----------------------+-----------------------+-----------------------+
-| **Validación de       | **003**               |                       |
-| usuario**             |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Con un grupo de       |                       |                       |
-| usuarios creados con  |                       |                       |
-| anterioridad se       |                       |                       |
-| realizará su          |                       |                       |
-| autentificación       |                       |                       |
-| obteniendo, true en   |                       |                       |
-| caso afirmativo y     |                       |                       |
-| false en caso         |                       |                       |
-| negativo.             |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha el    |                       |                       |
-| componente            |                       |                       |
-| Security\_API de la   |                       |                       |
-| aplicación. Poseer un |                       |                       |
-| grupo de usuarios     |                       |                       |
-| registrados cada uno  |                       |                       |
-| con su clave pública  |                       |                       |
-| única.                |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Encriptar datos de    | Clave Pública. Modelo |                       |
-| usuario con clave     | Usuario               |                       |
-| única.                |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Establecer el         | Modelo Usuario        |                       |
-| elemento new del      |                       |                       |
-| modelo de usuario a   |                       |                       |
-| false.                |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Añadir la clave       | Modelo Usuario. Clave |                       |
-| pública única al      | Pública.              |                       |
-| modelo de usuario.    |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar petición POST. | Modelo Usuario. Url   |                       |
-+-----------------------+-----------------------+-----------------------+
-| Recibir respuesta.    | Clave Pública         |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir el proceso.   |                       |                       |
-+-----------------------+-----------------------+-----------------------+
 
-+-----------------------+-----------------------+-----------------------+
-| **La claves pública   | **004**               |                       |
-| de aplicación varía   |                       |                       |
-| cada cierto número de |                       |                       |
-| usos así como la      |                       |                       |
-| encriptación en base  |                       |                       |
-| de datos de los datos |                       |                       |
-| de usuario.**         |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se realizará la       |                       |                       |
-| petición de obtención |                       |                       |
-| de clave pública de   |                       |                       |
-| aplicación y/o se     |                       |                       |
-| registrarán o         |                       |                       |
-| autentificarán        |                       |                       |
-| usuarios tantas veces |                       |                       |
-| como sean necesarias  |                       |                       |
-| para que se produzca  |                       |                       |
-| el cambio de claves   |                       |                       |
-| privada y pública de  |                       |                       |
-| aplicación. Por       |                       |                       |
-| defecto está          |                       |                       |
-| establecido que sean  |                       |                       |
-| 100.                  |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha el    |                       |                       |
-| componente            |                       |                       |
-| Security\_API de la   |                       |                       |
-| aplicación.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Obtener Clave Pública | Clave Pública. Modelo |                       |
-| de Aplicación y/o     | Usuario               |                       |
-| registrar o           |                       |                       |
-| autentificar usuario. |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir tantas veces  | Clave Pública. Modelo |                       |
-| como sea necesario.   | Usuario               |                       |
-+-----------------------+-----------------------+-----------------------+
-| Comprobar que la      | Clave Pública         |                       |
-| respuesta de          |                       |                       |
-| Obtención de clave    |                       |                       |
-| pública ha variado.   |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Comprobar que en base | Modelo Usuario.       |                       |
-| de datos se han       | Conexión Base de      |                       |
-| producido las         | datos.                |                       |
-| actualizaciones       |                       |                       |
-| necesarias.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir el proceso.   |                       |                       |
-+-----------------------+-----------------------+-----------------------+
+&nbsp;
 
-3.  **1.3.4.2 Pruebas al componente de acceso a Datos**
 
-+-----------------------+-----------------------+-----------------------+
-| **Devuelve País       | **001**               |                       |
-| Solicitado**          |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se realizarán diez    |                       |                       |
-| peticiones para diez  |                       |                       |
-| países distintos y se |                       |                       |
-| comprobará que en     |                       |                       |
-| cada una de las       |                       |                       |
-| respuestas los datos  |                       |                       |
-| pertenezcan al país   |                       |                       |
-| solicitado.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha el    |                       |                       |
-| componente            |                       |                       |
-| DataAcccess\_API de   |                       |                       |
-| la aplicación. Haber  |                       |                       |
-| esperado el tiempo    |                       |                       |
-| suficiente para que   |                       |                       |
-| los datos hayan sido  |                       |                       |
-| insertados en base de |                       |                       |
-| datos.                |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Crear Petición        | Modelo POST           |                       |
-| introduciendo el      |                       |                       |
-| código ISO2 de país   |                       |                       |
-| en el campo           |                       |                       |
-| correspondiente. Es   |                       |                       |
-| necesario introducir, |                       |                       |
-| también, el nombre    |                       |                       |
-| del método            |                       |                       |
-| correspondiente al    |                       |                       |
-| que se dirige la      |                       |                       |
-| aplicación.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar Petición       | Modelo POST           |                       |
-+-----------------------+-----------------------+-----------------------+
-| Recibir Respuesta     | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Comprobar Respuesta   | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir Proceso       |                       |                       |
-+-----------------------+-----------------------+-----------------------+
+|**El Método Get para obtener clave pública previa al registro de usuario funciona.**|**001**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se han de realizar varias peticiones Get a la url identificativa del servicio. Éstas deben devolver una clave pública con la que encriptar la información de usuario antes de solicitar un alta. La clave debe de ser la misma para los primeros X usos.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha el componente Security\_API de la aplicación.</p>|
+|**Pasos:**|**Datos** :|
+|Introducir url|url|
+|Obtener respuesta|Clave Pública de Aplicación|
+|Repetir Proceso||
 
-+-----------------------+-----------------------+-----------------------+
-| **Devuelve Países Por | **002**               |                       |
-| Fecha Solicitados**   |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se realizarán diez    |                       |                       |
-| peticiones para 100   |                       |                       |
-| países distintos de   |                       |                       |
-| diez en diez y para   |                       |                       |
-| diferentes rangos de  |                       |                       |
-| fechas.               |                       |                       |
-| Posteriormente se     |                       |                       |
-| comprobará que en     |                       |                       |
-| cada una de las       |                       |                       |
-| respuestas los datos  |                       |                       |
-| pertenezcan a los     |                       |                       |
-| países solicitados y  |                       |                       |
-| estén dentro del      |                       |                       |
-| rango de fechas       |                       |                       |
-| especificado.         |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha el    |                       |                       |
-| componente            |                       |                       |
-| DataAcccess\_API de   |                       |                       |
-| la aplicación. Haber  |                       |                       |
-| esperado el tiempo    |                       |                       |
-| suficiente para que   |                       |                       |
-| los datos hayan sido  |                       |                       |
-| insertados en base de |                       |                       |
-| datos.                |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Crear Petición        | Modelo POST           |                       |
-| introduciendo una     |                       |                       |
-| lista de códigos ISO2 |                       |                       |
-| de país en el campo   |                       |                       |
-| correspondiente del   |                       |                       |
-| modelo. Es necesario  |                       |                       |
-| introducir, también,  |                       |                       |
-| el nombre del método  |                       |                       |
-| correspondiente al    |                       |                       |
-| que se dirige la      |                       |                       |
-| aplicación.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar Petición       | Modelo POST           |                       |
-+-----------------------+-----------------------+-----------------------+
-| Recibir Respuesta     | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Comprobar Respuesta   | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir Proceso       |                       |                       |
-+-----------------------+-----------------------+-----------------------+
 
-+-----------------------+-----------------------+-----------------------+
-| **Devuelve datos para | **003**               |                       |
-| todos los países      |                       |                       |
-| disponibles dentro de |                       |                       |
-| un rango de fechas**  |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se almacenarán todos  |                       |                       |
-| los países            |                       |                       |
-| disponibles en base   |                       |                       |
-| de datos y,           |                       |                       |
-| posteriormente se     |                       |                       |
-| enviarán 100          |                       |                       |
-| peticiones que        |                       |                       |
-| solicitarán datos     |                       |                       |
-| para todos los países |                       |                       |
-| dentro de un rango de |                       |                       |
-| fechas. Se comprobará |                       |                       |
-| que existen datos     |                       |                       |
-| para todos los países |                       |                       |
-| y que esos datos      |                       |                       |
-| estarán dentro del    |                       |                       |
-| período solicitado.   |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha el    |                       |                       |
-| componente            |                       |                       |
-| DataAcccess\_API de   |                       |                       |
-| la aplicación. Haber  |                       |                       |
-| esperado el tiempo    |                       |                       |
-| suficiente para que   |                       |                       |
-| los datos hayan sido  |                       |                       |
-| insertados en base de |                       |                       |
-| datos.                |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Solicitar listado de  | Listado de países     |                       |
-| países introduciendo  |                       |                       |
-| el nombre del método  |                       |                       |
-| adecuado dentro del   |                       |                       |
-| campo apropiado de la |                       |                       |
-| petición POST.        |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Crear Petición        | Modelo POST           |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar Petición       | Modelo POST           |                       |
-+-----------------------+-----------------------+-----------------------+
-| Recibir Respuesta     | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Comprobar Respuesta   | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir Proceso       |                       |                       |
-+-----------------------+-----------------------+-----------------------+
+|**Registro de usuario satisfactorio**|**002**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se realizará el registro de varios usuario, con mismo y distinto correo electrónico. En caso de estar registrado se comprobará la actualización de los datos. En caso de no estarlo, se recibirá una clave pública única para cada usuario.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha el componente Security\_API de la aplicación. Obtener la clave pública de encriptado de la aplicación mediante método Get.</p>|
+|**Pasos:**|**Datos** :|
+|Obtener Clave Pública de Aplicación.|Clave Pública|
+|Encriptar los datos de usuario con la clave pública obtenida.|Modelo Usuario|
+|Establecer el elemento new del modelo de usuario a true.|Modelo Usuario|
+|Enviar petición POST|Modelo Usuario. Url|
+|Recibir respuesta|Clave Pública|
+|Repetir el proceso.||
 
-+-----------------------+-----------------------+-----------------------+
-| **Devuelve Listado de | **004**               |                       |
-| países**              |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se realizarán 100     |                       |                       |
-| peticiones del        |                       |                       |
-| listado completo de   |                       |                       |
-| países.               |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha el    |                       |                       |
-| componente            |                       |                       |
-| DataAcccess\_API de   |                       |                       |
-| la aplicación. Haber  |                       |                       |
-| esperado el tiempo    |                       |                       |
-| suficiente para que   |                       |                       |
-| los datos hayan sido  |                       |                       |
-| insertados en base de |                       |                       |
-| datos.                |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Crear Petición        | Modelo POST           |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar Petición       | Modelo POST           |                       |
-+-----------------------+-----------------------+-----------------------+
-| Recibir Respuesta     | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Comprobar Respuesta   | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir Proceso       |                       |                       |
-+-----------------------+-----------------------+-----------------------+
 
-+-----------------------+-----------------------+-----------------------+
-| **Devuelve Listado de | **005**               |                       |
-| fechas disponibles**  |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se realizarán 100     |                       |                       |
-| peticiones del        |                       |                       |
-| listado completo de   |                       |                       |
-| fechas. Se            |                       |                       |
-| comprobarán su        |                       |                       |
-| coincidencia a contar |                       |                       |
-| desde el primer día   |                       |                       |
-| de registro de las    |                       |                       |
-| mismas hasta el día   |                       |                       |
-| de realización de la  |                       |                       |
-| prueba.               |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Tener en pleno        |                       |                       |
-| funcionamiento la     |                       |                       |
-| aplicación.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Crear Petición        | Modelo POST           |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar Petición       | Modelo POST           |                       |
-+-----------------------+-----------------------+-----------------------+
-| Recibir Respuesta     | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Comprobar Respuesta   | Modelo de salida de   |                       |
-|                       | datos                 |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir Proceso       |                       |                       |
-+-----------------------+-----------------------+-----------------------+
+|**Validación de usuario**|**003**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Con un grupo de usuarios creados con anterioridad se realizará su autentificación obteniendo, true en caso afirmativo y false en caso negativo.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha el componente Security\_API de la aplicación. Poseer un grupo de usuarios registrados cada uno con su clave pública única.</p>|
+|**Pasos:**|**Datos** :|
+|Encriptar datos de usuario con clave única.|Clave Pública. Modelo Usuario|
+|Establecer el elemento new del modelo de usuario a false.|Modelo Usuario|
+|Añadir la clave pública única al modelo de usuario.|Modelo Usuario. Clave Pública.|
+|Enviar petición POST.|Modelo Usuario. Url|
+|Recibir respuesta.|Clave Pública|
+|Repetir el proceso.||
 
-4.  **1.3.4.3 Pruebas de Conjunto**
 
-+-----------------------+-----------------------+-----------------------+
-| **Repetir pruebas     | **001**               |                       |
-| realizadas en el      |                       |                       |
-| componente de         |                       |                       |
-| Seguridad**           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se repetirán las      |                       |                       |
-| pruebas realizadas al |                       |                       |
-| componente de         |                       |                       |
-| seguridad, esta vez,  |                       |                       |
-| empleando la url del  |                       |                       |
-| componente Covid\_API |                       |                       |
-| que gestiona el       |                       |                       |
-| conjunto.             |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha todos |                       |                       |
-| los componentes de la |                       |                       |
-| aplicación. Haber     |                       |                       |
-| cumplido los          |                       |                       |
-| prerrequisitos de     |                       |                       |
-| cada uno de ellos.    |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Levantar todos los    | Modelo POST           |                       |
-| componentes           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir Pruebas para  | Modelo POST           |                       |
-| cada componente       |                       |                       |
-| usando el modelo de   |                       |                       |
-| datos propio de       |                       |                       |
-| Covid\_API.           |                       |                       |
-+-----------------------+-----------------------+-----------------------+
+|**La claves pública de aplicación varía cada cierto número de usos así como la encriptación en base de datos de los datos de usuario.**|**004**||
+| :- | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se realizará la petición de obtención de clave pública de aplicación y/o se registrarán o autentificarán usuarios tantas veces como sean necesarias para que se produzca el cambio de claves privada y pública de aplicación. Por defecto está establecido que sean 100.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha el componente Security\_API de la aplicación.</p>|
+|**Pasos:**|**Datos** :|
+|Obtener Clave Pública de Aplicación y/o registrar o autentificar usuario.|Clave Pública. Modelo Usuario|
+|Repetir tantas veces como sea necesario.|Clave Pública. Modelo Usuario|
+|Comprobar que la respuesta de Obtención de clave pública ha variado.|Clave Pública|
+|Comprobar que en base de datos se han producido las actualizaciones necesarias.|Modelo Usuario. Conexión Base de datos.|
+|Repetir el proceso.||
 
-+-----------------------+-----------------------+-----------------------+
-| **Recibir Token JWT   | **002**               |                       |
-| tras autentificar un  |                       |                       |
-| usuario registrado**  |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se probará a          |                       |                       |
-| identificar un        |                       |                       |
-| conjunto de usuarios  |                       |                       |
-| previamente           |                       |                       |
-| registrados y cada    |                       |                       |
-| vez que la            |                       |                       |
-| identificación sea    |                       |                       |
-| exitosa se recibirá   |                       |                       |
-| un JWT token como     |                       |                       |
-| respuesta. En caso    |                       |                       |
-| negativo se mostrará  |                       |                       |
-| un error HTTP 401.    |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha todos |                       |                       |
-| los componentes de la |                       |                       |
-| aplicación. Haber     |                       |                       |
-| cumplido los          |                       |                       |
-| prerrequisitos de     |                       |                       |
-| cada uno de ellos.    |                       |                       |
-| Poseer varios         |                       |                       |
-| usuarios registrados. |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar petición de    | Modelo POST de        |                       |
-| autorización a la url | Usuario.              |                       |
-| correspondiente.      |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Comprobar que la      | Modelo POST de        |                       |
-| respuesta recibida    | Usuario y de          |                       |
-| posibilita la         | CovidData.            |                       |
-| petición de datos al  |                       |                       |
-| introducir el JWT     |                       |                       |
-| token en el           |                       |                       |
-| correspondiente       |                       |                       |
-| apartado de cabecera. |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir todo el       |                       |                       |
-| proceso para cada uno |                       |                       |
-| de los usuarios.      |                       |                       |
-+-----------------------+-----------------------+-----------------------+
+&nbsp;
 
-+-----------------------+-----------------------+-----------------------+
-| **Repetir pruebas de  | **003**               |                       |
-| acceso a datos**      |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-|                       | **Prueba de           | **Obligatoria**       |
-|                       | funcionamiento**      |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Descripción:**      |                       |                       |
-|                       |                       |                       |
-| Se repetirán todas    |                       |                       |
-| las pruebas de acceso |                       |                       |
-| a datos esta vez      |                       |                       |
-| empleando el modelo y |                       |                       |
-| url propios del       |                       |                       |
-| componente Covid\_API |                       |                       |
-| encargado de          |                       |                       |
-| interactuar con el    |                       |                       |
-| usuario y gestionar   |                       |                       |
-| el conjunto.          |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Prerrequisitos**:   |                       |                       |
-|                       |                       |                       |
-| Haber instalado todas |                       |                       |
-| las dependencias.     |                       |                       |
-| Poner en marcha todos |                       |                       |
-| los componentes de la |                       |                       |
-| aplicación. Haber     |                       |                       |
-| cumplido los          |                       |                       |
-| prerrequisitos de     |                       |                       |
-| cada uno de ellos.    |                       |                       |
-| Haber obtenido un     |                       |                       |
-| token de acceso tras  |                       |                       |
-| haber identificado un |                       |                       |
-| usuario.              |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| **Pasos:**            | **Datos**:            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Enviar petición de    | Modelo POST de        |                       |
-| autorización a la url | Usuario.              |                       |
-| correspondiente.      |                       |                       |
-+-----------------------+-----------------------+-----------------------+
-| Obtener token de      | Modelo POST de        |                       |
-| autentificación JWT.  | Usuario y de          |                       |
-|                       | CovidData.            |                       |
-+-----------------------+-----------------------+-----------------------+
-| Repetir todo el       |                       |                       |
-| proceso de pruebas    |                       |                       |
-| del componente de     |                       |                       |
-| acceso a datos.       |                       |                       |
-+-----------------------+-----------------------+-----------------------+
 
+#### 1.3.4.2 Pruebas al componente de acceso a Datos
+
+&nbsp;
+
+|**Devuelve País Solicitado**|**001**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se realizarán diez peticiones para diez países distintos y se comprobará que en cada una de las respuestas los datos pertenezcan al país solicitado.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha el componente DataAcccess\_API de la aplicación. Haber esperado el tiempo suficiente para que los datos hayan sido insertados en base de datos.</p>|
+|**Pasos:**|**Datos** :|
+|Crear Petición introduciendo el código ISO2 de país en el campo correspondiente. Es necesario introducir, también, el nombre del método correspondiente al que se dirige la aplicación.|Modelo POST|
+|Enviar Petición|Modelo POST|
+|Recibir Respuesta|Modelo de salida de datos|
+|Comprobar Respuesta|Modelo de salida de datos|
+|Repetir Proceso||
+
+
+|**Devuelve Países Por Fecha Solicitados**|**002**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se realizarán diez peticiones para 100 países distintos de diez en diez y para diferentes rangos de fechas. Posteriormente se comprobará que en cada una de las respuestas los datos pertenezcan a los países solicitados y estén dentro del rango de fechas especificado.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha el componente DataAcccess\_API de la aplicación. Haber esperado el tiempo suficiente para que los datos hayan sido insertados en base de datos.</p>|
+|**Pasos:**|**Datos** :|
+|Crear Petición introduciendo una lista de códigos ISO2 de país en el campo correspondiente del modelo. Es necesario introducir, también, el nombre del método correspondiente al que se dirige la aplicación.|Modelo POST|
+|Enviar Petición|Modelo POST|
+|Recibir Respuesta|Modelo de salida de datos|
+|Comprobar Respuesta|Modelo de salida de datos|
+|Repetir Proceso||
+
+
+|**Devuelve datos para todos los países disponibles dentro de un rango de fechas**|**003**||
+| :- | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se almacenarán todos los países disponibles en base de datos y, posteriormente se enviarán 100 peticiones que solicitarán datos para todos los países dentro de un rango de fechas. Se comprobará que existen datos para todos los países y que esos datos estarán dentro del período solicitado.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha el componente DataAcccess\_API de la aplicación. Haber esperado el tiempo suficiente para que los datos hayan sido insertados en base de datos.</p>|
+|**Pasos:**|**Datos** :|
+|Solicitar listado de países introduciendo el nombre del método adecuado dentro del campo apropiado de la petición POST.|Listado de países|
+|Crear Petición|Modelo POST|
+|Enviar Petición|Modelo POST|
+|Recibir Respuesta|Modelo de salida de datos|
+|Comprobar Respuesta|Modelo de salida de datos|
+|Repetir Proceso||
+
+
+|**Devuelve Listado de países**|**004**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se realizarán 100 peticiones del listado completo de países.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha el componente DataAcccess\_API de la aplicación. Haber esperado el tiempo suficiente para que los datos hayan sido insertados en base de datos.</p>|
+|**Pasos:**|**Datos** :|
+|Crear Petición|Modelo POST|
+|Enviar Petición|Modelo POST|
+|Recibir Respuesta|Modelo de salida de datos|
+|Comprobar Respuesta|Modelo de salida de datos|
+|Repetir Proceso||
+
+
+|**Devuelve Listado de fechas disponibles**|**005**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se realizarán 100 peticiones del listado completo de fechas. Se comprobarán su coincidencia a contar desde el primer día de registro de las mismas hasta el día de realización de la prueba.</p>|
+|<p>**Prerrequisitos** :</p><p>Tener en pleno funcionamiento la aplicación.</p>|
+|**Pasos:**|**Datos** :|
+|Crear Petición|Modelo POST|
+|Enviar Petición|Modelo POST|
+|Recibir Respuesta|Modelo de salida de datos|
+|Comprobar Respuesta|Modelo de salida de datos|
+|Repetir Proceso||  
+
+
+&nbsp;
+#### 1.3.4.3 Pruebas de Conjunto
+
+
+&nbsp;
+
+|**Repetir pruebas realizadas en el componente de Seguridad**|**001**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se repetirán las pruebas realizadas al componente de seguridad, esta vez, empleando la url del componente Covid\_API que gestiona el conjunto.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha todos los componentes de la aplicación. Haber cumplido los prerrequisitos de cada uno de ellos.</p>|
+|**Pasos:**|**Datos** :|
+|Levantar todos los componentes|Modelo POST|
+|Repetir Pruebas para cada componente usando el modelo de datos propio de Covid\_API.|Modelo POST|
+
+
+|**Recibir Token JWT tras autentificar un usuario registrado**|**002**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se probará a identificar un conjunto de usuarios previamente registrados y cada vez que la identificación sea exitosa se recibirá un JWT token como respuesta. En caso negativo se mostrará un error HTTP 401.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha todos los componentes de la aplicación. Haber cumplido los prerrequisitos de cada uno de ellos. Poseer varios usuarios registrados.</p>|
+|**Pasos:**|**Datos** :|
+|Enviar petición de autorización a la url correspondiente.|Modelo POST de Usuario.|
+|Comprobar que la respuesta recibida posibilita la petición de datos al introducir el JWT token en el correspondiente apartado de cabecera.|Modelo POST de Usuario y de CovidData.|
+|Repetir todo el proceso para cada uno de los usuarios.||
+
+
+|**Repetir pruebas de acceso a datos**|**003**||
+| - | - | :- |
+||**Prueba de funcionamiento**|**Obligatoria**|
+|<p>**Descripción:**</p><p>Se repetirán todas las pruebas de acceso a datos esta vez empleando el modelo y url propios del componente Covid\_API encargado de interactuar con el usuario y gestionar el conjunto.</p>|
+|<p>**Prerrequisitos** :</p><p>Haber instalado todas las dependencias. Poner en marcha todos los componentes de la aplicación. Haber cumplido los prerrequisitos de cada uno de ellos. Haber obtenido un token de acceso tras haber identificado un usuario.</p>|
+|**Pasos:**|**Datos** :|
+|Enviar petición de autorización a la url correspondiente.|Modelo POST de Usuario.|
+|Obtener token de autentificación JWT.|Modelo POST de Usuario y de CovidData.|
+|Repetir todo el proceso de pruebas del componente de acceso a datos.||
+
+
+&nbsp;
 # 2. Arquitectura
+
+
+&nbsp;
 
 Como ya se ha mencionado, se ha seguido una arquitectura orientada a
 microservicios. Ésta consiste en una perspectiva para el desarrollo de
@@ -1466,10 +951,16 @@ Esto quiere decir que cada uno de los servicios que componen la
 aplicación posee su propia jerarquía de clases y distribución de las
 mismas por lo que será necesario contemplarlos por separado.
 
+
+&nbsp;
+
+
 ## 2.1. Diagrama de módulos:
 
-![](.//media/image2.png){width="4.979166666666667in"
-height="4.565277777777778in"}
+
+&nbsp;
+
+![](.//media/image2.png)
 
 El diagrama anterior muestra una descripción general acerca de como está
 estructurada la aplicación y cómo se relacionan entre sí sus
@@ -1477,7 +968,14 @@ componentes. En él puede apreciarse una de las ventajas de usar la
 arquitectura orientada a microservicios: otras aplicaciones pueden
 emplear los componentes para funcionar.
 
+
+&nbsp;
+
 ## 2.2 Descripción jerárquica:
+
+
+&nbsp;
+
 
 La aplicación se divide en dos servicios componentes, con capacidad para
 funcionar independientemente y uno que hace las funciones de orquestador
@@ -1511,11 +1009,26 @@ JWT tokens una vez autentificado el usuario correspondiente. También es
 responsabilidad suya no permitir el acceso a los datos a usuarios no
 registrados.
 
+
+&nbsp;
+
+
 ## 2.3 Diagrama de módulos:
+
+
+&nbsp;
+
 
 ### 2.3.1 DataAccess\_API
 
+
+&nbsp;
+
+
 #### 2.3.1.1 DataInsertions
+
+
+&nbsp;
 
 Se trata de un módulo diseñado para gestionar la manipulación y gestión
 de datos desde el exterior de la aplicación. Sus responsabilidades son:
@@ -1603,7 +1116,12 @@ persistencia -- pasará a un segundo plano hasta cumplidas veinticuatro
 horas, tras las cuales volverá a iniciarlo manteniendo los datos de la
 aplicación siempre actualizados.
 
+&nbsp;
+
 #### 2.3.1.2 CovidDAO
+
+
+&nbsp;
 
 \<\<Data Access Object\>\> por sus siglas en inglés. Se trata de un
 objeto cuya responsabilidad es gestionar el acceso a los datos de la
@@ -1728,7 +1246,12 @@ una de las interfaces operacionales definidas anteriormente. Para cada
 uno de sus métodos delegará la operación a una de sus clases componentes
 que será la responsable de la misma.
 
-**2.3.1.3 DataAccessControler**
+&nbsp;
+
+
+#### 2.3.1.3 DataAccessControler
+
+&nbsp;
 
 Se trata del controlador encargado de recibir las peticiones HTTP
 destinadas a la aplicación, redirigir la información de entrada hacia el
@@ -1744,9 +1267,18 @@ Diagrama de clase:
 archivos de histórico de operaciones y un CovidDAO que será empleado
 para acceder a los datos insertados en base de datos.
 
+
+&nbsp;
+
+
 ### 2.3.2 Security API
 
+&nbsp;
+
+
 #### 2.3.2.1 Security DAO
+
+&nbsp;
 
 Al igual que en la anterior parte componente del sistema para la gestión
 de todo cuanto se encuentre relacionado con la base de datos -- creación
@@ -1844,7 +1376,11 @@ operaciones de selección y de creación de tablas y posibilitar la
 generación de las mismas dentro de un ambiente de campos y propiedades
 encriptadas.
 
-**2.3.2.2 Security Manager**
+&nbsp;
+
+#### 2.3.2.2 Security Manager
+
+&nbsp;
 
 Se trata de una clase que, compuesta por otras tres, gestiona todo el
 aspecto de la seguridad en el acceso, creación, actualización y
@@ -1899,7 +1435,12 @@ nuevos usuarios tras encriptar sus datos y posteriormente los valida y
 recupera de base de datos las claves pública y privada que serán
 empleadas para la creación de nuevos usuarios.
 
-**2.3.2.3 Security Controller**
+&nbsp;
+
+
+#### 2.3.2.3 Security Controller
+
+&nbsp;
 
 Se trata del controlador generado para gestionar las peticiones HTTP que
 recibirá la aplicación desde el exterior. El método Get suministra una
@@ -1909,7 +1450,11 @@ alta o deben de validarse.
 
 ![](.//media/image10.png)
 
+&nbsp;
+
 ### 2.3.3 Covid API
+
+&nbsp;
 
 Es un módulo diseñado únicamente para realizar de interfaz con el
 usuario. Por medio del mismo éste último puede interactuar con los dos
@@ -1920,7 +1465,12 @@ un simple redireccionamiento hacia los módulos que componen la
 aplicación. Ofrece además la implementación de una memoria caché que
 favorece la rápida obtención de los datos en peticiones de peso.
 
+&nbsp;
+
 #### 2.3.3.1 Controladores
+
+
+&nbsp;
 
 Se encargan de recibir las peticiones POST o GET y redireccionarlas al
 componente correspondiente.
@@ -1942,7 +1492,11 @@ Ofrece los datos relativos a la pandemia de Covid-19 empleando la
 memoria caché o el redireccionamiento hacia el microservicio DataAccess
 API.
 
+&nbsp;
+
 #### 2.3.3.2 CovidCache
+
+&nbsp;
 
 Extrae el conjunto de los datos disponibles en base de datos y los
 ofrece de manera rápida filtrando por rango de fecha desde memoria RAM.
@@ -1956,7 +1510,11 @@ almacenamiento.
 
 ![](.//media/image13.png)
 
+&nbsp;
+
 ### 2.3.4 Clases comunes
+
+&nbsp;
 
 Existen una serie de clases comunes a todos los servicios. Éstas
 incluyen funciones de serializado y deserializado de objetos Json desde
@@ -1966,7 +1524,12 @@ lectura y escritura en disco o reconocimiento del sistema operativo.
 
 ![](.//media/image14.png)
 
+
+&nbsp;
+
 ### 2.3.5 Dependencias Externas
+
+&nbsp;
 
 Únicamente se emplea como dependencia externa al propio marco de trabajo
 de .Net Core una librería llamada Newtonsoft. Ésta es utilizada en la
@@ -1976,12 +1539,23 @@ incluye de manera nativa. Su documentación oficial puede encontrarse en:
 
 [https://www.newtonsoft.com/json/help/html/Introduction.htm](https://www.newtonsoft.com/json/help/html/Introduction.htm)
 
+&nbsp;
+
 # 3 Modelo Entidad Relacional
+
+&nbsp;
 
 ## 3.1 Modelo E/R Datos Covid
 
+&nbsp;
+
 ![](.//media/image16.png)
 
+
+&nbsp;
+
 ## 3.2 Modelo E/R Base de Datos Usuarios
+
+&nbsp;
 
 ![](.//media/image17.png)
