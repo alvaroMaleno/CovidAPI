@@ -94,4 +94,4 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 
 - [DOCX](./Documentation/Documentacion.docx)
 
-- [pdf](./Documentation/Documentacion.pdf)
+- [PDF](./Documentation/Documentacion.pdf)
