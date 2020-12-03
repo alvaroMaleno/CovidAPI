@@ -98,8 +98,8 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 
 # Manual de uso
 
-- [DOCX](./Documentation/Manual de uso.docx)
+- [DOCX]('./Documentation/Manual de uso.docx')
 
-- [PDF](./Documentation/Manual de uso.pdf)
+- [PDF]('./Documentation/Manual de uso.pdf')
 
 - [Poryecto Postman](./Documentation/CovidAPI.postman_collection.json)
