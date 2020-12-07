@@ -58,10 +58,6 @@ La creación, acceso, respaldo y actualización de los datos ha quedado dentro d
 
 Dentro de la carpeta situada en DataAccess_API/Properties se encuentra el archivo launchProperties.json . En su interior se puede modificar la dirección y el puerto de acceso.
 
-# Url para pruebas
-
-Actualmente puede probarse enviando la petición a la url https://covidpaucasesnoves.azurewebsites.net/CovidDataBase . El servicio es gratuito por lo que pueden producirse fallos debido a la falta de disponibilidad del servidor. Se recomienda repetir cada petición varias veces. En ocasiones la base de datos puede encontrarse saturada, por lo que será necesario esperar unos minutos antes de que vuelva a estar disponible.
-
 # Métodos admitidos en la petición
 
 - **GetGeoZoneData**: Se emplea para obtener información sobre la evolución histórica de la pandemia de Covid - 19 relativa a uno o varios países dentro de un rango de fechas.
