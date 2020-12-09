@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "a8490279-225b-40c8-a5fb-d1bf054013b1",
+		"name": "CovidAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. GetPublicKeyToCommunucate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://193.176.87.187:44444/api/user",
+					"protocol": "http",
+					"host": [
+						"193",
+						"176",
+						"87",
+						"187"
+					],
+					"port": "44444",
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "This method returns a public key used to encript the future user registration process.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "2. Encrypt user mail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"paste here the public key you want to use to encrypt\",\n\n    \"text\":\"paste here the text to encrypt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://193.176.87.187:44444/api/EncryptationService",
+					"protocol": "http",
+					"host": [
+						"193",
+						"176",
+						"87",
+						"187"
+					],
+					"port": "44444",
+					"path": [
+						"api",
+						"EncryptationService"
+					]
+				},
+				"description": "This method send a text and get the encripted text."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Encrypt user pass",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"paste here the public key you want to use to encrypt\",\n\n    \"text\":\"paste here the pass to encrypt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://193.176.87.187:44444/api/EncryptationService",
+					"protocol": "http",
+					"host": [
+						"193",
+						"176",
+						"87",
+						"187"
+					],
+					"port": "44444",
+					"path": [
+						"api",
+						"EncryptationService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Sign up new user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI8UlNBS2V5VmFsdWU-PE1vZHVsdXM-azc5ZDlMOUt1bTZzdVhjZ3UrNTFZZ2JHT2pqOElmMHBxSm83TmNnSXAyVVdGSmR2cnFtWWhVR2cxV0pHMTNFbXdRYk1FMVFMYmd4WDNBRGpaYkRoTjJvdnB6VVRKbW8rWk9jK0ZXTXFicVowQk1Id3hIL0FNV3BodVRLWVZtYk1UY1VvbjdxNDNZV0c3VG9Da3ZYOFZ3Qm83UTRZVCtCdE5laWhGSmZVb2srYnZsYmpQSVpqL2hBTU5XUUgxYlZQcWZxUUtuZStsK1VRTVhTcHJDVGd3czNic3pPb2ZST0ZaRyswV1RDUE5FamswTjRJQjArQWdVQ21MWWMyWE40WnphNzFXc1NrQUZCQWJTMVBlQnd5bWZucVllMDhEb1FlSjBXUTB4d1l2WWpaaExjQUxLVXBkcTAwUEhid0lEZTZwTTFuTktwajB6VUpCSWp1bktkbkV3alVwT0FsVW8zeGlicWVvL0JYalo5aDI3ZmluSVZ2eU9RWG5XTnlyWkJpUXcybWFsWUxONFgvdWw2UGs2dDl5RWJLMEdYMzk2cWNINHI2bHVQNmo4ZGp3YXBjbjlsZWlwMjlEU09WN0lQMUVlS0xxQjUyM09nMTRJWjMzdzY3dDJjeW5mOHFmSFcyUDBZUTBidEJCWS83MUh4VHVjb2NrcHp1UVE1bXR4YXA8L01vZHVsdXM-PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU-IiwianRpIjoiY2YzZTE2NTItYzMzMS00M2EzLWE1MzktZjI4NjYyNmZjNTI3IiwibmJmIjoxNjA1MDM4MjM4LCJleHAiOjE2MDUxMjQ2MzgsImlzcyI6ImNvdmlkVG9rZW5Jc3N1ZXIiLCJhdWQiOiJjb3ZpZFRva2VuQXVkaWVuY2UifQ.-5ZVNFt0ARWwHtnhLMSuuEwvCkLDpF8QKYg3WbIpJvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"paste here encrypted email\",\n\"pass\": \"paste here encrypted pass\",\n\"new\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://193.176.87.187:44444/api/user",
+					"protocol": "http",
+					"host": [
+						"193",
+						"176",
+						"87",
+						"187"
+					],
+					"port": "44444",
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "This method sing up a new user."
+			},
+			"response": []
+		},
+		{
+			"name": "5. Encrypt user with its own public key",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"paste here the public key you want to use to encrypt\",\n\n    \"text\":\"paste here the text to encrypt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://193.176.87.187:44444/api/EncryptationService",
+					"protocol": "http",
+					"host": [
+						"193",
+						"176",
+						"87",
+						"187"
+					],
+					"port": "44444",
+					"path": [
+						"api",
+						"EncryptationService"
+					]
+				},
+				"description": "This method encrypt the user with the public key returned on the previous step."
+			},
+			"response": []
+		},
+		{
+			"name": "6. Encrypt user pass with its own public key",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"paste here the public key you want to use to encrypt\",\n\n    \"text\":\"paste here the text to encrypt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://193.176.87.187:44444/api/EncryptationService",
+					"protocol": "http",
+					"host": [
+						"193",
+						"176",
+						"87",
+						"187"
+					],
+					"port": "44444",
+					"path": [
+						"api",
+						"EncryptationService"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Authorize user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI8UlNBS2V5VmFsdWU-PE1vZHVsdXM-azc5ZDlMOUt1bTZzdVhjZ3UrNTFZZ2JHT2pqOElmMHBxSm83TmNnSXAyVVdGSmR2cnFtWWhVR2cxV0pHMTNFbXdRYk1FMVFMYmd4WDNBRGpaYkRoTjJvdnB6VVRKbW8rWk9jK0ZXTXFicVowQk1Id3hIL0FNV3BodVRLWVZtYk1UY1VvbjdxNDNZV0c3VG9Da3ZYOFZ3Qm83UTRZVCtCdE5laWhGSmZVb2srYnZsYmpQSVpqL2hBTU5XUUgxYlZQcWZxUUtuZStsK1VRTVhTcHJDVGd3czNic3pPb2ZST0ZaRyswV1RDUE5FamswTjRJQjArQWdVQ21MWWMyWE40WnphNzFXc1NrQUZCQWJTMVBlQnd5bWZucVllMDhEb1FlSjBXUTB4d1l2WWpaaExjQUxLVXBkcTAwUEhid0lEZTZwTTFuTktwajB6VUpCSWp1bktkbkV3alVwT0FsVW8zeGlicWVvL0JYalo5aDI3ZmluSVZ2eU9RWG5XTnlyWkJpUXcybWFsWUxONFgvdWw2UGs2dDl5RWJLMEdYMzk2cWNINHI2bHVQNmo4ZGp3YXBjbjlsZWlwMjlEU09WN0lQMUVlS0xxQjUyM09nMTRJWjMzdzY3dDJjeW5mOHFmSFcyUDBZUTBidEJCWS83MUh4VHVjb2NrcHp1UVE1bXR4YXA8L01vZHVsdXM-PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU-IiwianRpIjoiZDZhYTQ5NzUtMGRmNC00NGRjLWIwMmItOWRiZGRhZTkxN2Y3IiwibmJmIjoxNjAzODMxODY4LCJleHAiOjE2MDM5MTgyNjgsImlzcyI6ImNvdmlkVG9rZW5Jc3N1ZXIiLCJhdWQiOiJjb3ZpZFRva2VuQXVkaWVuY2UifQ.-QNmeVQ0BL5yPloMr0pljPCziB8xwFenG4Zf-FmRbD0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"paste here user encrypted mail\",\n    \n    \"pass\": \"paste here user encripted pass\",\n    \n    \"new\": false,\n\n     \"public_key\" : \"paste here user public key\"\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://193.176.87.187:44444/api/authorize",
+					"protocol": "http",
+					"host": [
+						"193",
+						"176",
+						"87",
+						"187"
+					],
+					"port": "44444",
+					"path": [
+						"api",
+						"authorize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Send covid requests",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI8UlNBS2V5VmFsdWU-PE1vZHVsdXM-azc5ZDlMOUt1bTZzdVhjZ3UrNTFZZ2JHT2pqOElmMHBxSm83TmNnSXAyVVdGSmR2cnFtWWhVR2cxV0pHMTNFbXdRYk1FMVFMYmd4WDNBRGpaYkRoTjJvdnB6VVRKbW8rWk9jK0ZXTXFicVowQk1Id3hIL0FNV3BodVRLWVZtYk1UY1VvbjdxNDNZV0c3VG9Da3ZYOFZ3Qm83UTRZVCtCdE5laWhGSmZVb2srYnZsYmpQSVpqL2hBTU5XUUgxYlZQcWZxUUtuZStsK1VRTVhTcHJDVGd3czNic3pPb2ZST0ZaRyswV1RDUE5FamswTjRJQjArQWdVQ21MWWMyWE40WnphNzFXc1NrQUZCQWJTMVBlQnd5bWZucVllMDhEb1FlSjBXUTB4d1l2WWpaaExjQUxLVXBkcTAwUEhid0lEZTZwTTFuTktwajB6VUpCSWp1bktkbkV3alVwT0FsVW8zeGlicWVvL0JYalo5aDI3ZmluSVZ2eU9RWG5XTnlyWkJpUXcybWFsWUxONFgvdWw2UGs2dDl5RWJLMEdYMzk2cWNINHI2bHVQNmo4ZGp3YXBjbjlsZWlwMjlEU09WN0lQMUVlS0xxQjUyM09nMTRJWjMzdzY3dDJjeW5mOHFmSFcyUDBZUTBidEJCWS83MUh4VHVjb2NrcHp1UVE1bXR4YXA8L01vZHVsdXM-PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU-IiwianRpIjoiY2YzZTE2NTItYzMzMS00M2EzLWE1MzktZjI4NjYyNmZjNTI3IiwibmJmIjoxNjA1MDM4MjM4LCJleHAiOjE2MDUxMjQ2MzgsImlzcyI6ImNvdmlkVG9rZW5Jc3N1ZXIiLCJhdWQiOiJjb3ZpZFRva2VuQXVkaWVuY2UifQ.-5ZVNFt0ARWwHtnhLMSuuEwvCkLDpF8QKYg3WbIpJvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"covid_data\":\n    {\n        \"countries\":\n        [\n            \n            \"*\"\n        ],\n        \"dates\":\n        {\n            \n            \"startDate\": \"31/12/2019\",\n            \"endDate\": \"08/10/2020\",\n            \"separator\": \"/\"\n        \n        },\n\n        \"dataType\": \"getAllDates\"\n    }\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://193.176.87.187:44444/api/covid",
+					"protocol": "http",
+					"host": [
+						"193",
+						"176",
+						"87",
+						"187"
+					],
+					"port": "44444",
+					"path": [
+						"api",
+						"covid"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
