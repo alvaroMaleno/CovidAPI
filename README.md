@@ -102,4 +102,4 @@ Finalmente es necesario un servicio que se encargue de interactuar con el usuari
 
 - [PDF](./Documentation/Manualdeuso.pdf)
 
-- [Poryecto Postman](./Documentation/CovidAPI.postman_collection.json)
+- [Proyecto Postman](./Documentation/CovidAPI.postman_collection.json)
